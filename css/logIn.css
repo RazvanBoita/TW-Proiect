@@ -1,0 +1,98 @@
+
+ :root {
+    /* Procentaj culori in aplicatie: 
+    body si main: 60%; secondary: 30%; third:10% */
+    --body-color:rgba(37, 39, 62, 0.95);
+    --main-color: rgb(37, 39, 62);
+    --secondary-color: rgb(239, 58, 86); 
+    --third-color: rgb(255, 243, 244);
+
+     /* A se utiliza fonturi sans-serif pentru web */
+    --font-family: sans-serif;
+} 
+
+label
+{
+    font-family: var(--font-family);
+    color: var(--main-color);
+}
+input{
+    border-radius: 10px;
+    background-color: var(--main-color);
+    border-color: var(--secondary-color);
+    border-width: 1px;
+    border-style: solid;
+    color: var(--third-color);
+    font-family: var(--font-family);
+    width: 40%;
+    height: 3vh;
+}
+
+input::placeholder
+{
+    color: gray;
+    padding-left: 2%;
+    font-family: var(--font-family);
+}
+input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 1000px var(--main-color) inset !important; /* Change the color to whatever you prefer */
+    -webkit-text-fill-color: var(--third-color) !important; /* Change the text color to contrast with the background */
+}
+body{
+    background-color: var(--body-color);
+}
+.container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    flex-shrink: 2;
+}
+.sign-in{
+    min-width: 350px;
+    min-height: 500px;
+    width: 30vw;
+    height: 60vh;
+    background-color: var(--main-color);
+    text-align: center;
+    border-radius: 50px;
+}
+.sub-title{
+    font-family: var(--font-family);
+    color: var(--third-color);
+}
+
+.form-group{
+    margin-bottom: 20px;
+}
+.submit-button{
+    display: inline-block;
+    width: 20%;
+    height: 60%;
+    border-radius: 10px;
+    border-style: none;
+    background-color: var(--secondary-color);
+    color: var(--third-color);
+    font-family: var(--font-family);
+    width: 40%;
+    height: 3vh;
+}
+.log-in-footer{
+    color: var(--third-color);
+    font-family: var(--font-family);
+}
+#log-in-link{
+    color: var(--third-color);
+    font-weight: 600;
+    text-decoration-line: none;
+}
+#log-in-link:visited{
+    color: var(--third-color);
+    font-weight: 600;
+    text-decoration-line: none;
+}
+#log-in-error{
+    color: var(--secondary-color);
+    font-family: var(--font-family);
+    visibility: visible;
+}
