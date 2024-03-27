@@ -1,28 +1,23 @@
+@import './vars.css';
 
- :root {
-    /* Procentaj culori in aplicatie: 
-    body si main: 60%; secondary: 30%; third:10% */
-    --body-color:rgba(37, 39, 62, 0.95);
-    --main-color: rgb(37, 39, 62);
-    --secondary-color: rgb(239, 58, 86); 
-    --third-color: rgb(255, 243, 244);
 
-     /* A se utiliza fonturi sans-serif pentru web */
-    --font-family: sans-serif;
-} 
+body{
+    background-color: var(--body-color);
+}
 
 label
 {
     font-family: var(--font-family);
     color: var(--main-color);
 }
+
 input{
     border-radius: 10px;
     background-color: var(--main-color);
-    border-color: var(--secondary-color);
+    border-color: var(--light-red);
     border-width: 1px;
     border-style: solid;
-    color: var(--third-color);
+    color: var(--bright-white);
     font-family: var(--font-family);
     width: 40%;
     height: 3vh;
@@ -36,10 +31,7 @@ input::placeholder
 }
 input:-webkit-autofill {
     -webkit-box-shadow: 0 0 0 1000px var(--main-color) inset !important; /* Change the color to whatever you prefer */
-    -webkit-text-fill-color: var(--third-color) !important; /* Change the text color to contrast with the background */
-}
-body{
-    background-color: var(--body-color);
+    -webkit-text-fill-color: var(--bright-white) !important; /* Change the text color to contrast with the background */
 }
 .container{
     display: flex;
@@ -59,7 +51,7 @@ body{
 }
 .sub-title{
     font-family: var(--font-family);
-    color: var(--third-color);
+    color: var(--bright-white);
 }
 
 .form-group{
@@ -71,28 +63,28 @@ body{
     height: 60%;
     border-radius: 10px;
     border-style: none;
-    background-color: var(--secondary-color);
-    color: var(--third-color);
+    background-color: var(--light-red);
+    color: var(--bright-white);
     font-family: var(--font-family);
     width: 40%;
     height: 3vh;
 }
 .log-in-footer{
-    color: var(--third-color);
+    color: var(--bright-white);
     font-family: var(--font-family);
 }
 #log-in-link{
-    color: var(--third-color);
+    color: var(--bright-white);
     font-weight: 600;
     text-decoration-line: none;
 }
 #log-in-link:visited{
-    color: var(--third-color);
+    color: var(--bright-white);
     font-weight: 600;
     text-decoration-line: none;
 }
 #log-in-error{
-    color: var(--secondary-color);
+    color: var(--light-red);
     font-family: var(--font-family);
     visibility: visible;
 }

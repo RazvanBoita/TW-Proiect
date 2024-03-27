@@ -1,0 +1,50 @@
+<!-- Author: Razvan -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/quiz.css">
+    <link rel="stylesheet" href="css/menu.css" type="text/css">
+    <title>Quizz</title>
+</head>
+<body>
+    <header>
+        <nav id="navigation-bar">
+            <div class="navigation-button-div"><a class="navigation-button" href="index.html">Home</a></div>
+            <div class="navigation-button-div"><a class="navigation-button" href="createSqlQuery.html">Create Query</a></div>
+            <div class="navigation-button-div"><a class="navigation-button" href="dashboard.html">Dashboard</a></div>
+        </nav>
+    </header>
+    <div class="quiz-question">
+        <h2 class="quiz-title title-text shiny-title">Care dintre urmatoarele select-uri afiseaza toti studentii cu bursa?</h2>
+        <div class="checkbox-wrapper">
+            <label class="checkbox-label">
+              <input type="checkbox" name="option"/>
+              <span class="checkbox"></span>
+              <span class="option-text">SELECT nume, prenume FROM studenti where bursa greater than 0;</span>
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="option"/>
+              <span class="checkbox"></span>
+              <span class="option-text">SELECT nume, prenume FROM studenti_bursieri;</span>
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="option"/>
+              <span class="checkbox"></span>
+              <span class="option-text">SELECT nume, prenume FROM studenti where bursa >=0;</span>
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="option"/>
+              <span class="checkbox"></span>
+              <span class="option-text">SELECT nume, prenume FROM studenti where bursa is not null;</span>
+            </label>
+          </div>
+        <button class="next-btn">Submit</button>
+        <div class="quiz-index">
+            <label for="progress">Progresul tau:</label>
+            <progress id="progress" value="50" max="100"> 50% </progress>
+        </div>
+      </div>
+</body>
+</html>
