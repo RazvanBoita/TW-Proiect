@@ -124,7 +124,10 @@ progress{
 
 .btn-container{
     align-self: flex-end;
+    display: flex;
+    gap: 1rem;
 }
+
 .next-btn{
     font-family: var(--font-family);
     color: var(--accent-color);
@@ -180,8 +183,9 @@ progress{
     .option-text{
         font-size: 0.75rem;
     }
-    .next-btn{
+    .btn-container{
         align-self: center;
+        flex-direction: column;
     }
     .quiz-index{
         display: flex;

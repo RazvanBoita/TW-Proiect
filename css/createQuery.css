@@ -20,11 +20,7 @@ input::placeholder
     font-family: var(--font-family);
 }
 
-.create-title{
-    margin: auto;
-    font-size: 50px;
-    color: var(--secondary-color);
-}
+
 
 .create-quiz-container{
     background-color: var(--main-color);
