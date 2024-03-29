@@ -9,30 +9,30 @@ body
 h1{
     text-align: center;
     font-family: var(--font-family);
-    color: var(--bright-white);
+    color: var(--secondary-color);
     font-size: 5vw;
 }
 h2{
     text-align: center;
     font-family: var(--font-family);
-    color: var(--light-green);
+    color: var(--accent-color);
     font-weight: 700;
     font-size: 2rem;
 }
 .navigation-button{
-    color: var(--bright-white);
+    color: var(--accent-color);
     font-weight: 600;
     text-decoration-line: none;
     font-family: var(--font-family);
 }
 .navigation-button:visited{
-    color: var(--bright-white);
+    color: var(--accent-color);
     font-weight: 600;
     text-decoration-line: none;
     font-family: var(--font-family);
 }
 .navigation-button:hover{
-    color: var(--light-red);
+    color: var(--secondary-color);
 }
 .navigation-button-div{
     flex-basis: 25vw;

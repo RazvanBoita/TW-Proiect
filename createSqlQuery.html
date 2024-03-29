@@ -1,4 +1,4 @@
-<!-- Author: Razvan -->
+<!-- Author: Stefan -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,10 +12,38 @@
     <header>
         <nav id="navigation-bar">
             <div class="navigation-button-div"><a class="navigation-button" href="index.html">Home</a></div>
-            <div class="navigation-button-div"><a class="navigation-button" href="createSqlQuery.html">Create Query</a></div>
+            <div class="navigation-button-div"><a class="navigation-button" href="quizz.html">Quizz</a></div>
             <div class="navigation-button-div"><a class="navigation-button" href="dashboard.html">Dashboard</a></div>
         </nav>
+        <h1>Create your quizz</h1>
     </header>
-    <div class="create-title">Inca n am facut nimic aici</div>
+    <main>
+        <form class="create-quiz-container" action="https://httpbin.org/get" method="get">
+            <p><input id="quizz-question" type="text" name="quizz-question" id="quizz-question" placeholder="Question" required autocomplete="off"></p>
+            <p class="option">
+                 <input type="text" name="option-A" id="option-0" class="option-input" placeholder="Option A" required autocomplete="off">
+                 <input type="checkbox" name="correct-answear-A" id="correct-answear-0" class="checkbox">
+            </p>
+            <p class="option">
+                <input type="text" name="option-B" id="option-1" class="option-input" placeholder="Option B" required autocomplete="off"> 
+                <input type="checkbox" name="correct-answear-B" id="correct-answear-1" class="checkbox">
+            </p>
+            <p class="option">
+                <input type="text" name="option-C" id="option-2" class="option-input" placeholder="Option C" required autocomplete="off"> 
+                <input type="checkbox" name="correct-answear-C" id="correct-answear-2" class="checkbox">
+            </p>
+            <p class="option">
+                 <input type="text" name="option-D" id="option-3" class="option-input" placeholder="Option D" required autocomplete="off">
+                 <input type="checkbox" name="correct-answear-D" id="correct-answear-3" class="checkbox">
+            </p>
+            <p>
+                <input type="file" id="import-button" accept=".json" size="10MB" style="display: none;" />
+                <button id="import-button" type="button" onclick="document.getElementById('import-button').click()">Import</button>
+                <button id="submit-button" type="submit">Submit</button>
+            </p>
+            <a id="import-quizz-link"href="importQuizz.html" target="_blank">Example of import format</a>
+        </form>
+    </main>
+    <script src="js/importQuestion.js"></script>
 </body>
 </html>

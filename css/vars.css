@@ -7,12 +7,9 @@
     body si main: 60%; secondary: 30%; third:10% */
     --body-color:rgba(37, 39, 62, 0.95);
     --main-color: rgb(37, 39, 62);
-    --light-red: rgb(239, 58, 86); 
-    --bright-white: rgb(255, 243, 244);
-    --normal-green: #2ea44f;
-    --light-blue: #D4E3FF;
-    --light-green: #9FFFBC;
-
+    --secondary-color: rgb(5, 127, 218);
+    --accent-color: rgb(255, 243, 244);
+    
     /* A se utiliza fonturi sans-serif pentru web */
     --font-family: sans-serif;
 } 
