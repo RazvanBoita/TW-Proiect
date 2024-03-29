@@ -1,7 +1,49 @@
 @import './vars.css';
 
-.dashboard-title{
-    margin: auto;
-    font-size: 50px;
-    color: var(--bright-white);
+body{
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+}
+
+header{
+    height: auto;
+}
+
+.dashboard-container{
+    display: flex;
+    height: 100%;
+    border: 2px solid white;
+    align-items: flex-start;
+    padding: 3.5rem;
+}
+
+.dashboard-container > *{
+    flex: 1;
+}
+
+.dashboard-content{
+    display: flex;
+    justify-content: flex-start;
+    gap: 5vw;
+    border: 5px solid white;
+    height: 100%;
+    background-image: url('../img/dashBar.jpg');
+    border-radius: 25px;
+}
+
+.dashboard-navbar{
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    width: 10%;
+    color: var(--accent-color);
+    padding: 1rem 2rem;
+    font-size: 1.25rem;
+}
+
+.dashboard-stats{
+    background-color: var(--accent-color);
+    width: 100%;
+    border-radius: 20px;
 }

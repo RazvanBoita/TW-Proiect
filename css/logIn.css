@@ -14,10 +14,10 @@ label
 input{
     border-radius: 10px;
     background-color: var(--main-color);
-    border-color: var(--light-red);
+    border-color: var(--secondary-color);
     border-width: 1px;
     border-style: solid;
-    color: var(--bright-white);
+    color: var(--accent-color);
     font-family: var(--font-family);
     width: 40%;
     height: 3vh;
@@ -30,8 +30,8 @@ input::placeholder
     font-family: var(--font-family);
 }
 input:-webkit-autofill {
-    -webkit-box-shadow: 0 0 0 1000px var(--main-color) inset !important; /* Change the color to whatever you prefer */
-    -webkit-text-fill-color: var(--bright-white) !important; /* Change the text color to contrast with the background */
+    -webkit-box-shadow: 0 0 0 1000px var(--main-color) inset !important;
+    -webkit-text-fill-color: var(--accent-color) !important;
 }
 .container{
     display: flex;
@@ -51,7 +51,7 @@ input:-webkit-autofill {
 }
 .sub-title{
     font-family: var(--font-family);
-    color: var(--bright-white);
+    color: var(--accent-color);
 }
 
 .form-group{
@@ -63,28 +63,32 @@ input:-webkit-autofill {
     height: 60%;
     border-radius: 10px;
     border-style: none;
-    background-color: var(--light-red);
-    color: var(--bright-white);
+    background-color: var(--secondary-color);
+    color: var(--accent-color);
     font-family: var(--font-family);
     width: 40%;
     height: 3vh;
 }
 .log-in-footer{
-    color: var(--bright-white);
+    color: var(--accent-color);
     font-family: var(--font-family);
 }
+#account-exists-error{
+    color:var(--secondary-color);
+    font-family: var(--font-family); 
+}
 #log-in-link{
-    color: var(--bright-white);
+    color: var(--accent-color);
     font-weight: 600;
     text-decoration-line: none;
 }
 #log-in-link:visited{
-    color: var(--bright-white);
+    color: var(--accent-color);
     font-weight: 600;
     text-decoration-line: none;
 }
 #log-in-error{
-    color: var(--light-red);
+    color: var(--secondary-color);
     font-family: var(--font-family);
     visibility: visible;
 }
