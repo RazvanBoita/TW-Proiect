@@ -1,33 +1,16 @@
 @import './vars.css';
 
-.option-input{
-    border-radius: 10px;
-    background-color: var(--main-color);
-    border-color: var(--secondary-color);
-    border-width: 1px;
-    border-style: solid;
-    
-    color: var(--accent-color);
-    font-family: var(--font-family);
-    width: 47vw;
-    height: 4vh;
-}
-
-input::placeholder
-{
+label{
     color: gray;
-    padding-left: 2%;
     font-family: var(--font-family);
 }
-
-
+option{
+    color: gray;
+    font-family: var(--font-family);
+}
 
 .create-quiz-container{
     background-color: var(--main-color);
-    display: flex;
-    flex-direction: column;    
-    align-items: center;
-    justify-content: center;
     margin-inline: auto;
     gap: 1rem;
     padding: 1.25rem;
@@ -38,30 +21,19 @@ input::placeholder
     border: 2px solid var(--main-color);
 }
 
-.option{
+#left-form{
     display: flex;
-    margin-right: 2vw;
-    padding-left: 2vw;
+    flex-direction: column;    
+    align-items: left;
+    justify-content: left;
+    margin-left: 2vw;
 }
-
-.checkbox{
-    width: 10%;;
-    cursor: pointer;
+#centered-form{
     display: flex;
+    flex-direction: column;    
     align-items: center;
-    margin-top: 0px;
-    margin-left: 3vw;
+    justify-content: center;
 }
-.checkbox:checked{
-    transform: rotate(35deg);
-    width: 16px;
-    margin-left: 12px;
-    border-color: var(--secondary-color);
-    border-top-color: transparent;
-    border-left-color: transparent;
-    border-radius: 0;
-    height: 30px;
- }
 
 #submit-button{
     display: inline-block;
@@ -112,6 +84,14 @@ input::placeholder
     border-color: #1b1f2326;
     transition-duration: 0.1s;
 }
+#category{
+    width: 10vw;
+    border-radius: 10px;
+    border-color: var(--secondary-color);
+    background-color: var(--main-color);
+    
+}
+
 
 #quizz-question{
     width: 50vw;
@@ -123,7 +103,26 @@ input::placeholder
     border-style: solid;
     padding-left: 1vw;
     color: var(--accent-color);
+    font-style: var(--font-family);
+    font-size: larger;
 }
+
+
+#answer-area{
+    resize: none;
+    width: 50vw;
+    height: 15vh;
+    border-radius: 10px;
+    border-color: var(--secondary-color);
+    border-width: 1px;
+    background-color: var(--main-color);
+    border-style: solid;
+    padding-left: 1vw;
+    color: var(--accent-color);
+    font-style: var(--font-family);
+    font-size: larger;
+}
+
 #import-quizz-link{
     color: var(--accent-color);
     font-weight: 600;
