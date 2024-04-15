@@ -17,38 +17,20 @@
         </nav>
     </header>
     <div class="quiz-question">
-        <h2 class="quiz-title title-text shiny-title" id="quizz-title">Care dintre urmatoarele select-uri afiseaza toti studentii cu bursa?</h2>
-        <div class="checkbox-wrapper">
-            <label class="checkbox-label">
-              <input type="checkbox" name="option"/>
-              <span class="checkbox"></span>
-              <span class="option-text">SELECT nume, prenume FROM studenti where bursa greater than 0;</span>
-            </label>
-            <label class="checkbox-label">
-              <input type="checkbox" name="option"/>
-              <span class="checkbox"></span>
-              <span class="option-text">SELECT nume, prenume FROM studenti_bursieri;</span>
-            </label>
-            <label class="checkbox-label">
-              <input type="checkbox" name="option"/>
-              <span class="checkbox"></span>
-              <span class="option-text">SELECT nume, prenume FROM studenti where bursa >=0;</span>
-            </label>
-            <label class="checkbox-label">
-              <input type="checkbox" name="option"/>
-              <span class="checkbox"></span>
-              <span class="option-text">SELECT nume, prenume FROM studenti where bursa is not null;</span>
-            </label>
-          </div>
-          <div class="btn-container">
-            <button class="export-btn" id="export-button">Export</button>
-            <button class="next-btn">Submit</button>
-          </div>
-        <div class="quiz-index">
-            <label for="progress">Progresul tau:</label>
-            <progress id="progress" value="50" max="100"> 50% </progress>
-        </div>
+      <h2 class="quiz-title title-text shiny-title" id="quizz-title">Scrieti o comanda care sa selecteze toti studentii bursieri din anul 2.</h2>
+      <form action="post" class="input-form">
+        <p>Raspunsul dvs:</p>
+        <textarea class="input-text-field" placeholder="Introduceti raspunsul"></textarea>
+      </form>
+      <div class="btn-container">
+        <button class="export-btn" id="export-button">Export</button>
+        <button class="next-btn">Submit</button>
       </div>
-      <script src="js/exportQuestion.js"></script>
+      <div class="quiz-index">
+          <label for="progress">Progresul tau:</label>
+          <progress id="progress" value="50" max="100"> 50% </progress>
+      </div>
+    </div>
+    <script src="js/exportQuestion.js"></script>
 </body>
 </html>
