@@ -11,51 +11,45 @@ document.getElementById('import-button').addEventListener('change', function(eve
         try {
             const jsonData = JSON.parse(content); 
             console.log('JSON file selected:', jsonData);
-            
+
+            const category = jsonData.category;
             const quizzTitle = jsonData.quizz_title;
-            const optionsList = jsonData.options;
-            const correctAnswears = jsonData.correct_answears;
+            const answer = jsonData.answer;
 
-            if(quizzTitle === null || optionsList === null || correctAnswears === null)
+            if(quizzTitle === null || answer === null || category === null)
             {
-                alert('Title, options or correct answears are invalid!');
+                alert('Title, answer or category are invalid!');
                 return;
             }
-            if(optionsList.length != 4 || correctAnswears.length != 4)
+            if(category.length === 0)
             {
-                alert('Options or correct answears do not have 4 elements!');
+                alert('Category must contain an element!');
                 return;
             }
-
-            for(let i=0;i<optionsList.length;i++)
-            {
-                if(correctAnswears[i] === false)
-                    continue;
-                if(correctAnswears[i] === true)
-                {
-                    let checkbox = document.getElementById("correct-answear-" + i);
-                    checkbox.checked = true;
-                    continue;
-                }
-                alert('Invalid answear');
-                return;
-            }
-            for(let i=0;i<optionsList.length;i++)
-            {
-                if(typeof optionsList[i] !== 'string')
-                {
-                    for(let i=0;i<optionsList.length;i++)
-                    {
-                        document.getElementById("correct-answear-" + i).checked = false;
-                    }   
-                    alert('Invalid option ' + i);
-                    return;
-                }
             
-                let option = document.getElementById("option-" + i);
-                option.value = optionsList[i];
+            const selectContainer = document.getElementById("category");
+
+            for(let i = 0; i< category.length; i++)
+            {
+                let found = false;
+                for(let j=0;j<selectContainer.length;j++)
+                {
+                    if(category[i].toLowerCase() === selectContainer.options[j].value.toLowerCase())
+                    {
+                        selectContainer.options[j].selected = true;
+                        found=true;
+                        break;
+                    }
+                    
+                }
+                if(!found)
+                {
+                    alert('Category ' + category[i] + ' does not exist!');
+                }
             }
+
             document.getElementById("quizz-question").value=quizzTitle;
+            document.getElementById("answer-area").value=answer;
         } catch (error) {
             console.error('Error parsing JSON:', error);
             alert('Invalid JSON file selected. Please select a valid JSON file.');
