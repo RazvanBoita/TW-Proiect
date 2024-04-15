@@ -28,9 +28,10 @@ header{
     gap: 5vw;
     border: 5px solid white;
     height: 100%;
-    background-image: url('../img/dashBar.jpg');
+    background-image: url('../img/firstOpac.png');
     border-radius: 25px;
 }
+
 
 .dashboard-navbar{
     display: flex;
@@ -42,8 +43,19 @@ header{
     font-size: 1.25rem;
 }
 
+.link-text{
+    text-decoration: underline;
+    color: var(--accent-color);
+    font-weight: 500;
+    font-size: 1.35rem;
+}
+
 .dashboard-stats{
     background-color: var(--accent-color);
     width: 100%;
     border-radius: 20px;
+}
+
+.dashboard-stats p{
+    margin: 0 auto;
 }
