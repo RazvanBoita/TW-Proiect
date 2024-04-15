@@ -41,13 +41,12 @@ body{
     margin-bottom: 0;
 }
 
-
-
 .input-form p {
     padding: 0;
     margin: 0;
     margin-bottom: 0.75rem;
     color: var(--accent-color);
+    font-family: var(--font-family);
 }
 
 .input-text-field{
@@ -55,6 +54,12 @@ body{
     width: 30vw;
     resize: vertical;
     transition: width 0.2s;
+    background-color: var(--body-color);
+    border-color: var(--secondary-color);
+    border-radius: 10px;
+    min-height: 3vh;
+    color: var(--accent-color);
+    font-family: var(--font-family);
 }
 
 .input-text-field:focus{

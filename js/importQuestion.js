@@ -1,4 +1,4 @@
-document.getElementById('import-button').addEventListener('change', function(event) {
+document.getElementById('input-json').addEventListener('change', function(event) {
     const file = event.target.files[0]; 
     if (!file) 
     {

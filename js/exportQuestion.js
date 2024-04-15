@@ -2,14 +2,7 @@ document.getElementById('export-button').addEventListener('click', function(even
     const optionsList = document.getElementsByClassName("option-text");
     const quizzTitle = document.getElementById("quizz-title");
 
-    let optionsData = [];
-    for(let i=0;i<optionsList.length;i++)
-    {
-        optionsData.push(optionsList[i].textContent);
-    }
-    
     const data ={
-        optionsList: optionsData,
         quizzTitle: quizzTitle.textContent,
     }
     const jsonData = JSON.stringify(data, null, 2);
