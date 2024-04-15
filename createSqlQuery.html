@@ -31,14 +31,14 @@
             </div>
 
             <div id="centered-form">
-                <p><input id="quizz-question" type="text" name="quizz-question" id="quizz-question" placeholder="Question" required></p>
+                <p><input id="quizz-question" type="text" name="quizz-question" placeholder="Question" required></p>
                 <p><textarea id="answer-area" name="answer-area" required placeholder="Answer"></textarea></p>   
                 <p>
-                    <input type="file" id="import-button" accept=".json" size="5MB" style="display: none;" />
-                    <button id="import-button" type="button" onclick="document.getElementById('import-button').click()">Import</button>
+                    <input type="file" id="input-json" accept=".json" style="display: none;">
+                    <button id="import-button" type="button" onclick="document.getElementById('input-json').click()">Import</button>
                     <button id="submit-button" type="submit">Submit</button>
                 </p>
-                <a id="import-quizz-link"href="importQuizz.html" target="_blank">Example of import format</a>
+                <a id="import-quizz-link" href="importQuizz.html" target="_blank">Example of import format</a>
             </div>
         </form>
     </main>
