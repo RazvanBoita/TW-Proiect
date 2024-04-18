@@ -1,0 +1,18 @@
+FOR User:
+//deocamdata nu e varianta finala a tabelei, ar mai trebui sa adaugam si o relatie one to many cu o tabela probleme
+
+CREATE SCHEMA `sql_tutoring`;
+
+CREATE TABLE `sql_tutoring`.`users` (
+  `idUser` INT NOT NULL,
+  `email` VARCHAR(45) NOT NULL,
+  `name` VARCHAR(45) NOT NULL,
+  `password` VARCHAR(45) NOT NULL,
+  `isAdmin` TINYINT NULL DEFAULT 0,
+  PRIMARY KEY (`idUser`, `email`),
+  UNIQUE INDEX `idUser_UNIQUE` (`idUser` ASC) VISIBLE,
+  UNIQUE INDEX `email_UNIQUE` (`email` ASC) VISIBLE);
+
+INSERT INTO `sql_tutoring`.`users` (`idUser`, `email`, `name`, `password`, `isAdmin`) VALUES ('1', 'sdoaga69@yahoo.ro', 'Stefan', 'LucyDulcy', '1');
+
+INSERT INTO `sql_tutoring`.`users` (`idUser`, `email`, `name`, `password`, `isAdmin`) VALUES ('2', 'elev@gmail.com', 'Elev', '1234', '0');
