@@ -52,6 +52,7 @@ function handleUserLogin(req, res) {
         let formData = qs.parse(body);
         
         try {
+          //de schimbat cu prisma
           const results = await dbConnection.query('SELECT email, password FROM users WHERE email = ?', formData.email);
           if (results[0].length === 0) {
             resolve('logIn.html');
