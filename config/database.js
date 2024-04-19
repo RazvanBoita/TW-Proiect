@@ -1,23 +1,16 @@
-const { PrismaClient } = require('@prisma/client');
-const prisma = new PrismaClient();
+const { createConnection } = require('mysql2');
 
-async function main() {
-  try {
-    await prisma.$connect();
+const dbConnection = createConnection({
+    host:"localhost",
+    user:"alter_root",
+    password:"1234",
+    database:"sql_tutoring"
+})
 
-    // Retrieve all rows from the 'users' table
-    const users = await prisma.users.findMany();
+dbConnection.connect(function(err){
+    if(err)
+        throw err;
+    console.log("Connection successful!");
+})
 
-    // Print each user row
-    console.log("Rows from the 'users' table:");
-    users.forEach(user => {
-      console.log(user);
-    });
-  } catch (error) {
-    console.error("Failed to connect to the database:", error);
-  } finally {
-    await prisma.$disconnect();
-  }
-}
-
-main();
+module.exports = dbConnection.promise();
