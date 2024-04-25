@@ -2,7 +2,7 @@ const { createConnection } = require('mysql2');
 
 const dbConnection = createConnection({
     host:"localhost",
-    user:"root",
+    user:"alter_root",
     password:"1234",
     database:"sql_tutoring"
 })

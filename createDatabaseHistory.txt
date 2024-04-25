@@ -16,3 +16,23 @@ CREATE TABLE `sql_tutoring`.`users` (
 INSERT INTO `sql_tutoring`.`users` (`idUser`, `email`, `name`, `password`, `isAdmin`) VALUES ('1', 'sdoaga69@yahoo.ro', 'Stefan', 'LucyDulcy', '1');
 
 INSERT INTO `sql_tutoring`.`users` (`idUser`, `email`, `name`, `password`, `isAdmin`) VALUES ('2', 'elev@gmail.com', 'Elev', '1234', '0');
+
+
+
+
+
+CREATE TABLE your_table_name (
+    id INT NOT NULL PRIMARY KEY,
+    title VARCHAR(255),
+    content TEXT,
+    category VARCHAR(255),
+    difficulty VARCHAR(50),
+    hint TEXT
+);
+
+CREATE TABLE quiz_answers (
+    idAnswer INT AUTO_INCREMENT PRIMARY KEY,
+    question_id INT,
+    answer VARCHAR(255),
+    FOREIGN KEY (question_id) REFERENCES quiz_questions(id)
+);
