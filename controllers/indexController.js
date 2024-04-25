@@ -1,6 +1,8 @@
 const fs = require('fs');
 const url = require('url');
 const qs = require('querystring');
+const cookieHandler = require('../utils/cookieHandler');
+const crypto = require('crypto');
 
 const dbConnection  = require('../config/database'); 
 
@@ -21,7 +23,17 @@ function handleIndexRequest(req, res)
                         res.writeHead(500);
                         res.end();
                     } else {
-                        res.writeHead(200, { 'Content-Type': 'text/html' });
+                        switch(url)
+                        {
+                            case 'logIn.html':
+                              res.writeHead(301, {'Location': '/logIn'});
+                              break;
+                            default:
+                              const sessionId = cookieHandler.generateSessionId();
+                              res.setHeader('Set-Cookie', 'sessionId=' + sessionId + '; HttpOnly; Max-Age:86400'); //1 day cookie session
+                              res.writeHead(200, {'Content-Type': 'text/html'});
+                              break;
+                        }
                         res.end(data);
                     }
                 });      
@@ -34,7 +46,14 @@ function handleIndexRequest(req, res)
                     res.writeHead(500);
                     res.end();
                 } else {
-                    res.writeHead(200, { 'Content-Type': 'text/html' });
+                    if(cookieHandler.checkSessionId(req))
+                    {
+                      res.writeHead(200, { 'Content-Type': 'text/html' });
+                    }
+                    else
+                    {
+                      res.writeHead(301, {'Location': '/logIn'});
+                    } 
                     res.end(data);
                 }
             });
@@ -52,12 +71,13 @@ function handleUserLogin(req, res) {
         let formData = qs.parse(body);
         
         try {
-          //de schimbat cu prisma
           const results = await dbConnection.query('SELECT email, password FROM users WHERE email = ?', formData.email);
           if (results[0].length === 0) {
             resolve('logIn.html');
           } else {
-            if(results[0][0].password !== formData.password)
+            const hashedPassword = crypto.createHash('sha256').update(formData.password).digest('hex');
+            console.log(hashedPassword)
+            if(hashedPassword !== results[0][0].password)
             {
                 resolve('logIn.html');
             }

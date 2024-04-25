@@ -2,7 +2,7 @@ const fs = require('fs');
 function handleLoginRequest(req, res) {
     switch(req.url) {
       case '/logIn':
-        renderLogInHTML(res);
+        renderLogInHTML(res, req);
         break;
       case '/css/logIn.css':
         renderLogInCSS(res);
@@ -14,7 +14,7 @@ function handleLoginRequest(req, res) {
     }
 }
 
-function renderLogInHTML(res)
+function renderLogInHTML(res, req)
 {
     const htmlPath = './views/';
     const filePath = htmlPath + 'logIn.html';
@@ -25,8 +25,18 @@ function renderLogInHTML(res)
             res.writeHead(500);
             res.end();
         } else {
+            
+            //we check the req headers to see if we redirected the user to login (when the login failed)
+            const wasRedirected = req.headers.referer && req.headers.referer.endsWith('/logIn');
+            let modifiedHTML = data.toString();
+            if(wasRedirected)
+            {
+                const errorMessage = '<p id="log-in-error">Email or password invalid!</p>';
+                modifiedHTML = data.toString().replace('<!-- ERROR_MESSAGE -->', errorMessage);
+            }
+
             res.writeHead(200, { 'Content-Type': 'text/html' });
-            res.end(data);
+            res.end(modifiedHTML);
         }
     });
 }
