@@ -4,7 +4,7 @@ FOR User:
 CREATE SCHEMA sql_tutoring;
 
 CREATE TABLE sql_tutoring.`users` (
-  idUser INT NOT NULL,
+  idUser INT NOT NULL AUTO_INCREMENT,
   email VARCHAR(45) NOT NULL,
   name VARCHAR(45) NOT NULL,
   password VARCHAR(64) NOT NULL,
