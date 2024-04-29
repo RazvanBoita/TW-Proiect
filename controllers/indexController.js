@@ -3,6 +3,7 @@ const url = require('url');
 const qs = require('querystring');
 const cookieHandler = require('../utils/cookieHandler');
 const crypto = require('crypto');
+const UserData = require('../models/userData');
 
 const dbConnection  = require('../config/database'); 
 
@@ -14,30 +15,34 @@ function handleIndexRequest(req, res)
     switch(req.method)
     {
         case "POST":
-            handleUserLogin(req, res).then((url)=>
-            {
-                filePath = htmlPath + url;
-                fs.readFile(filePath, (err, data) => {
-                    if (err) {
-                        console.log(err);
-                        res.writeHead(500);
-                        res.end();
-                    } else {
-                        switch(url)
-                        {
-                            case 'logIn.html':
-                              res.writeHead(301, {'Location': '/logIn'});
-                              break;
-                            default:
-                              const sessionId = cookieHandler.generateSessionId();
-                              res.setHeader('Set-Cookie', 'sessionId=' + sessionId + '; HttpOnly; Max-Age:86400'); //1 day cookie session
-                              res.writeHead(200, {'Content-Type': 'text/html'});
-                              break;
-                        }
-                        res.end(data);
+          handleUserLogin(req, res)
+          .then((userData) => {
+              filePath = htmlPath + 'index.html';
+              // Generate the cookie and add it in the map
+              const sessionId = cookieHandler.generateSessionId();
+              cookieHandler.sessions.set(sessionId, userData);
+              res.setHeader('Set-Cookie', 'sessionId=' + sessionId + '; HttpOnly; Max-Age:86400'); //1 day cookie session
+              res.writeHead(200, {'Content-Type': 'text/html'});
+      
+              fs.readFile(filePath, (err, data) => {
+                  if (err) {
+                      console.log(err);
+                      res.writeHead(500);
+                      res.end();
+                  } else 
+                    {
+                      const username = `${userData.username}`;
+                      modifiedHTML = data.toString().replace('user', username);
+                      res.end(modifiedHTML);
                     }
-                });      
-            });
+              });
+          })     
+          .catch((url) => {
+              console.log('Catch', url);
+              filePath = htmlPath + url;
+              res.writeHead(301, {'Location': '/logIn'});
+              res.end();
+          });
             break;
         case "GET":
             fs.readFile(filePath, (err, data) => {
@@ -49,12 +54,18 @@ function handleIndexRequest(req, res)
                     if(cookieHandler.checkSessionId(req))
                     {
                       res.writeHead(200, { 'Content-Type': 'text/html' });
+                      // Get data from cookie so we can display the username
+                      const rawCookie = cookieHandler.getRawCookie(req, 'sessionId=');
+                      const userData = cookieHandler.sessions.get(rawCookie);
+                      const username = userData.username;
+                      modifiedHTML = data.toString().replace('user', username);
+                      res.end(modifiedHTML);
                     }
                     else
                     {
                       res.writeHead(301, {'Location': '/logIn'});
+                      res.end(data);
                     } 
-                    res.end(data);
                 }
             });
             break;
@@ -71,22 +82,24 @@ function handleUserLogin(req, res) {
         let formData = qs.parse(body);
         
         try {
-          const results = await dbConnection.query('SELECT email, password FROM users WHERE email = ?', formData.email);
+          const results = await dbConnection.query('SELECT * FROM users WHERE email = ?', formData.email);
           if (results[0].length === 0) {
-            resolve('logIn.html');
+            reject('logIn.html');
           } else {
             const hashedPassword = crypto.createHash('sha256').update(formData.password).digest('hex');
-            console.log(hashedPassword)
             if(hashedPassword !== results[0][0].password)
             {
-                resolve('logIn.html');
+              reject('logIn.html');
             }
             else
-                resolve('index.html');
+            {
+              let userData = new UserData(results[0][0].idUser, results[0][0].name, results[0][0].email);
+              resolve(userData);
+            }
           }
         } catch (error) {
           console.error('Error executing query:', error);
-          resolve('logIn.html');
+          reject('logIn.html');
         }
       });
     });

@@ -1,5 +1,8 @@
 const crypto = require('crypto');
 
+// Store sessions in memory. Warning! The session will be lost after changes(CTRL + S)
+const sessions =new Map();
+
 function generateSessionId()
 {
     return crypto.randomBytes(16).toString('base64');
@@ -10,11 +13,27 @@ function checkSessionId(req)
     if(!cookie.includes('sessionId'))
         return false;
 
+    const rawCookie = getRawCookie(req, 'sessionId=');
+    if(!sessions.has(rawCookie))
+    {
+        console.log(rawCookie);
+        return false;
+    }
     // ok, cookie is valid
     return true;
 }
 
+// Returns the actual cookie id(without the name of the cookie)
+// The cookieName should be the name of the cookie, followed by = (ex: sessionId=)
+function getRawCookie(req, cookieName)
+{
+    const cookie = req.headers.cookie || '';
+    return cookie === '' ? cookie : cookie.split(cookieName)[1].trim();
+}
+
 module.exports = {
     generateSessionId,
-    checkSessionId
+    checkSessionId,
+    getRawCookie,
+    sessions
 }
