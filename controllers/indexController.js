@@ -1,96 +1,64 @@
 const fs = require('fs');
-const url = require('url');
 const qs = require('querystring');
 const cookieHandler = require('../utils/cookieHandler');
 const crypto = require('crypto');
-
+const UserData = require('../models/userData');
 const dbConnection  = require('../config/database'); 
+
+const { processUserLogin } = require('../utils/processUserLogin');
+const { processUserSignup } = require('../utils/processUserSignup.js')
 
 function handleIndexRequest(req, res)
 {
     const htmlPath = './views/';
     let filePath = htmlPath + 'index.html';
-
+    // Check method type
     switch(req.method)
     {
         case "POST":
-            handleUserLogin(req, res).then((url)=>
+            // Check who sent the method
+            const requestPage = req.headers.referer;
+            const pageName = requestPage.substring(requestPage.lastIndexOf('/') + 1);
+            switch(pageName)
             {
-                filePath = htmlPath + url;
-                fs.readFile(filePath, (err, data) => {
-                    if (err) {
-                        console.log(err);
-                        res.writeHead(500);
-                        res.end();
-                    } else {
-                        switch(url)
-                        {
-                            case 'logIn.html':
-                              res.writeHead(301, {'Location': '/logIn'});
-                              break;
-                            default:
-                              const sessionId = cookieHandler.generateSessionId();
-                              res.setHeader('Set-Cookie', 'sessionId=' + sessionId + '; HttpOnly; Max-Age:86400'); //1 day cookie session
-                              res.writeHead(200, {'Content-Type': 'text/html'});
-                              break;
-                        }
-                        res.end(data);
-                    }
-                });      
-            });
-            break;
+                case 'logIn':
+                  processUserLogin(req, res, htmlPath, filePath);
+                break;
+                case 'signUp':
+                  processUserSignup(req, res, htmlPath, filePath);
+                break;
+                default:
+                  console.log('none!');
+                break;
+            }
+        break;
         case "GET":
-            fs.readFile(filePath, (err, data) => {
-                if (err) {
-                    console.log(err);
-                    res.writeHead(500);
-                    res.end();
-                } else {
-                    if(cookieHandler.checkSessionId(req))
-                    {
-                      res.writeHead(200, { 'Content-Type': 'text/html' });
-                    }
-                    else
-                    {
-                      res.writeHead(301, {'Location': '/logIn'});
-                    } 
+          fs.readFile(filePath, (err, data) => {
+              if (err) {
+                  console.log(err);
+                  res.writeHead(500);
+                  res.end();
+              } else {
+                  if(cookieHandler.checkSessionId(req))
+                  {
+                    res.writeHead(200, { 'Content-Type': 'text/html' });
+                    // Get data from cookie so we can display the username
+                    const rawCookie = cookieHandler.getRawCookie(req, 'sessionId=');
+                    const userData = cookieHandler.sessions.get(rawCookie);
+                    const username = userData.username;
+                    modifiedHTML = data.toString().replace('user', username);
+                    res.end(modifiedHTML);
+                  }
+                  else
+                  {
+                    res.writeHead(301, {'Location': '/logIn'});
                     res.end(data);
-                }
-            });
-            break;
+                  } 
+              }
+          });
+      break;
     }
 }
-
-function handleUserLogin(req, res) {
-    return new Promise((resolve, reject) => {
-      let body = '';
-      req.on('data', (chunk) => {
-        body += chunk.toString();
-      });
-      req.on('end', async () => {
-        let formData = qs.parse(body);
-        
-        try {
-          const results = await dbConnection.query('SELECT email, password FROM users WHERE email = ?', formData.email);
-          if (results[0].length === 0) {
-            resolve('logIn.html');
-          } else {
-            const hashedPassword = crypto.createHash('sha256').update(formData.password).digest('hex');
-            console.log(hashedPassword)
-            if(hashedPassword !== results[0][0].password)
-            {
-                resolve('logIn.html');
-            }
-            else
-                resolve('index.html');
-          }
-        } catch (error) {
-          console.error('Error executing query:', error);
-          resolve('logIn.html');
-        }
-      });
-    });
-  }
 
 module.exports = {
     handleIndexRequest
