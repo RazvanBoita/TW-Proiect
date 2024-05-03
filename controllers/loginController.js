@@ -8,8 +8,7 @@ function handleLoginRequest(req, res) {
         renderLogInCSS(res);
         break;
       default:
-        res.statusCode = 404;
-        res.end();
+        renderLogInHTML(res, req);
         break;
     }
 }

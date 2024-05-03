@@ -11,9 +11,9 @@
 <body>
     <header>
         <nav id="navigation-bar">
-            <div class="navigation-button-div"><a class="navigation-button" href="index.html">Home</a></div>
-            <div class="navigation-button-div"><a class="navigation-button" href="quizz.html">Quizz</a></div>
-            <div class="navigation-button-div"><a class="navigation-button" href="dashboard.html">Dashboard</a></div>
+            <div class="navigation-button-div"><a class="navigation-button" href="/">Home</a></div>
+            <div class="navigation-button-div"><a class="navigation-button" href="quizz">Quizz</a></div>
+            <div class="navigation-button-div"><a class="navigation-button" href="dashboard">Dashboard</a></div>
         </nav>
         <h1>Create your quizz</h1>
     </header>
@@ -29,16 +29,25 @@
                     <option value="DATE">DATE</option>
                 </select>
             </div>
-
+            <div class="difficulty-container">
+                <input type="radio" id="easy" name="difficulty" value="easy" required>
+                <label for="easy">Easy</label>
+                
+                <input type="radio" id="medium" name="difficulty" value="medium">
+                <label for="medium">Medium</label>
+                
+                <input type="radio" id="hard" name="difficulty" value="hard">
+                <label for="hard">Hard</label>
+            </div>
             <div id="centered-form">
-                <p><input id="quizz-question" type="text" name="quizz-question" placeholder="Question" required></p>
+                <p><input id="quizz-question" type="text" name="quizz-question" placeholder="Question" required maxlength="150"></p>
                 <p><textarea id="answer-area" name="answer-area" required placeholder="Answer"></textarea></p>   
                 <p>
                     <input type="file" id="input-json" accept=".json" style="display: none;">
                     <button id="import-button" type="button" onclick="document.getElementById('input-json').click()">Import</button>
                     <button id="submit-button" type="submit">Submit</button>
                 </p>
-                <a id="import-quizz-link" href="importQuizz.html" target="_blank">Example of import format</a>
+                <a id="import-quizz-link" href="importQuizz" target="_blank">Example of import format</a>
             </div>
         </form>
     </main>

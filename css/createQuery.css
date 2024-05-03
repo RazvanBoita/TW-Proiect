@@ -20,7 +20,35 @@ option{
     border-radius: 0.75rem;
     border: 2px solid var(--main-color);
 }
+.difficulty-container {
+    display: inline-block;
+    margin-top: 2vh;
+    margin-left: 2vw;
+    overflow: hidden;
+    border-radius: 5px;
+}
+.difficulty-container input[type="radio"] {
+    display: none; 
+}
 
+.difficulty-container label {
+    display: inline-block;
+    background-color: var(--accent-color);
+    color: var(--secondary-color);
+    padding: 1vh 1vw;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: var(--font-family);
+}
+
+.difficulty-container label:last-child {
+    border-right: none;
+}
+
+.difficulty-container input[type="radio"]:checked + label {
+    background-color: var(--secondary-color);
+    color: var(--accent-color);
+}
 #left-form{
     display: flex;
     flex-direction: column;    

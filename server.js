@@ -1,36 +1,27 @@
 const http = require('http');
-const { handleLoginRequest } = require('./controllers/loginController');
-const { handleVarsRequest } = require('./controllers/varsController');
-const { handleBackgroundImageRequest } = require('./controllers/backgroundImageController');
-const { handleSignUpRequest } = require('./controllers/signupController');
-const { handleIndexRequest } = require('./controllers/indexController');
-const { handleMenuRequest } = require('./controllers/menuController');
+const cookieHandler = require('./utils/cookieHandler');
+
+const { handleUnauthentificatedRequests } = require('./utils/handleUnauthentificatedRequests');
+const { handleAuthentificatedRequests } = require('./utils/handleAuthentificatedRequests');
 
 const server = http.createServer((req, res) =>{
-    switch(true) {
-        case req.url === '/css/vars.css':
-            handleVarsRequest(req, res);
-            break;
-        case req.url === '/img/first.png':
-            handleBackgroundImageRequest(req, res);
-            break;
-        case req.url === '/css/menu.css':
-            handleMenuRequest(req, res);
-            break;
-        case req.url.includes('/logIn'):
-            handleLoginRequest(req, res);
-            break;
-        case req.url === '/signUp':
-            handleSignUpRequest(req, res);
-            break;
-        case req.url === '/':
-            handleIndexRequest(req, res);
-            break;
-        default:
-            res.writeHead(404, { 'Content-Type': 'text/html' });
-            res.end('<h1>404 Not Found</h1>');
-            break;
-      }
+    console.log(req.url);
+     // This function will handle requests that do not need authentification session!
+    if(handleUnauthentificatedRequests(req, res))
+    {
+        return;
+    }
+    // Verify if the cookie is valid
+    if(!cookieHandler.checkSessionId(req))
+    {
+        // Cookie is not valid, redirect to login page
+        res.writeHead(301, {'Location': '/logIn'});
+        res.end();
+        return;  
+    }
+
+    // This function will handle requests that need the user to be logged in
+    handleAuthentificatedRequests(req, res);
 
 });
 
