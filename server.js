@@ -5,7 +5,7 @@ const { handleUnauthentificatedRequests } = require('./utils/handleUnauthentific
 const { handleAuthentificatedRequests } = require('./utils/handleAuthentificatedRequests');
 
 const server = http.createServer((req, res) =>{
-    console.log(req.url);
+    // console.log(req.url);
      // This function will handle requests that do not need authentification session!
     if(handleUnauthentificatedRequests(req, res))
     {
