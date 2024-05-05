@@ -33,7 +33,7 @@ function processUserSignup(req, res, htmlPath, filePath)
     .catch((url) => {
         console.log('Catch', url);
         filePath = htmlPath + url;
-        res.writeHead(301, {'Location': '/signUp'});
+        res.writeHead(302, {'Location': '/signUp'});
         res.end();
     });
 }
