@@ -16,7 +16,6 @@ function checkSessionId(req)
     const rawCookie = getRawCookie(req, 'sessionId=');
     if(!sessions.has(rawCookie))
     {
-        console.log(rawCookie);
         return false;
     }
     // ok, cookie is valid

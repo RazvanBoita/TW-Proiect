@@ -1,9 +1,7 @@
-FOR User:
-//deocamdata nu e varianta finala a tabelei, ar mai trebui sa adaugam si o relatie one to many cu o tabela probleme
 
 CREATE SCHEMA sql_tutoring;
 
-CREATE TABLE sql_tutoring.`users` (
+CREATE TABLE sql_tutoring.`User` (
   idUser INT NOT NULL AUTO_INCREMENT,
   email VARCHAR(45) NOT NULL,
   name VARCHAR(45) NOT NULL,
@@ -13,26 +11,66 @@ CREATE TABLE sql_tutoring.`users` (
   UNIQUE INDEX idUser_UNIQUE (idUser ASC) VISIBLE,
   UNIQUE INDEX email_UNIQUE (email ASC) VISIBLE);
 
-INSERT INTO sql_tutoring.`users` (idUser, email, name, password, isAdmin) VALUES ('1', 'sdoaga69@yahoo.ro', 'Stefan', '04f5024a4b9a7e71223fd5093c8dc4989694b2ba6e703e7b7d6913062b4dc2a0', '1');
+INSERT INTO sql_tutoring.`User` (idUser, email, name, password, isAdmin) VALUES ('1', 'sdoaga69@yahoo.ro', 'Stefan', '04f5024a4b9a7e71223fd5093c8dc4989694b2ba6e703e7b7d6913062b4dc2a0', '1');
 
-INSERT INTO sql_tutoring.`users` (idUser, email, name, password, isAdmin) VALUES ('2', 'elev@gmail.com', 'Elev', '03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4', '0');
-
-
+INSERT INTO sql_tutoring.`User` (idUser, email, name, password, isAdmin) VALUES ('2', 'elev@gmail.com', 'Elev', '03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4', '0');
 
 
+CREATE TABLE `sql_tutoring`.`Question` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `title` VARCHAR(200) NOT NULL,
+  `difficulty` VARCHAR(10) NOT NULL,
+  `hint` VARCHAR(45) NULL,
+  `answer` TEXT NOT NULL,
+  `counter` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
+  UNIQUE INDEX `title_UNIQUE` (`title` ASC) VISIBLE);
 
-CREATE TABLE sql_tutoring.`quiz_questions`  (
-    id INT NOT NULL PRIMARY KEY,
-    title VARCHAR(255),
-    content TEXT,
-    category VARCHAR(255),
-    difficulty VARCHAR(50),
-    hint TEXT
-);
 
-CREATE TABLE sql_tutoring.`quiz_answers` (
-    idAnswer INT AUTO_INCREMENT PRIMARY KEY,
-    question_id INT,
-    answer VARCHAR(255),
-    FOREIGN KEY (question_id) REFERENCES quiz_questions(id)
-);
+CREATE TABLE `sql_tutoring`.`Comment` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `idQuestion` INT NOT NULL,
+  `idUser` INT NOT NULL,
+  `parentId` INT NOT NULL DEFAULT -1,
+  `description` TEXT NOT NULL,
+  `createdAt` DATE NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
+  INDEX `idQuestion_idx` (`idQuestion` ASC) VISIBLE,
+  INDEX `idUser_idx` (`idUser` ASC) VISIBLE,
+  CONSTRAINT `fk_idQuestion`
+  FOREIGN KEY (`idQuestion`)
+  REFERENCES `sql_tutoring`.`Question` (`id`),
+  CONSTRAINT `fk_idUser`
+  FOREIGN KEY (`idUser`)
+  REFERENCES `sql_tutoring`.`User` (`idUser`)
+  ON DELETE NO ACTION
+  ON UPDATE NO ACTION);
+
+CREATE TABLE `sql_tutoring`.`Category` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `type` VARCHAR(20) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
+  UNIQUE INDEX `type_UNIQUE` (`type` ASC) VISIBLE);
+
+CREATE TABLE `sql_tutoring`.`Question_Category` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `idQuestion` INT NOT NULL,
+  `idCategory` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
+  INDEX `fk_idQuestion_idx` (`idQuestion` ASC) VISIBLE,
+  INDEX `fk_idCategory_idx` (`idCategory` ASC) VISIBLE,
+  CONSTRAINT `fk_idQuestion_Category`
+    FOREIGN KEY (`idQuestion`)
+    REFERENCES `sql_tutoring`.`Question` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_idCategory`
+    FOREIGN KEY (`idCategory`)
+    REFERENCES `sql_tutoring`.`Category` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
+

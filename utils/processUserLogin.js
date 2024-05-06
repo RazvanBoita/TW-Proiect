@@ -33,7 +33,7 @@ function processUserLogin(req, res, htmlPath, filePath)
     .catch((url) => {
         console.log('Catch', url);
         filePath = htmlPath + url;
-        res.writeHead(301, {'Location': '/logIn'});
+        res.writeHead(302, {'Location': '/logIn'});
         res.end();
     });
 }
@@ -48,7 +48,7 @@ function handleUserLogin(req, res) {
         let formData = qs.parse(body);
         
         try {
-          const results = await dbConnection.query('SELECT * FROM users WHERE email = ?', formData.email);
+          const results = await dbConnection.query('SELECT * FROM User WHERE email = ?', formData.email);
           if (results[0].length === 0) {
             reject('logIn.html');
           } else {
