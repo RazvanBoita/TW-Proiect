@@ -1,22 +1,20 @@
 const fs = require('fs');
-const cookieHandler = require('../utils/cookieHandler');
+
+const {displayPage} = require('../utils/createSqlQueryUtils/displayCreateSqlQueryPage');
+const {processCreateSqlQuery} = require('../utils/createSqlQueryUtils/processCreateSqlQuery')
+
 function handleSqlQueryRequest(req, res)
 {
+    let filePath = './views/createSqlQuery.html';
     switch(req.method)
     {
         case "GET":
-            let filePath = './views/createSqlQuery.html';
-            fs.readFile(filePath, (err, data) => {
-                if (err) {
-                    console.log(err);
-                    res.writeHead(500);
-                    res.end();
-                } else {
-                    res.writeHead(200, { 'Content-Type': 'text/html' });
-                    res.end(data);
-                }
-            });
+            displayPage(req, res, filePath);           
         break;
+        case "POST":
+            processCreateSqlQuery(req, res);
+        break;
+
     }
 }
 

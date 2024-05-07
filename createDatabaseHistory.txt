@@ -11,9 +11,6 @@ CREATE TABLE sql_tutoring.`User` (
   UNIQUE INDEX idUser_UNIQUE (idUser ASC) VISIBLE,
   UNIQUE INDEX email_UNIQUE (email ASC) VISIBLE);
 
-INSERT INTO sql_tutoring.`User` (idUser, email, name, password, isAdmin) VALUES ('1', 'sdoaga69@yahoo.ro', 'Stefan', '04f5024a4b9a7e71223fd5093c8dc4989694b2ba6e703e7b7d6913062b4dc2a0', '1');
-
-INSERT INTO sql_tutoring.`User` (idUser, email, name, password, isAdmin) VALUES ('2', 'elev@gmail.com', 'Elev', '03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4', '0');
 
 
 CREATE TABLE `sql_tutoring`.`Question` (
@@ -74,3 +71,26 @@ CREATE TABLE `sql_tutoring`.`Question_Category` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION);
 
+INSERT INTO sql_tutoring.`User` (idUser, email, name, password, isAdmin) VALUES ('1', 'sdoaga69@yahoo.ro', 'Stefan', '04f5024a4b9a7e71223fd5093c8dc4989694b2ba6e703e7b7d6913062b4dc2a0', '1');
+INSERT INTO sql_tutoring.`User` (idUser, email, name, password, isAdmin) VALUES ('2', 'elev@gmail.com', 'Elev', '03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4', '0');
+
+INSERT INTO sql_tutoring.Category (type) VALUES ('SELECT');
+INSERT INTO sql_tutoring.Category (type) VALUES ('INSERT');
+INSERT INTO sql_tutoring.Category (type) VALUES ('UPDATE');
+INSERT INTO sql_tutoring.Category (type) VALUES ('DELETE');
+INSERT INTO sql_tutoring.Category (type) VALUES ('JOIN');
+INSERT INTO sql_tutoring.Category (type) VALUES ('INNER JOIN');
+INSERT INTO sql_tutoring.Category (type) VALUES ('LEFT JOIN');
+INSERT INTO sql_tutoring.Category (type) VALUES ('RIGHT JOIN');
+INSERT INTO sql_tutoring.Category (type) VALUES ('FULL OUTER JOIN');
+INSERT INTO sql_tutoring.Category (type) VALUES ('UNION');
+INSERT INTO sql_tutoring.Category (type) VALUES ('GROUP BY');
+INSERT INTO sql_tutoring.Category (type) VALUES ('HAVING');
+INSERT INTO sql_tutoring.Category (type) VALUES ('ORDER BY');
+INSERT INTO sql_tutoring.Category (type) VALUES ('WHERE');
+INSERT INTO sql_tutoring.Category (type) VALUES ('DISTINCT');
+INSERT INTO sql_tutoring.Category (type) VALUES ('AGGREGATE');
+INSERT INTO sql_tutoring.Category (type) VALUES ('SUBQUERY');
+INSERT INTO sql_tutoring.Category (type) VALUES ('LIKE');
+INSERT INTO sql_tutoring.Category (type) VALUES ('ALTER TABLE');
+INSERT INTO sql_tutoring.Category (type) VALUES ('CREATE TABLE');
