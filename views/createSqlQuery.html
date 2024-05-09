@@ -18,10 +18,10 @@
         <h1>Create your quizz</h1>
     </header>
     <main>
-        <form class="create-quiz-container" action="https://httpbin.org/get" method="get">
+        <form class="create-quiz-container" action="/createSqlQuery" method="post">
             <div id="left-form">
                 <label for="category">Category</label>
-                <select name="category" id="category" required multiple>
+                <select name="category" id="category" required multiple size="10">
                     <!--INSERT OPTIONS-->
              
                 </select>
@@ -37,14 +37,15 @@
                 <label for="hard">Hard</label>
             </div>
             <div id="centered-form">
-                <p><input id="quizz-question" type="text" name="quizz-question" placeholder="Question" required maxlength="150"></p>
-                <p><textarea id="answer-area" name="answer-area" required placeholder="Answer"></textarea></p>   
+                <p><input id="quizz-question" type="text" name="quizz_question" placeholder="Question" required maxlength="150"></p>
+                <p><textarea id="answer-area" name="answer_area" required placeholder="Answer"></textarea></p>   
                 <p>
                     <input type="file" id="input-json" accept=".json" style="display: none;">
                     <button id="import-button" type="button" onclick="document.getElementById('input-json').click()">Import</button>
                     <button id="submit-button" type="submit">Submit</button>
                 </p>
                 <a id="import-quizz-link" href="importQuizz" target="_blank">Example of import format</a>
+                <!-- STATUS MESSAGE -->
             </div>
         </form>
     </main>

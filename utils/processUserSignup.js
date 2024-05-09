@@ -26,6 +26,12 @@ function processUserSignup(req, res, htmlPath, filePath)
               {
                 const username = `${userData.username}`;
                 modifiedHTML = data.toString().replace('user', username);
+                
+                if(userData.isAdmin === 1)
+                {
+                    const createQueryButton = '<div class="navigation-button-div"><a class="navigation-button" href="createSqlQuery">Create Query</a></div>';
+                    modifiedHTML = modifiedHTML.replace('<!--CREATE SQL QUERY-->', createQueryButton);
+                }
                 res.end(modifiedHTML);
               }
         });
@@ -62,7 +68,7 @@ function handleUserSignup(req, res) {
                 const values = [formData.email, formData.name, hashedPassword, 0];
                 await dbConnection.query(query, values)
                 .then(([result]) => {
-                    let userData = new UserData(result.insertId, formData.name, formData.email);
+                    let userData = new UserData(result.insertId, formData.name, formData.email, 0);
                     console.log('Insert successful!');
                     resolve(userData);
                 })
