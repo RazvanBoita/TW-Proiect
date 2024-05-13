@@ -57,7 +57,7 @@ function handleIndexRequest(req, res)
                   }
                   else
                   {
-                    res.writeHead(301, {'Location': '/logIn'});
+                    res.writeHead(302, {'Location': '/logIn'});
                     res.end(data);
                   } 
               }

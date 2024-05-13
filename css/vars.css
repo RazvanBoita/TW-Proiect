@@ -9,6 +9,8 @@
     --main-color: rgb(37, 39, 62);
     --secondary-color: rgb(5, 127, 218);
     --accent-color: rgb(255, 243, 244);
+    --field-color: rgb(208, 214, 209);
+    --success-color: rgb(8, 212, 43);
     
     /* A se utiliza fonturi sans-serif pentru web */
     --font-family: sans-serif;
