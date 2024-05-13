@@ -13,19 +13,20 @@ async function deleteAllAnswers() {
 
 
 async function populateData() {
-    try {
-        await deleteAllAnswers()
+//         TO DO: Update the methods so it matches with the new tables
+//    try {
+//         await deleteAllAnswers()
 
-        console.log('Populating questions...');
-        await populateQuestions();
+//         console.log('Populating questions...');
+//         await populateQuestions();
 
-        console.log('Populating answers...');
-        await populateAnswers();
+//         console.log('Populating answers...');
+//         await populateAnswers();
 
-        console.log('Data population complete.');
-    } catch (error) {
-        console.error('Error populating data:', error.message);
-    }
+//        console.log('Data population complete.');
+//    } catch (error) {
+//        console.error('Error populating data:', error.message);
+//    }
 }
 
 populateData();

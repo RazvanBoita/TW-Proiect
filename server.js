@@ -1,9 +1,11 @@
 const http = require('http');
 const cookieHandler = require('./utils/cookieHandler');
-const fs = require('fs');
+const dotenv = require('dotenv');
 
 const { handleUnauthentificatedRequests } = require('./utils/handleUnauthentificatedRequests');
 const { handleAuthentificatedRequests } = require('./utils/handleAuthentificatedRequests');
+
+dotenv.config();
 
 const server = http.createServer((req, res) =>{
      // This function will handle requests that do not need authentification session!
@@ -24,5 +26,5 @@ const server = http.createServer((req, res) =>{
 
 });
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.SERVER_PORT;
 server.listen(PORT, ()=>console.log('Server running on port ' + PORT));

@@ -42,11 +42,17 @@ function handleIndexRequest(req, res)
                   if(cookieHandler.checkSessionId(req))
                   {
                     res.writeHead(200, { 'Content-Type': 'text/html' });
-                    // Get data from cookie so we can display the username
-                    const rawCookie = cookieHandler.getRawCookie(req, 'sessionId=');
-                    const userData = cookieHandler.sessions.get(rawCookie);
+                    // Get user data from cookie so we can display the username
+                    const userData = cookieHandler.getUserData(req);
                     const username = userData.username;
                     modifiedHTML = data.toString().replace('user', username);
+
+                    if(userData.isAdmin === 1)
+                    {
+                        const createQueryButton = '<div class="navigation-button-div"><a class="navigation-button" href="createSqlQuery">Create Query</a></div>';
+                        modifiedHTML = modifiedHTML.replace('<!--CREATE SQL QUERY-->', createQueryButton);
+                    }
+
                     res.end(modifiedHTML);
                   }
                   else

@@ -1,23 +1,33 @@
 const fs = require('fs');
+
 const cookieHandler = require('../utils/cookieHandler');
+const {displayPage} = require('../utils/createSqlQueryUtils/displayCreateSqlQueryPage');
+const {processCreateSqlQuery} = require('../utils/createSqlQueryUtils/processCreateSqlQuery')
+
 function handleSqlQueryRequest(req, res)
 {
+    let filePath = './views/createSqlQuery.html';
     switch(req.method)
     {
         case "GET":
-            let filePath = './views/createSqlQuery.html';
-            fs.readFile(filePath, (err, data) => {
-                if (err) {
-                    console.log(err);
-                    res.writeHead(500);
-                    res.end();
-                } else {
-                    res.writeHead(200, { 'Content-Type': 'text/html' });
-                    res.end(data);
-                }
-            });
+            if(cookieHandler.isUserAdmin(req))
+                displayPage(req, res, filePath);     
+            else
+                redirectUserToMenu(req, res);
+
         break;
+        case "POST":
+            processCreateSqlQuery(req, res, filePath);
+        break;
+
     }
 }
-
+function redirectUserToMenu(req, res)
+{
+    let filePath = './views/index.html';
+    fs.readFile(filePath, (err, data) => {
+        res.writeHead(302, { 'Location': '/' });
+        res.end(data);
+    });
+}
 module.exports = {handleSqlQueryRequest}

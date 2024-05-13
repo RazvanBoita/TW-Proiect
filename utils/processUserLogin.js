@@ -26,6 +26,11 @@ function processUserLogin(req, res, htmlPath, filePath)
               {
                 const username = `${userData.username}`;
                 modifiedHTML = data.toString().replace('user', username);
+                if(userData.isAdmin === 1)
+                {
+                    const createQueryButton = '<div class="navigation-button-div"><a class="navigation-button" href="createSqlQuery">Create Query</a></div>';
+                    modifiedHTML = modifiedHTML.replace('<!--CREATE SQL QUERY-->', createQueryButton);
+                }
                 res.end(modifiedHTML);
               }
         });
@@ -48,7 +53,7 @@ function handleUserLogin(req, res) {
         let formData = qs.parse(body);
         
         try {
-          const results = await dbConnection.query('SELECT * FROM users WHERE email = ?', formData.email);
+          const results = await dbConnection.query('SELECT * FROM User WHERE email = ?', formData.email);
           if (results[0].length === 0) {
             reject('logIn.html');
           } else {
@@ -59,7 +64,7 @@ function handleUserLogin(req, res) {
             }
             else
             {
-              let userData = new UserData(results[0][0].idUser, results[0][0].name, results[0][0].email);
+              let userData = new UserData(results[0][0].idUser, results[0][0].name, results[0][0].email, results[0][0].isAdmin);
               resolve(userData);
             }
           }
