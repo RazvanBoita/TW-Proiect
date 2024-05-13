@@ -16,7 +16,6 @@ function checkSessionId(req)
     const rawCookie = getRawCookie(req, 'sessionId=');
     if(!sessions.has(rawCookie))
     {
-        console.log(rawCookie);
         return false;
     }
     // ok, cookie is valid
@@ -31,9 +30,23 @@ function getRawCookie(req, cookieName)
     return cookie === '' ? cookie : cookie.split(cookieName)[1].trim();
 }
 
+function getUserData(req)
+{
+    const rawCookie = getRawCookie(req, 'sessionId=');
+    return sessions.get(rawCookie);
+}
+
+function isUserAdmin(req)
+{
+    const userData = getUserData(req);
+    return userData.isAdmin === 1 ? true : false;
+}
+
 module.exports = {
     generateSessionId,
     checkSessionId,
     getRawCookie,
+    getUserData,
+    isUserAdmin,
     sessions
 }

@@ -161,3 +161,13 @@ option{
     font-weight: 600;
     text-decoration-line: none;
 }
+#success-message{
+    color: var(--secondary-color);
+    font-family: var(--font-family);
+    visibility: visible;
+}
+#error-message{
+    color: var(--secondary-color);
+    font-family: var(--font-family);
+    visibility: visible;
+}

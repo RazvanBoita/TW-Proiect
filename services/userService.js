@@ -8,7 +8,7 @@ class UserService{
     static async addUser(email, name, password, isAdmin){
         try {
             await dbConnection.query(
-                'INSERT INTO users (email, name, password, isAdmin) VALUES (?, ?, ?, ?)',
+                'INSERT INTO User (email, name, password, isAdmin) VALUES (?, ?, ?, ?)',
                 [email, name, password, isAdmin]
             );
             console.log('User inserted successfully:');

@@ -26,6 +26,12 @@ function processUserSignup(req, res, htmlPath, filePath)
               {
                 const username = `${userData.username}`;
                 modifiedHTML = data.toString().replace('user', username);
+                
+                if(userData.isAdmin === 1)
+                {
+                    const createQueryButton = '<div class="navigation-button-div"><a class="navigation-button" href="createSqlQuery">Create Query</a></div>';
+                    modifiedHTML = modifiedHTML.replace('<!--CREATE SQL QUERY-->', createQueryButton);
+                }
                 res.end(modifiedHTML);
               }
         });
@@ -33,7 +39,7 @@ function processUserSignup(req, res, htmlPath, filePath)
     .catch((url) => {
         console.log('Catch', url);
         filePath = htmlPath + url;
-        res.writeHead(301, {'Location': '/signUp'});
+        res.writeHead(302, {'Location': '/signUp'});
         res.end();
     });
 }
@@ -49,7 +55,7 @@ function handleUserSignup(req, res) {
         
         try 
         {
-            const selectResult = await dbConnection.query('SELECT * FROM users WHERE email = ?', formData.email);
+            const selectResult = await dbConnection.query('SELECT * FROM User WHERE email = ?', formData.email);
             if (selectResult[0].length !== 0) {
                 // User already exists!
                 console.log('User already exists!');
@@ -58,11 +64,11 @@ function handleUserSignup(req, res) {
             else 
             {
                 const hashedPassword = crypto.createHash('sha256').update(formData.password).digest('hex');
-                const query = 'INSERT INTO users (email, name, password, isAdmin) VALUES (?, ?, ?, ?)';
+                const query = 'INSERT INTO User (email, name, password, isAdmin) VALUES (?, ?, ?, ?)';
                 const values = [formData.email, formData.name, hashedPassword, 0];
                 await dbConnection.query(query, values)
                 .then(([result]) => {
-                    let userData = new UserData(result.insertId, formData.name, formData.email);
+                    let userData = new UserData(result.insertId, formData.name, formData.email, 0);
                     console.log('Insert successful!');
                     resolve(userData);
                 })

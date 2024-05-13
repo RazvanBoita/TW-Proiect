@@ -2,7 +2,7 @@ const dbConnection = require('../config/database'); // assuming dbConnection.js 
 
 async function printAllData() {
     try {
-        const [users, userFields] = await dbConnection.query('SELECT * FROM users');
+        const [users, userFields] = await dbConnection.query('SELECT * FROM User');
         console.log('Users:');
         console.table(users);
     } catch (error) {
