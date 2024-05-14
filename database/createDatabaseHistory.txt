@@ -1,0 +1,96 @@
+
+CREATE SCHEMA sql_tutoring;
+
+CREATE TABLE sql_tutoring.`User` (
+  idUser INT NOT NULL AUTO_INCREMENT,
+  email VARCHAR(45) NOT NULL,
+  name VARCHAR(45) NOT NULL,
+  password VARCHAR(64) NOT NULL,
+  isAdmin TINYINT NULL DEFAULT 0,
+  PRIMARY KEY (idUser, email),
+  UNIQUE INDEX idUser_UNIQUE (idUser ASC) VISIBLE,
+  UNIQUE INDEX email_UNIQUE (email ASC) VISIBLE);
+
+
+
+CREATE TABLE `sql_tutoring`.`Question` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `title` VARCHAR(200) NOT NULL,
+  `difficulty` VARCHAR(10) NOT NULL,
+  `hint` VARCHAR(45) NULL,
+  `answer` TEXT NOT NULL,
+  `counter` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
+  UNIQUE INDEX `title_UNIQUE` (`title` ASC) VISIBLE);
+
+
+CREATE TABLE `sql_tutoring`.`Comment` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `idQuestion` INT NOT NULL,
+  `idUser` INT NOT NULL,
+  `parentId` INT NOT NULL DEFAULT -1,
+  `description` TEXT NOT NULL,
+  `createdAt` DATE NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
+  INDEX `idQuestion_idx` (`idQuestion` ASC) VISIBLE,
+  INDEX `idUser_idx` (`idUser` ASC) VISIBLE,
+  CONSTRAINT `fk_idQuestion`
+  FOREIGN KEY (`idQuestion`)
+  REFERENCES `sql_tutoring`.`Question` (`id`),
+  CONSTRAINT `fk_idUser`
+  FOREIGN KEY (`idUser`)
+  REFERENCES `sql_tutoring`.`User` (`idUser`)
+  ON DELETE NO ACTION
+  ON UPDATE NO ACTION);
+
+CREATE TABLE `sql_tutoring`.`Category` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `type` VARCHAR(20) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
+  UNIQUE INDEX `type_UNIQUE` (`type` ASC) VISIBLE);
+
+CREATE TABLE `sql_tutoring`.`Question_Category` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `idQuestion` INT NOT NULL,
+  `idCategory` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
+  INDEX `fk_idQuestion_idx` (`idQuestion` ASC) VISIBLE,
+  INDEX `fk_idCategory_idx` (`idCategory` ASC) VISIBLE,
+  CONSTRAINT `fk_idQuestion_Category`
+    FOREIGN KEY (`idQuestion`)
+    REFERENCES `sql_tutoring`.`Question` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_idCategory`
+    FOREIGN KEY (`idCategory`)
+    REFERENCES `sql_tutoring`.`Category` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
+
+INSERT INTO sql_tutoring.`User` (idUser, email, name, password, isAdmin) VALUES ('1', 'sdoaga69@yahoo.ro', 'Stefan', '04f5024a4b9a7e71223fd5093c8dc4989694b2ba6e703e7b7d6913062b4dc2a0', '1');
+INSERT INTO sql_tutoring.`User` (idUser, email, name, password, isAdmin) VALUES ('2', 'elev@gmail.com', 'Elev', '03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4', '0');
+
+INSERT INTO sql_tutoring.Category (type) VALUES ('SELECT');
+INSERT INTO sql_tutoring.Category (type) VALUES ('INSERT');
+INSERT INTO sql_tutoring.Category (type) VALUES ('UPDATE');
+INSERT INTO sql_tutoring.Category (type) VALUES ('DELETE');
+INSERT INTO sql_tutoring.Category (type) VALUES ('JOIN');
+INSERT INTO sql_tutoring.Category (type) VALUES ('INNER JOIN');
+INSERT INTO sql_tutoring.Category (type) VALUES ('LEFT JOIN');
+INSERT INTO sql_tutoring.Category (type) VALUES ('RIGHT JOIN');
+INSERT INTO sql_tutoring.Category (type) VALUES ('FULL OUTER JOIN');
+INSERT INTO sql_tutoring.Category (type) VALUES ('UNION');
+INSERT INTO sql_tutoring.Category (type) VALUES ('GROUP BY');
+INSERT INTO sql_tutoring.Category (type) VALUES ('HAVING');
+INSERT INTO sql_tutoring.Category (type) VALUES ('ORDER BY');
+INSERT INTO sql_tutoring.Category (type) VALUES ('WHERE');
+INSERT INTO sql_tutoring.Category (type) VALUES ('DISTINCT');
+INSERT INTO sql_tutoring.Category (type) VALUES ('AGGREGATE');
+INSERT INTO sql_tutoring.Category (type) VALUES ('SUBQUERY');
+INSERT INTO sql_tutoring.Category (type) VALUES ('LIKE');
+INSERT INTO sql_tutoring.Category (type) VALUES ('ALTER TABLE');
+INSERT INTO sql_tutoring.Category (type) VALUES ('CREATE TABLE');
