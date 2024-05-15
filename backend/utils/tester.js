@@ -1,18 +1,20 @@
-const QuizService = require('../services/quizService')
-const AnswerService = require('../services/answerService')
-const UserService = require('../services/userService')
+const handlebars = require('handlebars');
+const fs = require('fs');
+const path = require('path');
+const { log } = require('console');
 
-// QuizService.insert(5, "Ce faci?", "Ce mai faci", "INSERT")
-// QuizService.delete(5)
 
-// AnswerService.insert(3, "Binisor")
-// const id = 32
-// AnswerService.exists(id).then(result => {
-//     if(result){
-//         AnswerService.delete(id)
-//     } else{
-//         console.log("The answer doesnt exist...");
-//     }
-// })
+const templateData = {
+    cssPath: path.join(__dirname, '../../frontend/css/menu.css'), // Path to your CSS file
+};
 
-UserService.add("razvan@email.com", "Razvan", "Parola", 0)
+
+
+const templatePath = path.join(__dirname, '../../templates/index.hbs');
+const templateSource = fs.readFileSync(templatePath, 'utf8')
+
+const template = handlebars.compile(templateSource) 
+
+const renderedHTML = template(templateData)
+
+console.log(renderedHTML);

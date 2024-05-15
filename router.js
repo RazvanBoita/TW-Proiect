@@ -1,4 +1,7 @@
+const fs = require('fs');
+const path = require('path');
 const url = require('url');
+const handlebars = require('handlebars');
 
 const routes = {};
 const middlewares = [];

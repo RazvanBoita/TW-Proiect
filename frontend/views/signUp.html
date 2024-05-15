@@ -6,37 +6,43 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/logIn.css" type="text/css">
-    <title>Sign Up</title>
+    <title>Log In</title>
 </head>
 <body>
-    <div class="container">
-        <div class="sign-in">
-            <header>  
-                <h2 class="sub-title">Sign Up</h2>
-            </header>
-            <br>
-            <br>
-            
-            <main>
-                <form action="/" method="post">
+    <main class="container">
+            <div class="content">
+                <div class="logo">
+                    <img src="../img/liliac.png" alt="" class="logo-img">
+                </div>
+                <div class="fields">
+                    <header class="main-title">Join SQL Tutoring!</header>
+                    <form action="/" method="post" class="form-fields">
                         <div class="form-group">
-                            <input type="text" id="name" name="name" placeholder="Name" required>
+                            <ion-icon name="person-outline"></ion-icon>
+                            <input type="email" id="email" name="email" placeholder="Username" required>
                         </div>
                         <div class="form-group">
+                            <ion-icon name="mail-outline"></ion-icon>
                             <input type="email" id="email" name="email" placeholder="Email" required>
                         </div>
                         <div class="form-group">
+                            <ion-icon name="lock-closed-outline"></ion-icon>
                             <input type="password" id="password" name="password" placeholder="Password" required>
                         </div>
-                        <button type="submit" class="submit-button">Create Account</button>
-                </form>
-            </main>
-            <footer>
-                <p class="log-in-footer">Already have an accout?<a id="log-in-link" href="logIn"> Log in</a></p>
-                <!-- ERROR_MESSAGE -->
-            </footer>
-        </div>
-    </div>
-
+                        <div class="form-group">
+                            <ion-icon name="lock-closed-outline"></ion-icon>
+                            <input type="password" id="password" name="password" placeholder="Confirm password" required>
+                        </div>
+                        <button type="submit" class="submit-button" style="margin-bottom: .25rem;">Sign up</button>
+                        <div class="bottom-link-wrapper">
+                            <ion-icon name="return-down-forward-outline"></ion-icon>
+                            <a href="./logIn.html" class="bottom-link">Already got an account?</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+    </main>
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 </body>
 </html>

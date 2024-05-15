@@ -34,6 +34,7 @@ h2{
 .navigation-button:hover{
     color: var(--secondary-color);
 }
+
 .navigation-button-div{
     flex-basis: 25vw;
 }

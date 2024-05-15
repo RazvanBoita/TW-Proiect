@@ -1,64 +1,29 @@
-// backend/routes/indexHandler.js
 const fs = require('fs');
 const path = require('path');
+const handlebars = require('handlebars');
+
+const templatePath = path.join(__dirname, '../../templates/index.hbs');
 
 class IndexHandler {
-    static getHTML(req, res) {
-        const indexPath = path.join(__dirname, '../../frontend/views/index.html');
-        const cssPath = path.join(__dirname, '../../frontend/css/menu.css');
-        const varsCssPath = path.join(__dirname, '../../frontend/css/vars.css');
+    static get(req, res) {
+        try {
+            const templateSource = fs.readFileSync(templatePath, 'utf8');
+            const template = handlebars.compile(templateSource);
 
-        fs.readFile(indexPath, 'utf8', (err, htmlData) => {
-            if (err) {
-                res.statusCode = 500;
-                res.setHeader('Content-Type', 'text/plain');
-                res.end('Internal Server Error');
-                return;
-            }
+            const templateData = {
+                cssPath: '/menu.css',
+                titlu: 'SALUT'
+            };
 
-            fs.readFile(cssPath, 'utf8', (err, cssData) => {
-                if (err) {
-                    res.statusCode = 500;
-                    res.setHeader('Content-Type', 'text/plain');
-                    res.end('Internal Server Error');
-                    return;
-                }
+            const renderedHtml = template(templateData);
 
-                fs.readFile(varsCssPath, 'utf8', (err, varsCssData) => {
-                    if (err) {
-                        res.statusCode = 500;
-                        res.setHeader('Content-Type', 'text/plain');
-                        res.end('Internal Server Error');
-                        return;
-                    }
-
-                    // Combine HTML and CSS content
-                    let combinedHTML = htmlData.replace('</head>', `<style>${varsCssData}${cssData}</style></head>`);
-
-                    // Serve images by replacing their paths in HTML content
-                    const imagesDirPath = path.join(__dirname, '../../frontend/img');
-                    fs.readdir(imagesDirPath, (err, files) => {
-                        if (err) {
-                            console.error('Error reading images directory:', err);
-                            res.statusCode = 500;
-                            res.setHeader('Content-Type', 'text/plain');
-                            res.end('Internal Server Error');
-                            return;
-                        }
-
-                        files.forEach(file => {
-                            const imagePath = path.join(imagesDirPath, file);
-                            combinedHTML = combinedHTML.replace(`src="${file}"`, `src="${imagePath}"`);
-                        });
-
-                        // Send the combined HTML content as the response
-                        res.statusCode = 200;
-                        res.setHeader('Content-Type', 'text/html');
-                        res.end(combinedHTML);
-                    });
-                });
-            });
-        });
+            res.writeHead(200, { 'Content-Type': 'text/html' });
+            res.end(renderedHtml);
+        } catch (err) {
+            console.error(err);
+            res.writeHead(500);
+            res.end('Server error');
+        }
     }
 }
 

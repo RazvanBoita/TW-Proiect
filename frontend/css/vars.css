@@ -10,7 +10,7 @@
     --secondary-color: rgb(5, 127, 218);
     --accent-color: rgb(255, 243, 244);
     --field-color: rgb(208, 214, 209);
-    --success-color: rgb(8, 212, 43);
+    --button-color: rgb(174, 92, 189);
     
     /* A se utiliza fonturi sans-serif pentru web */
     --font-family: sans-serif;
@@ -20,7 +20,7 @@ body{
     margin: 0;
     padding: 0;
     background-color: var(--body-color);
-    background-image: url('../img/first.png');
+    background-image: url('../img/bg.png');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
