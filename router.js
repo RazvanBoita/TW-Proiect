@@ -1,7 +1,5 @@
-const fs = require('fs');
-const path = require('path');
 const url = require('url');
-const handlebars = require('handlebars');
+const Loader = require('./backend/loaders/Loader');
 
 const routes = {};
 const middlewares = [];
@@ -36,9 +34,7 @@ const handleRequest = (req, res) => {
                 handler(req, res);
             }
         } else {
-            res.statusCode = 404;
-            res.setHeader('Content-Type', 'text/plain');
-            res.end('Not Found');
+            Loader.loadHTML(req, res, 'notFound.html', 404);
         }
     };
 

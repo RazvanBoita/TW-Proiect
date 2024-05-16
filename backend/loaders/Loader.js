@@ -3,6 +3,7 @@ const path = require('path')
 const cssPath = path.join(__dirname, '../../frontend/css/');
 const viewsPath = path.join(__dirname, '../../frontend/views/');
 const imagePath = path.join(__dirname, '../../frontend/img/')
+const jsPath = path.join(__dirname, '../../frontend/js/');
 
 class Loader{
     static loadCSS(req, res, concatPath) {
@@ -19,9 +20,32 @@ class Loader{
         });
     }
 
-    static async loadHTML(concatPath){
+    static loadHTML(req, res, concatPath, statusCode = 200){
         const filePath = viewsPath.concat(concatPath)
-        return fs.readFile(filePath, 'utf-8');
+        fs.readFile(filePath, (err, data) => {
+            if (err) {
+                console.log(err);
+                res.writeHead(500);
+                res.end();
+            } else {
+                res.writeHead(statusCode, { 'Content-Type': 'text/html' });
+                res.end(data);
+            }
+        });
+    }
+    static redirect(req, res, concatPath, redirectUrl)
+    {
+        const filePath = viewsPath.concat(concatPath)
+        fs.readFile(filePath, (err, data) => {
+            if (err) {
+                console.log(err);
+                res.writeHead(500);
+                res.end();
+            } else {
+                res.writeHead(302, { 'Location': `${redirectUrl}` });
+                res.end(data);
+            }
+        });
     }
 
     static loadImage(req, res, concatPath) {
@@ -33,6 +57,20 @@ class Loader{
                 res.end();
             } else {
                 res.writeHead(200, { 'Content-Type': 'image/png' });
+                res.end(data);
+            }
+        });
+    }
+    static loadJs(req, res, concatPath)
+    {
+        const filePath = jsPath.concat(concatPath)
+        fs.readFile(filePath, (err, data) => {
+            if (err) {
+                console.log(err);
+                res.writeHead(500);
+                res.end();
+            } else {
+                res.writeHead(200, { 'Content-Type': 'text/js' });
                 res.end(data);
             }
         });

@@ -14,10 +14,22 @@ class UserService{
             console.log('User inserted successfully:');
         } catch (error) {
             console.error('Error inserting user:', error.message);
-        } finally{
-            dbConnection.end()
         }
+    }
+    static async getUser(email)
+    {
+        try {
+            const result = await dbConnection.query(
+                'SELECT * FROM User WHERE email = ?', email
+            );
+            return result;
+
+        } catch (error) {
+            console.error('Error selecting user:', error.message);
+        }
+
+        return null;
     }
 }
 
-module.exports = new UserService()
+module.exports = UserService;
