@@ -1,0 +1,8 @@
+@import './vars.css';
+
+h1{
+    text-align: center;
+    font-family: var(--font-family);
+    color: var(--secondary-color);
+    font-size: 5vw;
+}

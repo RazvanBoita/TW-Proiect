@@ -1,0 +1,143 @@
+@import './vars.css';
+
+
+body{
+    background-color: var(--body-color);
+    /* background: linear-gradient(135deg, #c0c0aa, #1cefff); */
+    display: flex;
+    justify-content: center;
+    font-family: var(--font-family);
+}
+
+.container{
+    /* background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d); */
+    background-color: var(--body-color);
+    margin: 0 auto;
+    border-radius: 2rem;
+    width: 60%;
+    height: 70vh;
+    display: flex;
+    align-items: center;
+}
+
+.main-title{
+    font-size: 2rem;
+    color: var(--accent-color);
+    font-weight: bold;
+    text-decoration:underline;
+    text-shadow: 1px 2px var(--button-color);
+}
+
+.logo-img{
+    width: 85%;
+}
+
+.content{
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.fields{
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+    margin: .75rem;
+}
+
+.form-fields{
+    display: flex;
+    flex-direction: column;
+    gap: .75rem;
+}
+
+.form-group{
+    background: var(--field-color);
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    padding: .3rem .5rem;
+    border-radius: 1rem;
+}
+
+.form-group input{
+    background: inherit;
+    border: none;
+    outline: none;
+    padding: .25rem;
+    color: var(--main-color);
+    font-weight: 600;
+    font-size: .9rem;
+}
+
+.submit-button{
+    background-color: var(--button-color);
+    color: var(--accent-color);
+    padding: .5rem;
+    border: none;
+    border-radius: 1rem;
+    font-weight: 700;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.submit-button:hover{
+    color: var(--button-color);
+    background: var(--accent-color);
+    transition: .8s;
+}
+
+.bottom-link{
+    text-decoration: none;
+    color: var(--field-color);
+    font-weight: 700;
+    font-size: .9rem;
+    cursor: pointer;
+}
+
+.bottom-link-wrapper *{
+    color: white;
+}
+
+.bottom-link:hover{
+    color: lightblue;
+    transition: .3s;
+}
+
+input{
+    max-width: 70%;
+}
+
+
+@media (max-width: 880px){
+    .container{
+        width: 70%;
+    }
+    .logo-img{
+        display: none;
+    }
+    .content{
+        justify-content: center;
+    }
+    .fields{
+        width: 70%;
+        margin: 0;
+        gap: 3rem;
+    }
+    .form-fields{
+        gap: 1.25rem;
+    }
+}
+
+@media (max-width: 515px){
+    .container{
+        width: 80%;
+    }
+    .main-title{
+        text-align: center;
+    }
+    .fields{
+        margin: 0;
+    }
+}

@@ -1,30 +1,21 @@
 const http = require('http');
-const cookieHandler = require('./utils/cookieHandler');
 const dotenv = require('dotenv');
-
-const { handleUnauthentificatedRequests } = require('./utils/handleUnauthentificatedRequests');
-const { handleAuthentificatedRequests } = require('./utils/handleAuthentificatedRequests');
+const { handleRequest } = require('./router')
+const routeCss = require('./backend/routes/cssRouter');
+const routeImgs = require('./backend/routes/imgRouter');
+const routeHtml = require('./backend/routes/htmlRouter');
+const routeJs = require('./backend/routes/jsRouter');
 
 dotenv.config();
 
-const server = http.createServer((req, res) =>{
-     // This function will handle requests that do not need authentification session!
-    if(handleUnauthentificatedRequests(req, res))
-    {
-        return;
-    }
-    // Verify if the cookie is valid
-    if(!cookieHandler.checkSessionId(req))
-    {
-        // Cookie is not valid, redirect to login page
-        res.writeHead(302, {'Location': '/logIn'});
-        res.end();
-        return;  
-    }
-    // This function will handle requests that need the user to be logged in
-    handleAuthentificatedRequests(req, res);
+//Routes
+routeCss()
+routeImgs()
+routeHtml();
+routeJs();
 
-});
+
+const server = http.createServer(handleRequest);
 
 const PORT = process.env.SERVER_PORT;
-server.listen(PORT, ()=>console.log('Server running on port ' + PORT));
+server.listen(PORT, ()=>console.log('Server: ' + `http://localhost:${process.env.SERVER_PORT}`));
