@@ -2,13 +2,12 @@ const {addRoute, use} = require('../../router');
 const Loader = require('../loaders/Loader');
 const checkCredentialsExist = require('../utils/middleWare/checkUser');
 const checkSession = require('../utils/middleWare/checkSession');
-const bodyParser = require('../utils/middleWare/bodyParser');
 const signUp = require('../services/signUpService');
 
-//! folosim parser ul pt body
-// use(bodyParser)
+
 
 function routeHtml(){
+
     addRoute('GET', '/', (req, res) => {
         Loader.loadHTML(req, res, 'index.html')
     }, checkSession); 
@@ -39,7 +38,6 @@ function routeHtml(){
     addRoute('GET', '/login', (req, res) => {
         Loader.loadHTML(req, res, 'logIn.html')
     });
-
 
     addRoute('POST', '/login', (req, res) => {
         Loader.redirect(req, res, 'index.html', '/')
