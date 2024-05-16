@@ -7,6 +7,9 @@ function routeJs(){
         Loader.loadJs(req, res, 'login.js')
     }); 
     
+    addRoute('GET', '/js/ButtonHandler.js', (req, res) => {
+        Loader.loadJs(req, res, 'ButtonHandler.js')
+    })
     
 }
 

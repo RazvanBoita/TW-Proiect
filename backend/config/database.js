@@ -12,7 +12,7 @@ const dbConnection = createConnection({
 dbConnection.connect(function(err){
     if(err)
         throw err;
-    console.log("Connection successful!");
+    console.log("Connection to database successful!");
 })
 
 module.exports = dbConnection.promise();

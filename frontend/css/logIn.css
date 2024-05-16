@@ -109,6 +109,26 @@ input{
     max-width: 70%;
 }
 
+.input-error {
+    border: 2px solid red;
+    animation: bounce 0.3s ease-in-out;
+}
+
+@keyframes bounce {
+    0%, 100% {
+        transform: translateX(0);
+    }
+    25% {
+        transform: translateX(-10px);
+    }
+    50% {
+        transform: translateX(10px);
+    }
+    75% {
+        transform: translateX(-5px);
+    }
+}
+
 
 @media (max-width: 880px){
     .container{
@@ -133,6 +153,7 @@ input{
 @media (max-width: 515px){
     .container{
         width: 80%;
+        min-height: 90vh;
     }
     .main-title{
         text-align: center;

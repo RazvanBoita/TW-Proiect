@@ -1,0 +1,29 @@
+@import './vars.css';
+
+.container{
+    text-align: center;
+    margin: 0 auto;
+    margin-top: 25vh;
+}
+
+.message {
+    font-size: 3.2rem;
+    margin-bottom: 20px;
+    color: var(--accent-color);
+    font-weight: 700;
+}
+.button {
+    padding: 15px 30px;
+    background-color: #007bff;
+    color: var(--accent-color);
+    border: none;
+    border-radius: .25rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    font-size: 1.25rem;
+    font-weight: 600;
+    box-shadow: 1px 2px 5px var(--accent-color);
+}
+.button:hover {
+    background-color: #0056b3;
+}
