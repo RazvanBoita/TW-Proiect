@@ -12,6 +12,7 @@ const SignUpService = require('../services/signUpService');
 const AdminPrivilages = require('../utils/adminPrivilages');
 const CategoryService = require('../services/categoryService');
 const QuestionService = require('../services/questionService');
+
 function routeHtml(){
 
     addRoute('GET', '/signup', (req, res) => {
