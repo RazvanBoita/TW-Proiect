@@ -1,9 +1,11 @@
 const fs = require('fs');
 const path = require('path')
+const handlebars = require('handlebars')
 const cssPath = path.join(__dirname, '../../frontend/css/');
 const viewsPath = path.join(__dirname, '../../frontend/views/');
 const imagePath = path.join(__dirname, '../../frontend/img/')
 const jsPath = path.join(__dirname, '../../frontend/js/');
+const templatePath = path.join(__dirname, '../../templates/')
 
 class Loader{
     static loadCSS(req, res, concatPath) {
@@ -33,6 +35,21 @@ class Loader{
             }
         });
     }
+    static loadTemplateEngineHTML(req, res, concatPath, data, statusCode = 200){
+        const filePath = templatePath.concat(concatPath);
+        fs.readFile(filePath, 'utf8', (err, fileData) => {
+            if (err) {
+                console.log(err);
+                res.writeHead(500);
+                res.end();
+            } else {
+                const template = handlebars.compile(fileData);
+                const html = template(data);
+                res.writeHead(statusCode, { 'Content-Type': 'text/html' });
+                res.end(html);
+            }
+        });
+    };
     static redirect(req, res, concatPath, redirectUrl)
     {
         const filePath = viewsPath.concat(concatPath)
@@ -70,7 +87,7 @@ class Loader{
                 res.writeHead(500);
                 res.end();
             } else {
-                res.writeHead(200, { 'Content-Type': 'text/js' });
+                res.writeHead(200, { 'Content-Type': 'application/javascript' });
                 res.end(data);
             }
         });

@@ -17,6 +17,10 @@ function routeCss(){
     addRoute('GET', '/css/forbidden.css', (req, res)=>{
         Loader.loadCSS(req, res, 'forbidden.css')
     })
+
+    addRoute('GET', '/css/intermediary.css', (req, res) => {
+        Loader.loadCSS(req, res, 'intermediary.css')
+    })
     
 }
 
