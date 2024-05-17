@@ -1,9 +1,8 @@
-const {addRoute, use} = require('../../router');
+const {addRoute} = require('../../router');
 const Loader = require('../loaders/Loader');
 const checkCredentialsExist = require('../utils/middleWare/checkUser');
 const checkSession = require('../utils/middleWare/checkSession');
 const signUp = require('../services/signUpService');
-
 
 
 function routeHtml(){
