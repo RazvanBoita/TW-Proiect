@@ -2,9 +2,7 @@ const {addRoute} = require('../../router');
 const Loader = require('../loaders/Loader');
 const checkCredentialsExist = require('../utils/middleWare/checkUser');
 const checkSession = require('../utils/middleWare/checkSession');
-const signUp = require('../services/signUpService');
-
-
+const SignUpService = require('../services/signUpService')
 function routeHtml(){
 
     addRoute('GET', '/', (req, res) => {
@@ -18,7 +16,7 @@ function routeHtml(){
     addRoute('GET', '/verifyEmail', (req, res) => {
         const data = {
             title: 'Verify Email',
-            message: `Proceed verifying your email!`,
+            message: `Email verification sent!`,
             buttonLabel: 'All done?',
             destination: '/login'
         };
@@ -27,11 +25,7 @@ function routeHtml(){
 
     addRoute('POST', '/signup', (req, res) => {
         //process signup ig
-        const resCode = signUp(req, res)
-        if(resCode==200){
-            res.writeHead(302, { 'Location': '/verifyEmail' });
-            res.end();        
-        }
+        SignUpService.signUp(req, res)
     })
     
     addRoute('GET', '/login', (req, res) => {
@@ -42,6 +36,26 @@ function routeHtml(){
         Loader.redirect(req, res, 'index.html', '/')
     }, checkCredentialsExist);
 
+    addRoute('GET', '/signup/verify', (req, res) => {
+        SignUpService.verifyEmail(req, res)
+    })
+    addRoute('GET', '/signup/verify', async (req, res) => {
+
+        const result = await SignUpService.verifyEmail(req, res)
+        
+        const code = result.code
+        const message = result.message
+        const label = result.label
+        const destination = result.destination
+
+        const data = {
+            title: 'Email verification',
+            message: message,
+            buttonLabel: label,
+            destination: destination
+        }
+        Loader.loadTemplateEngineHTML(req, res, 'intermediary.hbs', data)
+    })
 }
 
 module.exports = routeHtml
