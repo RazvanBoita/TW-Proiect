@@ -1,9 +1,4 @@
-const { use } = require("../../router");
 const Loader = require("../loaders/Loader");
-const bodyParser = require("../utils/middleWare/bodyParser");
-
-use(bodyParser)
-
 
 function signUp(req, res){
     console.log(req.body);

@@ -28,20 +28,20 @@ const checkCredentialsExist = async (req, res, next) => {
             }
             
             // If the result length is 0, it means the query did not find the user
-            if (result[0].length === 0)
+            if (result.length === 0)
             {
                 res.writeHead(401, { 'Content-Type': 'application/json' });
                 return res.end(JSON.stringify({ error: 'Invalid credentials' }));
             }
 
             const hashedPassword = crypto.createHash('sha256').update(password).digest('hex');
-            if(hashedPassword !== result[0][0].password)
+            if(hashedPassword !== result[0].password)
             {
                 res.writeHead(401, { 'Content-Type': 'application/json' });
                 return res.end(JSON.stringify({ error: 'Forbidden!' }));
             }
             
-            const userData = new UserData(result[0][0].idUser, result[0][0].name, result[0][0].email, result[0][0].isAdmin);
+            const userData = new UserData(result[0].idUser, result[0].name, result[0].email, result[0].isAdmin);
             const sessionId = cookieHandler.generateSessionId();
             cookieHandler.sessions.set(sessionId, userData);
             res.setHeader('Set-Cookie', 'sessionId=' + sessionId + '; HttpOnly; Max-Age:86400');  //1 day cookie session
