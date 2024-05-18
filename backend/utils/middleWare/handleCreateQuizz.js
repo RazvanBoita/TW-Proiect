@@ -14,7 +14,11 @@ const handleCreateQuizz =  async (req, res, next) => {
         
         try 
         {
+<<<<<<< HEAD
             const questionData = await QuestionService.insertQuestion(formData.quizz_question, formData.difficulty, formData.answer_area, formData.description_area);
+=======
+            const questionData = await QuestionService.insertQuestion(formData.quizz_question, formData.difficulty, formData.answer_area);
+>>>>>>> 1f479ca (Added create quizz logic)
             // Error at inserting question into db
             if(questionData === null)
             {
