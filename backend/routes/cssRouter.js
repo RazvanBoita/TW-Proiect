@@ -31,7 +31,10 @@ function routeCss(){
     })
 
     addRoute('GET', '/frontend/css/vars.css', (req, res) => {
-        Loader.loadCSS(req, res, 'vars.css')
+        Loader.loadCSS(req, res, 'vars.css')})
+
+    addRoute('GET', '/css/navbar.css', (req, res) => {
+        Loader.loadCSS(req, res, 'navbar.css')
     })
     
 }

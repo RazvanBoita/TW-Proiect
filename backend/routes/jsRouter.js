@@ -10,6 +10,10 @@ function routeJs(){
     addRoute('GET', '/js/ButtonHandler.js', (req, res) => {
         Loader.loadJs(req, res, 'ButtonHandler.js')
     })
+
+    addRoute('GET', '/js/navbar.js', (req, res) => {
+        Loader.loadJs(req, res, 'navbar.js')
+    })
     
     addRoute('GET', '/js/exportQuestion.js', (req, res) => {
         Loader.loadJs(req, res, 'exportQuestion.js')

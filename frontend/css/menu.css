@@ -1,64 +1,9 @@
 @import './vars.css';
 
-body
-{
-    margin: 0;
-    padding: 0;
-}
-
 h1{
     text-align: center;
     font-family: var(--font-family);
     color: var(--secondary-color);
-    font-size: 5vw;
-}
-h2{
-    text-align: center;
-    font-family: var(--font-family);
-    color: var(--accent-color);
     font-weight: 700;
-    font-size: 2rem;
-}
-.navigation-button{
-    color: var(--accent-color);
-    font-weight: 600;
-    text-decoration-line: none;
-    font-family: var(--font-family);
-}
-.navigation-button:visited{
-    color: var(--accent-color);
-    font-weight: 600;
-    text-decoration-line: none;
-    font-family: var(--font-family);
-}
-.navigation-button:hover{
-    color: var(--secondary-color);
-}
-
-.navigation-button-div{
-    flex-basis: 25vw;
-}
-#navigation-bar{
-    display: flex;
-    text-align: center;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    height: fit-content;
-    background-color: var(--main-color);
-}
-
-.navigation-button-div{
-    padding: 2rem 0;
-}
-
-@media screen and (max-width: 450px){
-    #navigation-bar{
-        flex-direction: column;
-        gap: 5vw;
-    }
-    .navigation-button-div{
-        padding: 0.5rem;
-        flex-basis: 0;
-    }
+    font-size: 6rem;
 }
