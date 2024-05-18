@@ -4,6 +4,7 @@ const checkCredentialsExist = require('../utils/middleWare/checkUser');
 const checkSession = require('../utils/middleWare/checkSession');
 const logoutUser = require('../utils/middleWare/logoutUser');
 const SignUpService = require('../services/signUpService');
+const AdminPrivilages = require('../utils/adminPrivilages');
 function routeHtml(){
 
     addRoute('GET', '/signup', (req, res) => {
@@ -54,8 +55,13 @@ function routeHtml(){
         Loader.redirect(req, res, 'index.html', '/')
     }, checkCredentialsExist);
 
-    addRoute('GET', '/navbar.html', (req, res)=>{
-        Loader.loadHTML(req, res, 'navbar.html')
+    addRoute('GET', '/navbar.html', async (req, res)=>{
+        const result = AdminPrivilages.getCreateQuizzButton(req);
+        console.log(result);
+        const data = {
+            result:result
+        }
+        Loader.loadTemplateEngineHTML(req, res, 'navbar.hbs', data);
     })
 
     addRoute('GET', '/', (req, res) => {

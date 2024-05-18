@@ -50,12 +50,17 @@ function getRawCookie(req, cookieName)
 function getUserData(req)
 {
     const rawCookie = getRawCookie(req, 'sessionId=');
-    return sessions.get(rawCookie);
+    if(sessions.has(rawCookie))
+       return sessions.get(rawCookie);
+
+    return null;
 }
 
 function isUserAdmin(req)
 {
     const userData = getUserData(req);
+    if(userData === null)
+        return false;
     return userData.isAdmin === 1 ? true : false;
 }
 
