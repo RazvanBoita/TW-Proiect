@@ -16,7 +16,6 @@ const use = (middleware) => {
 };
 
 const handleRequest = (req, res) => {
-    console.log(req.url);
     const parsedUrl = url.parse(req.url, true);
     const method = req.method;
     const path = parsedUrl.pathname;
