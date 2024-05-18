@@ -21,6 +21,10 @@ function routeCss(){
     addRoute('GET', '/css/intermediary.css', (req, res) => {
         Loader.loadCSS(req, res, 'intermediary.css')
     })
+
+    addRoute('GET', '/css/navbar.css', (req, res) => {
+        Loader.loadCSS(req, res, 'navbar.css')
+    })
     
 }
 

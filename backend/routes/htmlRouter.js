@@ -5,10 +5,6 @@ const checkSession = require('../utils/middleWare/checkSession');
 const SignUpService = require('../services/signUpService')
 function routeHtml(){
 
-    addRoute('GET', '/', (req, res) => {
-        Loader.loadHTML(req, res, 'index.html')
-    }, checkSession); 
-
     addRoute('GET', '/signup', (req, res) => {
         Loader.loadHTML(req, res, 'signUp.html')
     })
@@ -27,14 +23,6 @@ function routeHtml(){
         //process signup ig
         SignUpService.signUp(req, res)
     })
-    
-    addRoute('GET', '/login', (req, res) => {
-        Loader.loadHTML(req, res, 'logIn.html')
-    });
-
-    addRoute('POST', '/login', (req, res) => {
-        Loader.redirect(req, res, 'index.html', '/')
-    }, checkCredentialsExist);
 
     addRoute('GET', '/signup/verify', (req, res) => {
         SignUpService.verifyEmail(req, res)
@@ -56,6 +44,22 @@ function routeHtml(){
         }
         Loader.loadTemplateEngineHTML(req, res, 'intermediary.hbs', data)
     })
+
+    addRoute('GET', '/login', (req, res) => {
+        Loader.loadHTML(req, res, 'logIn.html')
+    });
+
+    addRoute('POST', '/login', (req, res) => {
+        Loader.redirect(req, res, 'index.html', '/')
+    }, checkCredentialsExist);
+
+    addRoute('GET', '/navbar.html', (req, res)=>{
+        Loader.loadHTML(req, res, 'navbar.html')
+    })
+
+    addRoute('GET', '/', (req, res) => {
+        Loader.loadHTML(req, res, 'index.html')
+    }, checkSession); 
 }
 
 module.exports = routeHtml
