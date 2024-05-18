@@ -1,12 +1,15 @@
 const {addRoute} = require('../../router');
 const Loader = require('../loaders/Loader');
+//middlewares
 const checkCredentialsExist = require('../utils/middleWare/checkUser');
 const checkSession = require('../utils/middleWare/checkSession');
-const SignUpService = require('../services/signUpService');
-const QuestionService = require('../services/questionService');
 const logoutUser = require('../utils/middleWare/logoutUser');
-const SignUpService = require('../services/signUpService');
+const checkAdminPrivileges = require('../utils/middleWare/checkAdminPrivilages');
+//
 
+const SignUpService = require('../services/signUpService');
+const AdminPrivilages = require('../utils/adminPrivilages');
+const CategoryService = require('../services/categoryService');
 function routeHtml(){
 
     addRoute('GET', '/signup', (req, res) => {
@@ -64,8 +67,12 @@ function routeHtml(){
         Loader.redirect(req, res, 'index.html', '/')
     }, checkCredentialsExist);
 
-    addRoute('GET', '/navbar.html', (req, res)=>{
-        Loader.loadHTML(req, res, 'navbar.html')
+    addRoute('GET', '/navbar.html', async (req, res)=>{
+        const result = AdminPrivilages.getCreateQuizzButton(req);
+        const data = {
+            result
+        }
+        Loader.loadTemplateEngineHTML(req, res, 'navbar.hbs', data);
     })
 
     addRoute('GET', '/', (req, res) => {
@@ -75,6 +82,19 @@ function routeHtml(){
     addRoute('POST', '/logout', (req, res) =>{
         Loader.loadHTML(req, res, 'logIn.html')
     }, logoutUser)
+
+    addRoute('GET', '/createQuizz', async (req, res) =>{
+        const categories = await CategoryService.getCategoriesAsHTML();
+        const data = {
+            categories
+        };
+        Loader.loadTemplateEngineHTML(req, res, 'createSqlQuery.hbs', data);
+    }, checkAdminPrivileges)
+
+
+    addRoute('GET', '/forbidden', (req, res) =>{
+        Loader.loadHTML(req, res, 'forbidden.html');
+    })
 }
 
 module.exports = routeHtml

@@ -9,7 +9,7 @@ class QuestionService{
         let counter = 0;
         try 
         {
-            const query = 'INSERT INTO Question (title, difficulty, answer, counter) VALUES (?, ?, ?, ?)';
+            const query = 'INSERT INTO sql_tutoring."Question" (title, difficulty, answer, counter) VALUES (?, ?, ?, ?)';
             const values = [title, difficulty, answer, counter];
             const result = await dbConnection.query(query, values);
             questionData = new QuestionData(result[0].insertId, title, difficulty, answer, counter);

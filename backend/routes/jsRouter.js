@@ -17,6 +17,9 @@ function routeJs(){
     addRoute('GET', '/js/logout.js', (req, res) => {
         Loader.loadJs(req, res, 'logout.js')
     })
+    addRoute('GET', '/js/importQuestion.js', (req, res)=>{
+        Loader.loadJs(req, res, 'importQuestion.js')
+    })
     
     addRoute('GET', '/js/exportQuestion.js', (req, res) => {
         Loader.loadJs(req, res, 'exportQuestion.js')
