@@ -1,3 +1,4 @@
+const database = require('../config/database');
 const dbConnection = require('../config/database')
 const QuestionData = require('../models/questionData');
 
@@ -28,6 +29,24 @@ class QuestionService{
         } finally {
             dbConnection.end();
         }
+    }
+
+    static async fetchQuestion(){
+        // fetch it from somewhere
+        const tableDescription = "\n TABLE students\n\t\tid INTEGER PRIMARY KEY,\n\tfirstName VARCHAR(30) NOT NULL,\n\tlastName VARCHAR(30) NOT NULL"
+        const formattedDescription = tableDescription.replace(/\t/, "    ")
+        const data = {
+            currentQuestion: 1,
+            questionContent: "Given the following data definition, write a query that returns the number of students whose first name is John.",
+            tableDescription: formattedDescription
+        }
+        return data
+    }
+
+    static async serveQuestion(){
+        //data should be imported by another service
+        const data = QuestionService.fetchQuestion()
+        return data
     }
 }
 

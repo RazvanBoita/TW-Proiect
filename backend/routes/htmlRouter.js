@@ -2,7 +2,8 @@ const {addRoute} = require('../../router');
 const Loader = require('../loaders/Loader');
 const checkCredentialsExist = require('../utils/middleWare/checkUser');
 const checkSession = require('../utils/middleWare/checkSession');
-const SignUpService = require('../services/signUpService')
+const SignUpService = require('../services/signUpService');
+const QuestionService = require('../services/questionService');
 function routeHtml(){
 
     addRoute('GET', '/', (req, res) => {
@@ -39,6 +40,7 @@ function routeHtml(){
     addRoute('GET', '/signup/verify', (req, res) => {
         SignUpService.verifyEmail(req, res)
     })
+
     addRoute('GET', '/signup/verify', async (req, res) => {
 
         const result = await SignUpService.verifyEmail(req, res)
@@ -56,6 +58,12 @@ function routeHtml(){
         }
         Loader.loadTemplateEngineHTML(req, res, 'intermediary.hbs', data)
     })
+
+    addRoute('GET', '/quiz', async (req, res) => {
+        const data = await QuestionService.serveQuestion()
+        //insert as data
+        Loader.loadTemplateEngineHTML(req, res, 'quiz.hbs', data)
+    }) //pe viitor sa am si checksession aici
 }
 
 module.exports = routeHtml

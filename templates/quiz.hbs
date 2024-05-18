@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../frontend/css/quiz.css">
+    <link rel="stylesheet" href="../frontend/css/menu.css" type="text/css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.0/codemirror.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.0/theme/material.min.css">
+    <title>Quizz</title>
+</head>
+<body>
+    <header>
+        <nav id="navigation-bar">
+            <div class="navigation-button-div"><a class="navigation-button" href="index.html">Home</a></div>
+            <div class="navigation-button-div"><a class="navigation-button" href="createSqlQuery.html">Create Query</a></div>
+            <div class="navigation-button-div"><a class="navigation-button" href="dashboard.html">Dashboard</a></div>
+        </nav>
+    </header>
+    <main class="whole-container">
+        <div class="left-container">
+            <div class="top-side">
+                <p class="question-index"><em>Question</em> <span class="sharp-number">{{currentQuestion}}</span> of <span class="sharp-number">10</span></p>
+                <div class="votes">
+                    <ion-icon name="thumbs-up-sharp" class="thumbs-up"></ion-icon>
+                    <ion-icon name="thumbs-down-sharp" class="thumbs-down"></ion-icon>
+                </div>
+            </div>
+            <div class="question-side">
+                <h4 class="question-content">{{questionContent}}</h4>
+                <div class="table-description">
+                    <p class="table-description-content">{{tableDescription}}</p>
+                </div>
+            </div>
+            <div class="bottom-side">
+                <button class="submit-and-next only-submit">Submit & next</button>
+            </div>
+        </div>
+        <div class="right-container">
+            <div class="top-side">
+                <p class="mini-title question-index">SQL Tutoring</p>
+                <div class="helpers">
+                    <ion-icon name="help-circle"></ion-icon>
+                </div>
+            </div>
+            <textarea id="sql-editor"></textarea>
+            <div class="db-engine">
+                <p class="db-engine-title">Database Engine </p>
+                <p class="db-engine-value">PostgreSQL</p>
+            </div>
+            <div class="run-button-wrapper">
+                <button class="submit-and-next run-button">
+                    <p>Run</p>
+                    <ion-icon name="hammer" class="builder"></ion-icon>
+                </button>
+            </div>
+            <div class="console">
+                <p class="error-message">ERROR MESSAGE</p>
+                <p class="succes-message">SUCCESS MESSAGE</p>
+                <p class="error-message">ERROR MESSAGE</p>
+                <p class="succes-message">SUCCESS MESSAGE</p>
+                <p class="error-message">ERROR MESSAGE</p>
+                <p class="succes-message">SUCCESS MESSAGE</p>
+                <p class="error-message">ERROR MESSAGE</p>
+                <p class="succes-message">SUCCESS MESSAGE</p>
+            </div>
+        </div>
+    </main>
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.0/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.0/mode/sql/sql.min.js"></script>
+    <script>
+        function adjustContainerHeight() {
+            const navbarHeight = document.querySelector('header').offsetHeight;
+            const wholeContainer = document.querySelector('.whole-container');
+            wholeContainer.style.height = `calc(100vh - ${navbarHeight}px)`;
+        }
+
+        window.addEventListener('load', adjustContainerHeight);
+        window.addEventListener('resize', adjustContainerHeight);
+
+        //initializari pt codemirror, n ar trb sa se schimbe
+        window.addEventListener('load', function() {
+            CodeMirror.fromTextArea(document.getElementById('sql-editor'), {
+                mode: "text/x-sql",
+                theme: "material",
+                lineNumbers: true,
+                matchBrackets: true,
+                autoCloseBrackets: true
+            });
+        });
+    </script>
+</body>
+</html>

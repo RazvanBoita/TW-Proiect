@@ -11,6 +11,9 @@ function routeJs(){
         Loader.loadJs(req, res, 'ButtonHandler.js')
     })
     
+    addRoute('GET', '/js/exportQuestion.js', (req, res) => {
+        Loader.loadJs(req, res, 'exportQuestion.js')
+    })
 }
 
 module.exports = routeJs

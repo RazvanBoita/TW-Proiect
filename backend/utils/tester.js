@@ -1,3 +1,5 @@
-const UserService = require('../services/userService')
+const QuestionService = require('../services/questionService')
 
-UserService.deleteUser('razvanboita1609@gmail.com')
+QuestionService.serveQuestion().then(result => {
+    console.log(result);
+})

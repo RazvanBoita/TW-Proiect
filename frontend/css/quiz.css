@@ -1,10 +1,9 @@
-@import './vars.css';
 
-body{
+body {
     margin: 0;
     padding: 0;
     background-color: var(--body-color);
-    background-image: url('../img/first.png');
+    background-image: url('../img/bg.png');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -13,141 +12,217 @@ body{
     flex-direction: column;
 }
 
-*{
+p {
+    margin-inline: 0;
+    margin-block: 0;
+}
+
+* {
     font: var(--font-family);
 }
 
-.quiz-question{
-    background-color: var(--main-color);
-    display: flex;
-    flex-direction: column;    
-    align-items: flex-start;
-    gap: 2rem;
-    margin: auto;
-    margin-top: 15vh;
-    padding: 1.25rem;
-    max-width: 55vw;
-    min-height: 40vh;
-    min-width: 22vw;
-    border-radius: 0.75rem;
-    border: 2px solid var(--main-color);
-}
-
-.title-text{
-    color: var(--secondary-color);
-    font-weight: 600;
-    font-size: 1.75vw;
-    text-align: left;
-    margin-bottom: 0;
-}
-
-.input-form p {
+.whole-container {
+    box-sizing: border-box;
+    width: 100%;
+    margin: 0;
+    border: 0;
     padding: 0;
-    margin: 0;
-    margin-bottom: 0.75rem;
-    color: var(--accent-color);
-    font-family: var(--font-family);
+    overflow: auto;
+    display: flex;
 }
 
-.input-text-field{
-    padding: 0.25rem;
-    width: 30vw;
-    resize: vertical;
-    transition: width 0.2s;
-    background-color: var(--body-color);
-    border-color: var(--secondary-color);
-    border-radius: 10px;
-    min-height: 3vh;
-    color: var(--accent-color);
-    font-family: var(--font-family);
+.left-container {
+    width: 35%;
+    background-color: aliceblue;
+    border-right: 4px solid gray;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    justify-content: space-between;
+    padding: 0;
 }
 
-.input-text-field:focus{
-    width: 45vw;
+.question-side {
+    color: var(--body-color);
+    padding: .75rem;
+    height: 80%;
+    background-color: white;
+    border-radius: .25rem;
+    border: 2px solid gray;
+    margin: 0 1.2rem;
 }
 
-.quiz-index{
-    align-self: flex-end;
-    margin: 0;
-    color: var(--accent-color);
+.question-content {
+    font-weight: bold;
     font-size: 1.2rem;
 }
 
-progress{
-    max-width: 10vw;
-    font-family: var(--font-family);
+.table-description {
+    margin: 0;
+    border-left: 2px solid gray;
+    font-family: 'Source Code Pro', monospace;
+    display: inline-block;
 }
 
-.btn-container{
-    align-self: flex-end;
+.table-description-content {
+    margin: 0;
+    padding: 0;
+    white-space: pre-wrap;
+}
+
+
+.submit-and-next{
+    background-color: var(--body-color);
+    padding: 1rem;
+    font-size: 1rem;
+    color: var(--accent-color);
+    letter-spacing: 1px;
+    font-weight: bold;
+    border-radius: 1rem;
+    font-family: sans-serif;
+}
+
+.submit-and-next:hover{
+    cursor: pointer;
+    transition: .5s;
+    box-shadow: 2px 2px 2px 2px black;
+    background-color: rgb(64, 181, 64);
+    color: var(--accent-color);
+}
+
+.question-index {
+    font-size: 1.4rem;
+    margin: 0;
+}
+
+.sharp-number {
+    font-weight: bold;
+    color: var(--body-color);
+}
+
+.votes {
     display: flex;
+    gap: .75rem;
+}
+
+.votes .thumbs-up:hover {
+    color: rgb(0, 243, 0);
+    cursor: pointer;
+    transition: .4s;
+}
+
+.votes .thumbs-down:hover {
+    color: red;
+    cursor: pointer;
+    transition: .4s;
+}
+
+.votes * {
+    font-size: larger;
+}
+
+.top-side {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0;
+}
+
+.right-container {
+    width: 65%;
+    background-color: aliceblue;
+    border-left: 4px solid gray;
+    display: flex;
+    flex-direction: column;
     gap: 1rem;
 }
 
-.next-btn{
-    font-family: var(--font-family);
-    color: var(--accent-color);
-    background-color: var(--secondary-color);
-}
-.export-btn{
-    font-family: var(--font-family);
-    color: var(--secondary-color);
-    background-color: var(--accent-color);
+
+.CodeMirror {
+    border-radius: .25rem;
+    font-family: 'Source Code Pro', monospace;
+    padding: .25rem;
+    margin: 0 1.2rem;
 }
 
-.next-btn, .export-btn{
-    display: inline-block;
-    outline: 0;
+.mini-title{
+    font-weight: bold;
+}
+
+.helpers *{
+    font-size: x-large;
     cursor: pointer;
-    padding: 0.25rem 1rem;
-    font-size: 1rem;
+}
+
+.db-engine{
+    display: flex;
+    gap: 1rem;
+    font-size: 1.25rem;
+    color: var(--body-color);
+    align-items: center;
+    margin: 0 1.2rem;
+}
+
+.db-engine-title{
+    letter-spacing: .5px;
+    font-weight: 700;
+}
+
+.db-engine-value{
+    font-size: 1.2rem;
     font-weight: 600;
-    line-height: 20px;
-    vertical-align: middle;
-    border: 1px solid;
-    border-radius: 6px;
-    border-color: #1b1f2326;
-    box-shadow: rgba(27, 31, 35, 0.04) 0px 1px 0px 0px, rgba(255, 255, 255, 0.25) 0px 1px 0px 0px inset;
-    transition: 0.2s;
+    border: 1px solid gray;
+    padding: .5rem;
+    background-color: white;
 }
 
-.next-btn:hover {
-    background-color: var(--secondary-color);
-    opacity: 0.9;
-    border-color: #1b1f2326;
-    transition-duration: 0.1s;
-}
-.export-btn:hover{
-    background-color: var(--accent-color);
-    opacity: 0.9;
-    border-color: #1b1f2326;
-    transition-duration: 0.1s;
-}
-@media screen and (max-width: 950px){
-    .title-text{
-        font-size: 3.5vw;
-    }
-    .option-text{
-        font-size: 1rem;
-    }
+.run-button{
+    display: flex;
+    align-items: center;
+    gap: .5rem;
 }
 
-@media screen and (max-width: 400px){
-    .title-text{
-        font-size: 6vw;
-    }
-    .option-text{
-        font-size: 0.75rem;
-    }
-    .btn-container{
-        align-self: flex-start;
+.run-button .builder{
+    font: 2rem;
+}
+
+.console{
+    border: 2px solid gray;
+    border-radius: 1rem;
+    max-height: 15vh;
+    background-color: white;
+    padding: .5rem;
+    overflow-y: auto;
+    color: var(--body-color);
+    font-weight: 600;
+    font-size: .9rem;
+    margin: 1.2rem;
+}
+
+.top-side{
+    margin-left: 1.2rem;
+    margin-top: 1.2rem;
+    margin-right: 1.2rem;
+}
+
+.submit-and-next{
+    margin: 0 1.2rem;
+}
+
+.only-submit{
+    margin-bottom: 1.2rem;
+}
+
+*::-webkit-scrollbar {
+    display: none; /* Safari and Chrome */
+}
+
+
+@media (max-width: 680px){
+    .whole-container{
         flex-direction: column;
     }
-    .quiz-index{
-        display: flex;
-        align-self: flex-start;
-        flex-direction: column;
-        gap: 1rem;
-        align-items: flex-start;
+    .left-container, .right-container{
+        width: 100vw;
     }
 }

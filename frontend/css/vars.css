@@ -1,6 +1,6 @@
 /* In acest fisier stocam variabilele pentru font-uri, culori, ... */
 /* ca sa nu le redefinim in fiecare fisier separat */
-
+@import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&display=swap');
 
 :root {
     /* Procentaj culori in aplicatie: 
@@ -14,6 +14,7 @@
     
     /* A se utiliza fonturi sans-serif pentru web */
     --font-family: sans-serif;
+
 } 
 
 body{
@@ -27,4 +28,9 @@ body{
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+}
+
+
+.formatted-description {
+    white-space: pre-wrap;
 }
