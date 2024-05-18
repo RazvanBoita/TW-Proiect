@@ -45,9 +45,7 @@ const checkCredentialsExist = async (req, res, next) => {
             }
             
             const userData = new UserData(result[0].idUser, result[0].name, result[0].email, result[0].isAdmin);
-            const sessionId = cookieHandler.generateSessionId();
-            cookieHandler.sessions.set(sessionId, userData);
-            res.setHeader('Set-Cookie', 'sessionId=' + sessionId + '; HttpOnly; Max-Age:86400');  //1 day cookie session
+            cookieHandler.setSessionId(res, userData);
             
             next();
 
