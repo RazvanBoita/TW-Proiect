@@ -10,10 +10,8 @@ async function logout()
                     method: 'POST'
                 });
                 if (response.ok) {
-                    // Redirect or handle logout success
                     window.location.href = '/login'
                 } else {
-                    // Handle logout failure
                     console.error('Logout failed');
                 }
             } catch (error) {

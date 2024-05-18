@@ -2,13 +2,11 @@ const {addRoute} = require('../../router');
 const Loader = require('../loaders/Loader');
 const checkCredentialsExist = require('../utils/middleWare/checkUser');
 const checkSession = require('../utils/middleWare/checkSession');
-<<<<<<< HEAD
 const SignUpService = require('../services/signUpService');
 const QuestionService = require('../services/questionService');
-=======
 const logoutUser = require('../utils/middleWare/logoutUser');
 const SignUpService = require('../services/signUpService');
->>>>>>> d4b1c6e (Added logout logic)
+
 function routeHtml(){
 
     addRoute('GET', '/signup', (req, res) => {
