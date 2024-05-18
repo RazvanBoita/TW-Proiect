@@ -15,7 +15,7 @@
         <h1>Create your quizz</h1>
     </header>
     <main>
-        <form class="create-quiz-container" action="/createSqlQuery" method="post">
+        <form class="create-quiz-container" action="/createQuizz" method="post">
             <div id="left-form">
                 <label for="category">Category</label>
                 <select name="category" id="category" required multiple size="10">
@@ -42,8 +42,8 @@
                     <button id="import-button" type="button" onclick="document.getElementById('input-json').click()">Import</button>
                     <button id="submit-button" type="submit">Submit</button>
                 </p>
-                <a id="import-quizz-link" href="importQuizz" target="_blank">Example of import format</a>
-                <!-- STATUS MESSAGE -->
+                <a id="import-quizz-link" href="/importQuizz" target="_blank">Example of import format</a>
+                `<p id="error-message">{{errorMessage}}</p>`
             </div>
         </form>
     </main>

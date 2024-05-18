@@ -1,4 +1,4 @@
-const dbConnection = require('../config/database')
+const dbConnection = require('../config/postgresDB')
 const QuestionData = require('../models/questionData');
 
 class QuestionService{
@@ -8,10 +8,14 @@ class QuestionService{
         let counter = 0;
         try 
         {
-            const query = 'INSERT INTO sql_tutoring."Question" (title, difficulty, answer, counter) VALUES (?, ?, ?, ?)';
-            const values = [title, difficulty, answer, counter];
-            const result = await dbConnection.query(query, values);
-            questionData = new QuestionData(result[0].insertId, title, difficulty, answer, counter);
+            const insertQuery = {
+                text: 'INSERT INTO sql_tutoring."Question" (title, difficulty, answer, counter) VALUES ($1, $2, $3, $4) RETURNING id',
+                values: [title, difficulty, answer, counter],
+              };
+            
+            const result =  await dbConnection.query(insertQuery);
+            const id = result.rows[0].id;
+            questionData = new QuestionData(id, title, difficulty, answer, counter);
         }
          catch (error) {
             console.error('Error executing INSERT query for Question table:', error);

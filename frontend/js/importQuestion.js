@@ -12,11 +12,12 @@ document.getElementById('input-json').addEventListener('change', function(event)
             const jsonData = JSON.parse(content); 
             console.log('JSON file selected:', jsonData);
 
+            const difficulty = jsonData.difficulty;
             const category = jsonData.category;
             const quizzTitle = jsonData.quizz_title;
             const answer = jsonData.answer;
 
-            if(quizzTitle === null || answer === null || category === null)
+            if(quizzTitle === null || answer === null || category === null || difficulty === null)
             {
                 alert('Title, answer or category are invalid!');
                 return;
@@ -46,6 +47,14 @@ document.getElementById('input-json').addEventListener('change', function(event)
                 {
                     alert('Category ' + category[i] + ' does not exist!');
                 }
+            }
+            
+            switch(difficulty)
+            {
+                case "easy": document.getElementById("easy").checked = true; break;
+                case "medium": document.getElementById("medium").checked = true; break;
+                case "hard": document.getElementById("hard").checked = true; break;
+                default: alert('Invalid difficulty!. Choose easy, medium or hard.');
             }
 
             document.getElementById("quizz-question").value=quizzTitle;
