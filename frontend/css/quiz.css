@@ -239,3 +239,44 @@ p {
         height: 400vh;
     }
 }
+
+.console{
+    border: 2px solid gray;
+    border-radius: 1rem;
+    max-height: 15vh;
+    background-color: white;
+    padding: .5rem;
+    overflow-y: auto;
+    color: var(--body-color);
+    font-weight: 600;
+    font-size: .9rem;
+    margin: 1.2rem;
+}
+
+.top-side{
+    margin-left: 1.2rem;
+    margin-top: 1.2rem;
+    margin-right: 1.2rem;
+}
+
+.submit-and-next{
+    margin: 0 1.2rem;
+}
+
+.only-submit{
+    margin-bottom: 1.2rem;
+}
+
+*::-webkit-scrollbar {
+    display: none; /* Safari and Chrome */
+}
+
+
+@media (max-width: 680px){
+    .whole-container{
+        flex-direction: column;
+    }
+    .left-container, .right-container{
+        width: 100vw;
+    }
+}
