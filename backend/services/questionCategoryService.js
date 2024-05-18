@@ -1,20 +1,22 @@
-const dbConnection = require('../config/database');
+const dbConnection = require('../config/postgresDB');
 const QuestionCategoryData = require('../models/questionCategoryData');
 
 class QuestionCategoryService{
 
     static async insertQuestionCategory(idQuestion, idCategory){
         let questionCategoryData = null;
-
-        const query = 'INSERT INTO Question_Category (idQuestion, idCategory) VALUES (?, ?)';
-        const values = [idQuestion, idCategory]; 
         try{
-            const result = await dbConnection.query(query, values);
-            const id = result[0].insertId;
+            const insertQuery = {
+                text: 'INSERT INTO sql_tutoring."Question_Category" (id_question, id_category) VALUES ($1, $2) RETURNING id',
+                values: [idQuestion, idCategory],
+            };
+
+            const result = await dbConnection.query(insertQuery);
+            const id = result.rows[0].id;
             questionCategoryData = new QuestionCategoryData(id, idQuestion , idCategory);
         }
         catch(error){
-            console.error('Error executing INSERT query for Question_Category table:', error);
+            console.error('Error executing INSERT query for sql_tutoring."Question_Category" table:', error);
         }
         return questionCategoryData;
     }

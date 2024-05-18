@@ -5,6 +5,7 @@ const checkCredentialsExist = require('../utils/middleWare/checkUser');
 const checkSession = require('../utils/middleWare/checkSession');
 const logoutUser = require('../utils/middleWare/logoutUser');
 const checkAdminPrivileges = require('../utils/middleWare/checkAdminPrivilages');
+const handleCreateQuizz = require('../utils/middleWare/handleCreateQuizz');
 //
 
 const SignUpService = require('../services/signUpService');
@@ -90,6 +91,18 @@ function routeHtml(){
         };
         Loader.loadTemplateEngineHTML(req, res, 'createSqlQuery.hbs', data);
     }, checkAdminPrivileges)
+
+    addRoute('POST', '/createQuizz', async (req, res)=>{
+        const categories = await CategoryService.getCategoriesAsHTML();
+        const data = {
+            categories
+        };
+        Loader.loadTemplateEngineHTML(req, res, 'createSqlQuery.hbs', data);
+    }, handleCreateQuizz)
+
+    addRoute('GET', '/importQuizz', (req, res) =>{
+        Loader.loadHTML(req, res, 'importQuizz.html')
+    }, logoutUser)
 
 
     addRoute('GET', '/forbidden', (req, res) =>{

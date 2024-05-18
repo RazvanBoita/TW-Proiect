@@ -7,10 +7,13 @@ class CategoryService{
     {
         let categoryData = null;
         try{
-            const query = 'SELECT id FROM sql_tutoring."Category" WHERE type = ?';
-            const result = await dbConnection.query(query, type);
+            const selectQuery = {
+                text: 'SELECT id FROM sql_tutoring."Category" WHERE type = $1',
+                values: [type],
+              };
+            const result = await dbConnection.query(selectQuery);
 
-            const categoryId = result[0][0].id;
+            const categoryId = result.rows[0].id;
             categoryData = new CategoryData(categoryId, type);
         }
         catch(error)
