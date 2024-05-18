@@ -12,7 +12,7 @@ const checkSession = (req, res, next) => {
     }
 
     // Session is not valid
-    Loader.loadHTML(req, res, 'forbidden.html', 403);
+    Loader.redirect(req, res, 'login.html', '/login');
     
 };
 

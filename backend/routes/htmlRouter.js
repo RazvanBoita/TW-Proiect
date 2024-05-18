@@ -2,7 +2,8 @@ const {addRoute} = require('../../router');
 const Loader = require('../loaders/Loader');
 const checkCredentialsExist = require('../utils/middleWare/checkUser');
 const checkSession = require('../utils/middleWare/checkSession');
-const SignUpService = require('../services/signUpService')
+const logoutUser = require('../utils/middleWare/logoutUser');
+const SignUpService = require('../services/signUpService');
 function routeHtml(){
 
     addRoute('GET', '/signup', (req, res) => {
@@ -60,6 +61,10 @@ function routeHtml(){
     addRoute('GET', '/', (req, res) => {
         Loader.loadHTML(req, res, 'index.html')
     }, checkSession); 
+
+    addRoute('POST', '/logout', (req, res) =>{
+        Loader.loadHTML(req, res, 'logIn.html')
+    }, logoutUser)
 }
 
 module.exports = routeHtml
