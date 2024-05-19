@@ -12,7 +12,7 @@ const checkSession = (req, res, next) => {
     }
 
     // Session is not valid
-    Loader.redirect(req, res, 'login.html', '/login');
+    Loader.redirect(req, res, 'logIn.html', '/login');
     
 };
 
