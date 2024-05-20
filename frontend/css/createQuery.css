@@ -1,7 +1,7 @@
 @import './vars.css';
 
 label{
-    color: var(--main-color);;
+    color: var(--secondary-color-container);
     font-family: var(--font-family);
 }
 option{
@@ -124,7 +124,7 @@ option{
 #answer-area, #description-area{
     resize: none;
     width: 50vw;
-    height: 15vh;
+    height: 7vh;
     border-radius: 10px;
     border-width: 1px;
     background-color: var(--secondary-color-container);
@@ -160,7 +160,7 @@ option{
     font-family: var(--font-family);
     visibility: visible;
 }
-@media (max-width: 400px) {
+@media (max-width: 1000px) {
     #category{
         width: 60vw;
     }

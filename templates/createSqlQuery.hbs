@@ -14,8 +14,7 @@
     <header>
         <div id="navbar"></div>
     </header>
-    <main>
-        <main class="whole-container">
+    <main class="whole-container">
         <div class="left-container">
             <div class="top-side">
                 <p class="question-index">Live view</p>
@@ -39,7 +38,7 @@
             <div id="left-form">
                 <h4 class="question-content">Create Quizz</h4>
                 <label for="category">Category</label>
-                <select name="category" id="category" required multiple size="10">
+                <select name="category" id="category" required multiple size="6">
                     {{#each categories}}
                         <option class="options" value="{{this.type}}">{{this.type}}</option>
                     {{/each}}
@@ -65,13 +64,7 @@
                 <p><textarea id="answer-area" name="answer_area" required placeholder="Answer"></textarea></p>   
             </div>
             <a id="import-quizz-link" href="/importQuizz" target="_blank">Example of import format</a>
-                {{!-- <p>
-                    <input type="file" id="input-json" accept=".json" style="display: none;">
-                    <button id="import-button" type="button" onclick="document.getElementById('input-json').click()">Import</button>
-                    <button id="submit-button" type="submit">Submit</button>
-                </p>
-                <a id="import-quizz-link" href="/importQuizz" target="_blank">Example of import format</a> --}}
-                <p id="error-message">{{errorMessage}}</p>
+            <p id="error-message">{{errorMessage}}</p>
         </form>
         </div>
     </main>
@@ -85,7 +78,7 @@
         function adjustContainerHeight() {
             const navbarHeight = document.querySelector('header').offsetHeight;
             const wholeContainer = document.querySelector('.whole-container');
-            wholeContainer.style.height = `calc(100vh - ${navbarHeight}px)`;
+            wholeContainer.style.height = `calc(100vh - ${navbarHeight}px )`;
         }
 
         window.addEventListener('load', adjustContainerHeight);

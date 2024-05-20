@@ -55,7 +55,7 @@ function routeHtml(){
         Loader.loadTemplateEngineHTML(req, res, 'intermediary.hbs', data)
     })
 
-    addRoute('GET', '/quizz', async (req, res) => {
+    addRoute('GET', '/quiz', async (req, res) => {
         const data = await QuestionService.serveQuestion()
         //insert as data
         Loader.loadTemplateEngineHTML(req, res, 'quiz.hbs', data)
@@ -85,7 +85,7 @@ function routeHtml(){
         Loader.loadHTML(req, res, 'logIn.html')
     }, logoutUser)
 
-    addRoute('GET', '/createQuizz', async (req, res) =>{
+    addRoute('GET', '/createQuiz', async (req, res) =>{
         const categories = await CategoryService.getCategoriesAsHTML();
         const data = {
             categories
@@ -93,7 +93,7 @@ function routeHtml(){
         Loader.loadTemplateEngineHTML(req, res, 'createSqlQuery.hbs', data);
     }, checkAdminPrivileges)
 
-    addRoute('POST', '/createQuizz', async (req, res)=>{
+    addRoute('POST', '/createQuiz', async (req, res)=>{
         const categories = await CategoryService.getCategoriesAsHTML();
         const data = {
             categories
