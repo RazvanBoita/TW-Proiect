@@ -54,21 +54,12 @@
                 <input type="radio" id="hard" name="difficulty" value="hard">
                 <label for="hard">Hard</label>
             </div>
-<<<<<<< HEAD
             <div class="content-form">
                 <p><input id="quizz-question" type="text" name="quizz_question" placeholder="Title" required maxlength="150"></p>
-=======
             <div id="centered-form">
                 <p><input id="quizz-question" type="text" name="quizz_question" placeholder="Question" required maxlength="150"></p>
-                <p><textarea id="answer-area" name="answer_area" required placeholder="Answer"></textarea></p>   
-                <p>
-                    <input type="file" id="input-json" accept=".json" style="display: none;">
-                    <button id="import-button" type="button" onclick="document.getElementById('input-json').click()">Import</button>
-                    <button id="submit-button" type="submit">Submit</button>
-                </p>
-                <a id="import-quizz-link" href="/importQuizz" target="_blank">Example of import format</a>
-                `<p id="error-message">{{errorMessage}}</p>`
->>>>>>> 1f479ca (Added create quizz logic)
+            <div class="content-form">
+                <p><input id="quizz-question" type="text" name="quizz_question" placeholder="Title" required maxlength="150"></p>
             </div>
             <div class="content-form">
                 <p><textarea id="description-area" name="description_area" required placeholder="Description"></textarea></p>   
@@ -77,7 +68,7 @@
                 <p><textarea id="answer-area" name="answer_area" required placeholder="Answer"></textarea></p>   
             </div>
             <a id="import-quizz-link" href="/importQuizz" target="_blank">Example of import format</a>
-            <p id="error-message">{{errorMessage}}</p>
+                <p id="error-message">{{errorMessage}}</p>
         </form>
         </div>
     </main>

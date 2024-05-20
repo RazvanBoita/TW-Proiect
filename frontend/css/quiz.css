@@ -244,26 +244,26 @@ p {
     border: 2px solid gray;
     border-radius: 1rem;
     max-height: 15vh;
-    background-color: white;
+    background-color: var(--accent-color);
     padding: .5rem;
     overflow-y: auto;
-    color: var(--body-color);
+    color: var(--main-color);
     font-weight: 600;
     font-size: .9rem;
     margin: 1.2rem;
 }
 
-.top-side{
+.top-side {
     margin-left: 1.2rem;
     margin-top: 1.2rem;
     margin-right: 1.2rem;
 }
 
-.submit-and-next{
+.submit-and-next {
     margin: 0 1.2rem;
 }
 
-.only-submit{
+.only-submit {
     margin-bottom: 1.2rem;
 }
 
@@ -271,12 +271,14 @@ p {
     display: none; /* Safari and Chrome */
 }
 
-
-@media (max-width: 680px){
-    .whole-container{
+@media (max-width: 680px) {
+    .whole-container {
         flex-direction: column;
     }
-    .left-container, .right-container{
+    .left-container, .right-container {
+        border-bottom: 4px solid var(--main-color);
+        border-left: 0px;
+        border-right: 0px;
         width: 100vw;
     }
 }
