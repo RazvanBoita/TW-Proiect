@@ -46,6 +46,11 @@ option{
     justify-content: left;
     margin-left: 2vw;
 }
+#subtitle{
+    color: var(--secondary-color-container);
+    font-weight: bold;
+    font-size: 1.2rem;
+}
 .content-form{
     display: flex;
     flex-direction: column;    
