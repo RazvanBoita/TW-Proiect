@@ -54,6 +54,7 @@ p {
 .question-content {
     font-weight: bold;
     font-size: 1.2rem;
+    color: var(--secondary-color-container);
 }
 
 .table-description {
@@ -280,5 +281,18 @@ p {
         border-left: 0px;
         border-right: 0px;
         width: 100vw;
+        height: 100%;
+    }
+}
+@media (max-height: 500px) {
+    .whole-container {
+        flex-direction: column;
+    }
+    .left-container, .right-container {
+        border-bottom: 4px solid var(--main-color);
+        border-left: 0px;
+        border-right: 0px;
+        width: 100vw;
+        height: 400vh;
     }
 }

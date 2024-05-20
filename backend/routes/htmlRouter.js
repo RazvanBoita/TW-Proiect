@@ -55,7 +55,7 @@ function routeHtml(){
         Loader.loadTemplateEngineHTML(req, res, 'intermediary.hbs', data)
     })
 
-    addRoute('GET', '/quizz', async (req, res) => {
+    addRoute('GET', '/quiz', async (req, res) => {
         const data = await QuestionService.serveQuestion()
         //insert as data
         Loader.loadTemplateEngineHTML(req, res, 'quiz.hbs', data)
