@@ -11,6 +11,7 @@ const handleCreateQuizz = require('../utils/middleWare/handleCreateQuizz');
 const SignUpService = require('../services/signUpService');
 const AdminPrivilages = require('../utils/adminPrivilages');
 const CategoryService = require('../services/categoryService');
+const QuestionService = require('../services/questionService');
 function routeHtml(){
 
     addRoute('GET', '/signup', (req, res) => {
@@ -54,7 +55,7 @@ function routeHtml(){
         Loader.loadTemplateEngineHTML(req, res, 'intermediary.hbs', data)
     })
 
-    addRoute('GET', '/quiz', async (req, res) => {
+    addRoute('GET', '/quizz', async (req, res) => {
         const data = await QuestionService.serveQuestion()
         //insert as data
         Loader.loadTemplateEngineHTML(req, res, 'quiz.hbs', data)

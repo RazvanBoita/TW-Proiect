@@ -3,19 +3,19 @@ const QuestionData = require('../models/questionData');
 
 class QuestionService{
 
-    static async insertQuestion(title, difficulty, answer){
+    static async insertQuestion(title, difficulty, answer, description){
         let questionData = null;
         let counter = 0;
         try 
         {
             const insertQuery = {
-                text: 'INSERT INTO sql_tutoring."Question" (title, difficulty, answer, counter) VALUES ($1, $2, $3, $4) RETURNING id',
-                values: [title, difficulty, answer, counter],
+                text: 'INSERT INTO sql_tutoring."Question" (title, difficulty, answer, counter, description) VALUES ($1, $2, $3, $4, $5) RETURNING id',
+                values: [title, difficulty, answer, counter, description],
               };
             
             const result =  await dbConnection.query(insertQuery);
             const id = result.rows[0].id;
-            questionData = new QuestionData(id, title, difficulty, answer, counter);
+            questionData = new QuestionData(id, title, difficulty, answer, counter, description);
         }
          catch (error) {
             console.error('Error executing INSERT query for Question table:', error);

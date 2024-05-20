@@ -14,7 +14,7 @@ const handleCreateQuizz =  async (req, res, next) => {
         
         try 
         {
-            const questionData = await QuestionService.insertQuestion(formData.quizz_question, formData.difficulty, formData.answer_area);
+            const questionData = await QuestionService.insertQuestion(formData.quizz_question, formData.difficulty, formData.answer_area, formData.description_area);
             // Error at inserting question into db
             if(questionData === null)
             {

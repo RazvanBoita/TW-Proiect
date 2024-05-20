@@ -20,10 +20,17 @@ function routeJs(){
     addRoute('GET', '/js/importQuestion.js', (req, res)=>{
         Loader.loadJs(req, res, 'importQuestion.js')
     })
+    addRoute('GET', '/js/submitCreateQuizzForm.js', (req ,res)=>{
+        Loader.loadJs(req, res, 'submitCreateQuizzForm.js')
+    })
     
     addRoute('GET', '/js/exportQuestion.js', (req, res) => {
         Loader.loadJs(req, res, 'exportQuestion.js')
     })
+    addRoute('GET', '/js/liveView.js', (req, res) => {
+        Loader.loadJs(req, res, 'liveView.js')
+    })
+
 }
 
 module.exports = routeJs

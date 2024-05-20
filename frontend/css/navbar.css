@@ -39,11 +39,7 @@
     .icon {
       font-size: 20px;
     }
-    @media (max-width: 400px) {
-      .button-container {
-        width: 25em; 
-      }
-    }
+    
     
     /* mobile devices */
     @media (max-width: 600px) {
@@ -61,10 +57,4 @@
       }
     }
     
-    /* desktops */
-    @media (min-width: 1025px) {
-      .button {
-        width: 2vw;
-        height: 3vh;
-      }
-    }
+   

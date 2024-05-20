@@ -7,7 +7,9 @@
     body si main: 60%; secondary: 30%; third:10% */
     --body-color:rgba(37, 39, 62, 0.95);
     --main-color: rgb(37, 39, 62);
+    --main-color-container: rgb(83, 84, 110);
     --secondary-color: rgb(5, 127, 218);
+    --secondary-color-container: rgb(237, 238, 255);
     --accent-color: rgb(255, 243, 244);
     --field-color: rgb(208, 214, 209);
     --button-color: rgb(174, 92, 189);
