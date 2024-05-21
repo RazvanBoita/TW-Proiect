@@ -3,6 +3,9 @@ const cookieHandler = require('../../utils/cookieHandler');
 const UserService = require('../../services/userService');
 const UserData = require('../../models/userData');
 const crypto = require('crypto');
+const { use } = require('../../../router');
+
+
 
 // Middleware function to check if user email and password exist
 const checkCredentialsExist = async (req, res, next) => {
@@ -16,7 +19,7 @@ const checkCredentialsExist = async (req, res, next) => {
     req.on('end', async () => {
         try {
             const { email, password } = parse(body);
-
+            // console.log(email, password);
             // Check if the user exists in the database based on the provided email
             const result = await UserService.getUser(email);
 
@@ -42,9 +45,7 @@ const checkCredentialsExist = async (req, res, next) => {
             }
             
             const userData = new UserData(result[0].idUser, result[0].name, result[0].email, result[0].isAdmin);
-            const sessionId = cookieHandler.generateSessionId();
-            cookieHandler.sessions.set(sessionId, userData);
-            res.setHeader('Set-Cookie', 'sessionId=' + sessionId + '; HttpOnly; Max-Age:86400');  //1 day cookie session
+            cookieHandler.setSessionId(res, userData);
             
             next();
 

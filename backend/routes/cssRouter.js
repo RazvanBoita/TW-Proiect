@@ -21,6 +21,25 @@ function routeCss(){
     addRoute('GET', '/css/intermediary.css', (req, res) => {
         Loader.loadCSS(req, res, 'intermediary.css')
     })
+
+    addRoute('GET', '/frontend/css/quiz.css', (req, res) => {
+        Loader.loadCSS(req, res, 'quiz.css')
+    })
+
+    addRoute('GET', '/frontend/css/menu.css', (req, res) => {
+        Loader.loadCSS(req, res, 'menu.css')
+    })
+
+    addRoute('GET', '/frontend/css/vars.css', (req, res) => {
+        Loader.loadCSS(req, res, 'vars.css')})
+
+    addRoute('GET', '/css/navbar.css', (req, res) => {
+        Loader.loadCSS(req, res, 'navbar.css')
+    })
+
+    addRoute('GET', '/css/createQuery.css', (req, res)=>{
+        Loader.loadCSS(req, res, 'createQuery.css')
+    })
     
 }
 

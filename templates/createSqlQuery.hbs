@@ -1,0 +1,88 @@
+<!-- Author: Stefan -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../frontend/css/quiz.css">
+    <link rel="stylesheet" href="../css/menu.css" type="text/css">
+    <link rel="stylesheet" href="../css/createQuery.css" type="text/css">
+    <link rel="stylesheet" href="../css/navbar.css" type="text/css">
+    <title>Create Quizz</title>
+</head>
+<body>
+    <header>
+        <div id="navbar"></div>
+    </header>
+    <main class="whole-container">
+        <div class="left-container">
+            <div class="top-side">
+                <p class="question-index">Live view</p>
+            </div>
+            <div class="question-side">
+                <h4 id="title"></h4>
+                <h5 id="difficulty-title"></h5>
+                <div class="table-description">
+                    <p id="table-description-content"></p>
+                </div>
+                <h5 id="topics"></h5>
+            </div>
+            <div class="bottom-side">
+                <button id="submit-button">Submit quizz</button>
+                <input type="file" id="input-json" accept=".json" style="display: none;">
+                <button id="import-button" type="button" onclick="document.getElementById('input-json').click()">Import quizz</button>
+            </div>
+        </div>
+        <div class="right-container">
+            <form id="create-quiz-form" action="/createQuizz" method="post">
+            <div id="left-form">
+                <h4 id="subtitle">Create Quizz</h4>
+                <label for="category">Category</label>
+                <select name="category" id="category" required multiple size="6">
+                    {{#each categories}}
+                        <option class="options" value="{{this.type}}">{{this.type}}</option>
+                    {{/each}}
+                </select>
+            </div>
+            <div class="difficulty-container">
+                <input type="radio" id="easy" name="difficulty" value="easy" required>
+                <label for="easy">Easy</label>
+                
+                <input type="radio" id="medium" name="difficulty" value="medium">
+                <label for="medium">Medium</label>
+                
+                <input type="radio" id="hard" name="difficulty" value="hard">
+                <label for="hard">Hard</label>
+            </div>
+            <div class="content-form">
+                <p><input id="quizz-question" type="text" name="quizz_question" placeholder="Title" required maxlength="150"></p>
+            </div>
+            <div class="content-form">
+                <p><textarea id="description-area" name="description_area" required placeholder="Description"></textarea></p>   
+            </div>
+            <div class="content-form">
+                <p><textarea id="answer-area" name="answer_area" required placeholder="Answer"></textarea></p>   
+            </div>
+            <a id="import-quizz-link" href="/importQuizz" target="_blank">Example of import format</a>
+            <p id="error-message">{{errorMessage}}</p>
+        </form>
+        </div>
+    </main>
+    <script src="../js/navbar.js"></script>
+    <script src="../js/importQuestion.js"></script>
+    <script src="../js/submitCreateQuizzForm.js"></script>
+    <script src="../js/liveView.js"></script>
+
+    <script>
+        // Used for adjusting container
+        function adjustContainerHeight() {
+            const navbarHeight = document.querySelector('header').offsetHeight;
+            const wholeContainer = document.querySelector('.whole-container');
+            wholeContainer.style.height = `calc(100vh - ${navbarHeight}px )`;
+        }
+
+        window.addEventListener('load', adjustContainerHeight);
+        window.addEventListener('resize', adjustContainerHeight);
+    </script>
+</body>
+</html>
