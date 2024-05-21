@@ -1,0 +1,102 @@
+@import './vars.css';
+
+body {
+    font-family: var(--font-family);
+    background-color: var(--main-color-container);
+    background-image: none;
+    color: var(--accent-color);
+
+}
+#whole-container{
+    background-color: var(--main-color-container);
+    width: 100%;
+    height: 100%;
+ 
+}
+
+#table-container {
+    width: 90vw;
+    margin: auto;
+    background-color: var(--main-color-container);
+}
+
+table {
+    width: 100%;
+    border-style: none;
+    border-collapse: collapse;
+}
+
+th:last-child, td:last-child {
+    width: 15%; /* Adjust as needed */
+    text-align: end;
+}
+td:first-child {
+    width: 10%; /* Adjust as needed */
+    text-align: end;
+}
+tbody tr:nth-child(even) {
+    background-color: var(--main-color);
+}
+
+th, td {
+    height: 5vh;
+    border-style: none;
+    text-align: left;
+}
+
+th {
+    font-weight: 700;
+}
+
+#status-field {
+    padding: auto;
+    text-align: left;
+    padding-left: 0;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+}
+
+.pagination button {
+    margin: 0 5px;
+    padding: 8px 12px;
+    border: 1px solid black;
+    background-color: white;
+    cursor: pointer;
+}
+
+.pagination button:hover {
+    background-color: #f2f2f2;
+}
+
+.medium {
+    color: gold;
+}
+
+.easy {
+    color: rgb(0, 182, 0);
+}
+
+.hard {
+    color: red;
+}
+
+a{
+    text-decoration: none;
+    color: var(--accent-color);
+}
+
+#dropdowns {
+    display: flex;
+    justify-content: center;
+    margin-top: 1rem;
+    gap: 1rem; /* Adjust the gap between the dropdowns if needed */
+    margin-bottom: 1rem; /* Add some space between dropdowns and the table */
+}
+#dropdowns select{
+    background-color: var(--main-color);
+    color: var(--accent-color);
+    border-style: none;
+}
