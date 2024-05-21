@@ -14,7 +14,9 @@
     <main>
         <p>{</p>
         <p style="margin-left: 2vw;">"quizz_title": "Select employees name where department is Finance order by salary descending",</p>
-        <p style="margin-left: 2vw;">"category": ["SELECT", "order"],</p>
+        <p style="margin-left: 2vw">"difficulty": "easy",</p>
+        <p style="margin-left: 2vw">"description": " TABLE employees\n   id INTEGER unique primary key  not null\n   employee_name VARCHAR(20) not null\n   department VARCHAR(20) not null\n   salary INTEGER not null",</p>
+        <p style="margin-left: 2vw;">"category": ["SELECT", "order by"],</p>
         <p style="margin-left: 2vw;">"answer": "SELECT employee_name FROM employees WHERE department = 'Finance' ORDER BY salary DESC;"</p>
         <p>}</p>
     </main>
