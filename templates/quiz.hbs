@@ -5,10 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../frontend/css/quiz.css">
     <link rel="stylesheet" href="../frontend/css/menu.css" type="text/css">
-<<<<<<< HEAD
-=======
     <link rel="stylesheet" href="../css/navbar.css" type="text/css">
->>>>>>> 94d8cedb4e22ab5536849019563555681b6c1ded
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.0/codemirror.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.0/theme/material.min.css">
     <title>Quizz</title>
@@ -16,13 +13,7 @@
 <body>
     <header>
         <nav id="navigation-bar">
-<<<<<<< HEAD
-            <div class="navigation-button-div"><a class="navigation-button" href="index.html">Home</a></div>
-            <div class="navigation-button-div"><a class="navigation-button" href="createSqlQuery.html">Create Query</a></div>
-            <div class="navigation-button-div"><a class="navigation-button" href="dashboard.html">Dashboard</a></div>
-=======
             <div id="navbar"></div>
->>>>>>> 94d8cedb4e22ab5536849019563555681b6c1ded
         </nav>
     </header>
     <main class="whole-container">
@@ -37,15 +28,11 @@
             <div class="question-side">
                 <h4 class="question-content">{{questionContent}}</h4>
                 <div class="table-description">
-<<<<<<< HEAD
-                    <p class="table-description-content">{{tableDescription}}</p>
-=======
                     <p id="table-description-content">{{tableDescription}}</p>
->>>>>>> 94d8cedb4e22ab5536849019563555681b6c1ded
                 </div>
             </div>
             <div class="bottom-side">
-                <button class="submit-and-next only-submit">Submit & next</button>
+                <button class="button-submit" role="button">Submit & next</button>
             </div>
         </div>
         <div class="right-container">
@@ -57,24 +44,21 @@
             </div>
             <textarea id="sql-editor"></textarea>
             <div class="db-engine">
-                <p class="db-engine-title">Database Engine </p>
-                <p class="db-engine-value">PostgreSQL</p>
+                <div class="engine-description">
+                    <p class="db-engine-title">Database Engine </p>
+                    <p class="db-engine-value">PostgreSQL</p>
+                </div>
+                <p class="question-status">Status: <span class="status">Waiting...</span></p>
             </div>
             <div class="run-button-wrapper">
-                <button class="submit-and-next run-button">
+                <button class="button-41 run-button" role="button">
                     <p>Run</p>
                     <ion-icon name="hammer" class="builder"></ion-icon>
                 </button>
             </div>
+
             <div class="console">
-                <p class="error-message">ERROR MESSAGE</p>
-                <p class="succes-message">SUCCESS MESSAGE</p>
-                <p class="error-message">ERROR MESSAGE</p>
-                <p class="succes-message">SUCCESS MESSAGE</p>
-                <p class="error-message">ERROR MESSAGE</p>
-                <p class="succes-message">SUCCESS MESSAGE</p>
-                <p class="error-message">ERROR MESSAGE</p>
-                <p class="succes-message">SUCCESS MESSAGE</p>
+                <p>The results of your query will appear here!</p>
             </div>
         </div>
     </main>
@@ -83,26 +67,6 @@
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.0/codemirror.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.0/mode/sql/sql.min.js"></script>
-    <script>
-        function adjustContainerHeight() {
-            const navbarHeight = document.querySelector('header').offsetHeight;
-            const wholeContainer = document.querySelector('.whole-container');
-            wholeContainer.style.height = `calc(100vh - ${navbarHeight}px)`;
-        }
-
-        window.addEventListener('load', adjustContainerHeight);
-        window.addEventListener('resize', adjustContainerHeight);
-
-        //initializari pt codemirror, n ar trb sa se schimbe
-        window.addEventListener('load', function() {
-            CodeMirror.fromTextArea(document.getElementById('sql-editor'), {
-                mode: "text/x-sql",
-                theme: "material",
-                lineNumbers: true,
-                matchBrackets: true,
-                autoCloseBrackets: true
-            });
-        });
-    </script>
+    <script src="../frontend/js/quiz.js"></script>
 </body>
 </html>

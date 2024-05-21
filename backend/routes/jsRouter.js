@@ -31,6 +31,10 @@ function routeJs(){
         Loader.loadJs(req, res, 'liveView.js')
     })
 
+    addRoute('GET', '/frontend/js/quiz.js', (req, res) => {
+        Loader.loadJs(req, res, 'quiz.js')
+    })
+
 }
 
 module.exports = routeJs

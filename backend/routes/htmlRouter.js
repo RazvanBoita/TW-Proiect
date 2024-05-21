@@ -6,9 +6,10 @@ const checkSession = require('../utils/middleWare/checkSession');
 const logoutUser = require('../utils/middleWare/logoutUser');
 const checkAdminPrivileges = require('../utils/middleWare/checkAdminPrivilages');
 const handleCreateQuizz = require('../utils/middleWare/handleCreateQuizz');
-//
+
 
 const SignUpService = require('../services/signUpService');
+const SqlService = require('../services/sqlService')
 const AdminPrivilages = require('../utils/adminPrivilages');
 const CategoryService = require('../services/categoryService');
 const QuestionService = require('../services/questionService');
@@ -136,6 +137,11 @@ function routeHtml(){
     addRoute('GET', '/forbidden', (req, res) =>{
         Loader.loadHTML(req, res, 'forbidden.html');
     })
+
+    addRoute('POST', '/run-sql', (req, res) => {
+        SqlService.processQuery(req, res)
+    })
+    
 }
 
 module.exports = routeHtml
