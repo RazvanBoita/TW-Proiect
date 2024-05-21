@@ -105,6 +105,15 @@ function routeHtml(){
         Loader.loadHTML(req, res, 'importQuizz.html')
     }, logoutUser)
 
+    addRoute('GET', '/quizzes', async (req, res)=>{
+        const categories = await CategoryService.getCategoriesAsHTML();
+        const questions = await QuestionService.getAllQuestions();
+        const data={
+            categories,
+            questions,
+        }        
+        Loader.loadTemplateEngineHTML(req, res, 'quizzes.hbs', data);
+    })
 
     addRoute('GET', '/forbidden', (req, res) =>{
         Loader.loadHTML(req, res, 'forbidden.html');

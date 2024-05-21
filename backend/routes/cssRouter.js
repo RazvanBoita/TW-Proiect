@@ -40,6 +40,9 @@ function routeCss(){
     addRoute('GET', '/css/createQuery.css', (req, res)=>{
         Loader.loadCSS(req, res, 'createQuery.css')
     })
+    addRoute('GET', '/css/quizzes.css', (req, res)=>{
+        Loader.loadCSS(req, res, 'quizzes.css');
+    })
     
 }
 

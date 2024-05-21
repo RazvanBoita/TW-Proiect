@@ -15,12 +15,22 @@ class QuestionService{
             
             const result =  await dbConnection.query(insertQuery);
             const id = result.rows[0].id;
-            questionData = new QuestionData(id, title, difficulty, answer, counter, description);
+            questionData = new QuestionData(id, title, difficulty, answer, counter, description, 0);
         }
          catch (error) {
             console.error('Error executing INSERT query for Question table:', error);
         }
         return questionData;
+    }
+    static async getAllQuestions()
+    {
+        const results = await dbConnection.query('SELECT * FROM sql_tutoring."Question"');
+        const rows = results.rows;
+        const questions = rows.map(element => {
+            return { id: element.id, title: element.title, difficulty: element.difficulty, rating: element.rating };
+        });
+        return questions;
+        
     }
     
     static async deleteByID(id){
