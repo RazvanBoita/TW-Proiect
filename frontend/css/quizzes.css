@@ -54,32 +54,15 @@ th {
     padding-left: 0;
 }
 
-.pagination {
-    display: flex;
-    justify-content: center;
-}
-
-.pagination button {
-    margin: 0 5px;
-    padding: 8px 12px;
-    border: 1px solid black;
-    background-color: white;
-    cursor: pointer;
-}
-
-.pagination button:hover {
-    background-color: #f2f2f2;
-}
-
-.medium {
+.Medium {
     color: gold;
 }
 
-.easy {
+.Easy {
     color: rgb(0, 182, 0);
 }
 
-.hard {
+.Hard {
     color: red;
 }
 
@@ -87,16 +70,44 @@ a{
     text-decoration: none;
     color: var(--accent-color);
 }
+#pagination{
+    display: flex;
+    justify-content: center;
+    margin-top: 1rem;
+    gap: 1rem; 
+    margin-bottom: 1rem;
+}
+#pagination button{
+    background-color: var(--main-color);
+    color: var(--accent-color);
+    border-style: none;
+}
+.disabled {
+    cursor: default;
+  }
+.enabled{
+    cursor: pointer;
+}
 
 #dropdowns {
     display: flex;
     justify-content: center;
     margin-top: 1rem;
-    gap: 1rem; /* Adjust the gap between the dropdowns if needed */
-    margin-bottom: 1rem; /* Add some space between dropdowns and the table */
+    gap: 1rem; 
+    margin-bottom: 1rem;
 }
 #dropdowns select{
     background-color: var(--main-color);
     color: var(--accent-color);
     border-style: none;
+}
+#page-numbers{
+    display: flex;
+    justify-content: center;
+    margin-top: 1rem;
+    gap: 1rem; 
+    margin-bottom: 1rem;
+}
+#page-numbers p{
+    color: var(--accent-color);
 }

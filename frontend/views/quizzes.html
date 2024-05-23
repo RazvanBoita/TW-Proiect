@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quizzes</title>
+    <link rel="stylesheet" href="../css/quizzes.css" type="text/css">
+    <link rel="stylesheet" href="../css/navbar.css" type="text/css">
+</head>
+<body>
+    <header>
+        <div id="navbar"></div>
+    </header>
+    <main id="whole-container">
+        <div id="dropdowns">
+            <select name="difficulty" id="difficulty">
+                <option value="" disabled selected>Difficulty</option>
+                <option class="options Easy" value="Easy">Easy</option>
+                <option class="options Medium" value="Medium">Medium</option>
+                <option class="options Hard" value="Hard">Hard</option>
+            </select>
+             <select name="category" id="category">
+                
+             </select>
+        </div>
+
+        <div id="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Status</th>
+                        <th>Title</th>
+                        <th>Rating</th>
+                        <th>Difficulty</th>
+                    </tr>
+                </thead>
+                <tbody id="list">
+                 
+                </tbody>
+            </table>
+            <div id="pagination">
+                <button id="prev" >
+                    <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m15 19-7-7 7-7"/>
+                    </svg>
+                  </button>
+                <button id="next">
+                    <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m9 5 7 7-7 7"/>
+                    </svg>
+                  </button>
+            </div>
+            <div id="page-numbers">
+                <p id="currentPage"></p>
+                <p>/</p>
+                <div id="quizz-counter">
+                </div>
+            </div>
+            <p>Total questions:<span id="total-questions"></span></p>
+
+           
+        </div>
+    </main>
+    <script src="../js/navbar.js"></script>
+    <script src="../js/getQuizzesPage.js"></script>
+
+    <script  id="template-list-category" type="text/template">
+        <option class="options" value="{{type}}">{{type}}</option>
+    </script>
+    <script id="template-list-quizzes" type="text/template">
+        <tr>
+            <td id="status-field"></td>
+            <td><a href="/quizzes/{{id}}">{{title}}</a></td>
+            <td>{{rating}}</td>
+            <td class="{{difficulty}}">{{difficulty}}</td>
+        </tr>
+    </script>
+    <script id="template-quizz-counter" type="text/template">
+        <p id="counter">{{counter}}</p>
+    </script>
+
+    <script src="../js/templates/categoryList.js" type="text/javascript"> </script>
+    <script src="../js/templates/quizzList.js" type="text/javascript"></script>
+    <script src="../js/templates/quizzCounter.js" type="text/javascript"></script>
+</body>
+</html>
