@@ -32,6 +32,40 @@ class QuestionService{
         return questions;
         
     }
+    static async getPageQuestions(pageIndex)
+    {
+        const maxQuestions = 10;
+        try{
+            const selectQuery = {
+                text: 'SELECT * FROM sql_tutoring."Question" ORDER BY id LIMIT $1 OFFSET $2',
+                values: [maxQuestions, pageIndex * maxQuestions],
+            }
+
+            const result =  await dbConnection.query(selectQuery);
+            const rows = result.rows;
+            const questions = rows.map(element => {
+            return { id: element.id, title: element.title, difficulty: element.difficulty, rating: element.rating };
+            });
+            return questions;
+        }
+        catch(error){
+            console.error('Error executing SELECT LIMIT query for Question table:', error);
+        }
+    }
+    static async getQuestionsCounter()
+    {
+        try{
+            const selectQuery = {
+                text: 'SELECT COUNT(*) FROM sql_tutoring."Question"',
+            }
+            const result =  await dbConnection.query(selectQuery);
+
+            return result.rows;
+        }
+        catch(error){
+            console.error('Error executing SELECT LIMIT query for Question table:', error);
+        }
+    }
     
     static async deleteByID(id){
         try {
