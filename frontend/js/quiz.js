@@ -1,16 +1,65 @@
 document.addEventListener('DOMContentLoaded', function() {
-    let isCorrect = false; // Flag to track if the status is already marked as correct
-    let statusCodeReceived = false; // Flag to track if statusCode has been received
 
-    // Function to handle 'Submit & next' button click
+
+    //make a fetch to the main endpoint(/quiz), to get the first question
+    //next questions will be handled by the /next-question endpoint
+
+
+    let isCorrect = false;
+    let statusCodeReceived = false;
+    let currIdx = 1;
+
+
     const submitButton = document.querySelector('.button-submit');
-    submitButton.disabled = true; // Disable the button initially
-    submitButton.classList.add('disabled'); // Add the disabled class
+    submitButton.disabled = true;
+    submitButton.classList.add('disabled');
+
+
     submitButton.addEventListener('click', function() {
-        console.log('User is trying to submit');
+        console.log('User is trying to submit with index:  ' + currIdx);
+        currIdx++;
+        fetch('/next-question', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ index: currIdx })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if(data.message){
+                console.log(data.message);
+            } else{
+                updateQuestion(data, currIdx)
+            }
+        })
     });
 
-    // Function to handle 'Run' button click and log CodeMirror content
+
+    function updateQuestion(data, currentQuestionIndex){
+        const questionContent = document.querySelector('.question-content');
+        const tableDescriptionContent = document.querySelector('#table-description-content');
+        const questionIndexSpan = document.querySelector('.question-index .sharp-number');
+        const statusSpan = document.querySelector('.status');
+        const consoleDiv = document.querySelector('.console');
+        const sqlEditor = document.querySelector('#sql-editor');
+        const codeMirrorInstance = sqlEditor.nextSibling.CodeMirror;
+
+        questionIndexSpan.innerText = currentQuestionIndex;
+        questionContent.innerText = data.title;
+        tableDescriptionContent.innerText = data.description;
+
+        statusSpan.innerText = 'Waiting...';
+        statusSpan.style.color = 'violet';
+        submitButton.disabled = true;
+        submitButton.classList.add('disabled');
+        isCorrect = false;
+        statusCodeReceived = false;
+
+        consoleDiv.innerHTML = '<p>The results of your query will appear here!</p>';
+        codeMirrorInstance.setValue('');
+    }
+
     const runButton = document.querySelector('.run-button');
     runButton.addEventListener('click', function() {
         const sqlEditor = document.querySelector('#sql-editor');
@@ -18,7 +67,6 @@ document.addEventListener('DOMContentLoaded', function() {
         const sqlContent = codeMirrorInstance.getValue();
         console.log(sqlContent);
 
-        // Send the SQL content to the backend
         fetch('/run-sql', {
             method: 'POST',
             headers: {
@@ -29,17 +77,15 @@ document.addEventListener('DOMContentLoaded', function() {
         .then(response => response.json())
         .then(data => {
             console.log('Backend response:', data);
-            // Display the message in the console div
             const consoleDiv = document.querySelector('.console');
             const statusSpan = document.querySelector('.status');
             
-            // Update status message and color based on statusCode
             if (!isCorrect) {
                 switch(data.statusCode) {
                     case 1:
                         statusSpan.innerText = 'Solved!';
                         statusSpan.style.color = 'lightgreen';
-                        isCorrect = true; // Set the flag to true
+                        isCorrect = true; 
                         break;
                     case 2:
                         statusSpan.innerText = 'Wrong...';
@@ -56,11 +102,10 @@ document.addEventListener('DOMContentLoaded', function() {
             }
             
             consoleDiv.innerHTML = `<p>${data.message}</p>`;
-            // Enable the submit button if a statusCode has been received
             if (!statusCodeReceived) {
                 statusCodeReceived = true;
                 submitButton.disabled = false;
-                submitButton.classList.remove('disabled'); // Remove the disabled class
+                submitButton.classList.remove('disabled'); 
             }
         })
         .catch(error => {
@@ -68,7 +113,17 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Function to adjust the container height
+
+
+
+
+
+
+
+
+
+
+
     function adjustContainerHeight() {
         const navbarHeight = document.querySelector('header').offsetHeight;
         const wholeContainer = document.querySelector('.whole-container');
@@ -86,5 +141,8 @@ document.addEventListener('DOMContentLoaded', function() {
             matchBrackets: true,
             autoCloseBrackets: true
         });
+    });
+
+    window.addEventListener('beforeunload', function (e) {
     });
 });

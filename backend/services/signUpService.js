@@ -6,6 +6,9 @@ const generateToken = require('../utils/generateToken')
 const {parse} = require('url')
 const jwt = require('jsonwebtoken')
 
+const dotenv = require('dotenv');
+dotenv.config()
+
 const hashPassword = require('../utils/hashPassword')
 
 class SignUpService{
@@ -32,7 +35,7 @@ class SignUpService{
                 {
                     //send email, add user
                     const token = generateToken(email)
-                    const verificationLink = `http://localhost:5000/signup/verify?token=${token}`;
+                    const verificationLink = `${process.env.BASE_URL}/signup/verify?token=${token}`;
                     await EmailSender.sendVerificationEmail(email, verificationLink)
                     
 

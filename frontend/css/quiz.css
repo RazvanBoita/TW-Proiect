@@ -366,6 +366,10 @@ p {
 }
 
 
+
+
+
+
 @media (max-width: 680px){
     .whole-container{
         flex-direction: column;

@@ -56,11 +56,14 @@ function routeHtml(){
         Loader.loadTemplateEngineHTML(req, res, 'intermediary.hbs', data)
     })
 
+    
     addRoute('GET', '/quiz', async (req, res) => {
         const data = await QuestionService.serveQuestion()
         //insert as data
         Loader.loadTemplateEngineHTML(req, res, 'quiz.hbs', data)
-    }) //pe viitor sa am si checksession aici
+    }) 
+
+    //pe viitor sa am si checksession aici
 
     addRoute('GET', '/login', (req, res) => {
         Loader.loadHTML(req, res, 'logIn.html')
@@ -93,10 +96,14 @@ function routeHtml(){
     })
 
     addRoute('GET', '/quiz', async (req, res) => {
+
+        //this will always be the first question, so it should be an easy one
         const data = await QuestionService.serveQuestion()
         //insert as data
         Loader.loadTemplateEngineHTML(req, res, 'quiz.hbs', data)
-    }) //pe viitor sa am si checksession aici
+    }) 
+    
+    //pe viitor sa am si checksession aici
     addRoute('GET', '/navbar.html', async (req, res)=>{
         const result = AdminPrivilages.getCreateQuizzButton(req);
         const data = {
@@ -140,6 +147,10 @@ function routeHtml(){
 
     addRoute('POST', '/run-sql', (req, res) => {
         SqlService.processQuery(req, res)
+    })
+
+    addRoute('POST', '/next-question', (req, res) => {
+        QuestionService.handleNextQuestion(req, res)
     })
     
 }

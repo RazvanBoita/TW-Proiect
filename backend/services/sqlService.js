@@ -34,7 +34,7 @@ class SqlService {
         //2 is wrong
         let statusCode = 1
         //should get the correct query considering the respective question ig
-        const correctQuery = 'SELECT COUNT(*) FROM sql_tutoring.students WHERE firstName = \'John\';';
+        const correctQuery = 'SELECT s.id AS student_id, s.firstName, s.lastName FROM students s JOIN enrollments e ON s.id = e.student_id GROUP BY s.id, s.firstName, s.lastName HAVING COUNT(DISTINCT e.course_id) >= 2;';
         try {
             await dbConnection.query("SET search_path TO sql_tutoring");
             const correctResult = await dbConnection.query(correctQuery)
@@ -59,6 +59,8 @@ class SqlService {
         }
         return { message, statusCode }
     }
+
+    
 
 }
 
