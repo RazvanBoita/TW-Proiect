@@ -60,5 +60,7 @@ async function showErrorMessage(req, res)
     };
     Loader.loadTemplateEngineHTML(req, res, 'createSqlQuery.hbs', data);
 }
-
+function capitalizeFirstLetter(str) {
+    return str.charAt(0).toUpperCase() + str.slice(1);
+}
 module.exports = handleCreateQuizz;

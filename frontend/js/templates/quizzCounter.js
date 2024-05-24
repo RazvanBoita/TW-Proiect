@@ -21,7 +21,7 @@ function displayQuizzCounter(counter) {
     const maxQuestionsPerPage = 10;
 
     questionCounter = counter[0]["count"];
-    pageCounter = Math.floor(counter[0]["count"] / 10) + 1;
+    pageCounter = Math.ceil(counter[0]["count"] / 10);
     let listHtml = templateHtml.replace(/{{counter}}/g, pageCounter);
 
   return listHtml;
