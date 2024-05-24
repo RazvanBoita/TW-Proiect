@@ -13,7 +13,7 @@ function displayCategories(quizzes) {
     const template = document.getElementById("template-list-category");
     const templateHtml = template.innerHTML;
 
-    let listHtml = "";
+    let listHtml = '<option class="options" disabled selected>Category</option><option class="options">All</option>';
 
     for (key in quizzes) {
     listHtml += templateHtml.replace(/{{type}}/g, quizzes[key]["type"])

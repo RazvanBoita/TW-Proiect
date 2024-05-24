@@ -5,13 +5,15 @@ let pageCounter;
 fetchQuizzCounter();
 async function fetchQuizzCounter() {
     try {
-        const response = await fetch('/quizzCounter'); // Fetch quizzes from the first page
+        const response = await fetch(`/quizzCounter?difficulty=${currentDifficulty}&categoryId=${categoryId}`); // Fetch quizzes from the first page
         const counterJSON = await response.json();
         document.getElementById("quizz-counter").innerHTML = displayQuizzCounter(counterJSON);
         document.getElementById("total-questions").innerHTML = questionCounter;
     } catch (error) {
         console.error('Error fetching quizz counter:', error);
     }
+
+    reset();
 }
 function displayQuizzCounter(counter) {
     const template = document.getElementById("template-quizz-counter");
