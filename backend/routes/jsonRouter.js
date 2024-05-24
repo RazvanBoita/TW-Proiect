@@ -11,16 +11,40 @@ function routeJSON()
     addRoute('GET', '/quizzList', async (req, res) => {
         const parsedUrl = url.parse(req.url, true);
         const pageIndex = parsedUrl.query.page || 0;
-        
         if(pageIndex < 0)
             pageIndex = 0;
-
-        const questions = await QuestionService.getPageQuestions(pageIndex);
+        
+        let difficulty = `%${parsedUrl.query.difficulty}`;
+        if(parsedUrl.query.difficulty === undefined || parsedUrl.query.difficulty === '')
+        {
+            difficulty='%';
+        }
+        let categoryId = parsedUrl.query.categoryId; 
+        if(categoryId === undefined)
+        {
+            categoryId = '';
+        }
+        
+        const questions = await QuestionService.getPageQuestions(pageIndex, difficulty, categoryId);
         Loader.loadJSON(req, res, questions);
     }, checkSession)
 
     addRoute('GET', '/quizzCounter', async (req, res) => {
-        const counter = await QuestionService.getQuestionsCounter();
+        const parsedUrl = url.parse(req.url, true);
+
+        let difficulty = `%${parsedUrl.query.difficulty}`;
+        if(parsedUrl.query.difficulty === undefined || parsedUrl.query.difficulty === '')
+        {
+            difficulty='%';
+        }
+
+        let categoryId = parsedUrl.query.categoryId; 
+        if(categoryId === undefined)
+        {
+            categoryId = '';
+        }
+        
+        const counter = await QuestionService.getQuestionsCounter(difficulty, categoryId);
         Loader.loadJSON(req, res, counter);
     }, checkSession)
 
