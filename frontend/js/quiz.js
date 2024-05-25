@@ -1,13 +1,31 @@
+
 document.addEventListener('DOMContentLoaded', function() {
 
+    
+   fetch('/load-quiz')
+   .then(response => response.json())
+   .then(data => {
+        const questionIndexSpan = document.querySelector('.question-index .sharp-number');
+        const questionContent = document.querySelector('.question-content');
+        const tableDescriptionContent = document.querySelector('#table-description-content');
 
-    //make a fetch to the main endpoint(/quiz), to get the first question
-    //next questions will be handled by the /next-question endpoint
+        questionIndexSpan.innerText = data.currentQuestion;
+        questionContent.innerText = data.questionContent;
+        tableDescriptionContent.innerText = data.tableDescription;
 
+        // Store question ID in localStorage
+        localStorage.setItem('currentQuestionId', data.questionId);
+        chosenQuestionIds.push(data.questionId)
+        localStorage.setItem('pickedQuestions', JSON.stringify(chosenQuestionIds))
+    })
+    .catch(error => {
+        console.error('Error fetching quiz:', error);
+    });
 
     let isCorrect = false;
     let statusCodeReceived = false;
     let currIdx = 1;
+    let chosenQuestionIds = [];
 
 
     const submitButton = document.querySelector('.button-submit');
@@ -23,7 +41,7 @@ document.addEventListener('DOMContentLoaded', function() {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ index: currIdx })
+            body: JSON.stringify({ index: currIdx, pickedQuestions: localStorage.getItem('pickedQuestions') })
         })
         .then(response => response.json())
         .then(data => {
@@ -56,6 +74,10 @@ document.addEventListener('DOMContentLoaded', function() {
         isCorrect = false;
         statusCodeReceived = false;
 
+        localStorage.setItem('currentQuestionId', data.id)
+        chosenQuestionIds.push(data.id)
+        localStorage.setItem('pickedQuestions', JSON.stringify(chosenQuestionIds))
+
         consoleDiv.innerHTML = '<p>The results of your query will appear here!</p>';
         codeMirrorInstance.setValue('');
     }
@@ -72,7 +94,7 @@ document.addEventListener('DOMContentLoaded', function() {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ sql: sqlContent })
+            body: JSON.stringify({ sql: sqlContent, questionId: localStorage.getItem('currentQuestionId') })
         })
         .then(response => response.json())
         .then(data => {
@@ -144,5 +166,8 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     window.addEventListener('beforeunload', function (e) {
+        const confirmationMessage = 'Are you sure you want to leave this page?';
+        (e || window.event).returnValue = confirmationMessage;
+        return confirmationMessage; 
     });
 });

@@ -1,4 +1,5 @@
-const dbConnection = require('../config/postgresDB')
+const dbConnection = require('../config/postgresDB');
+const QuestionService = require('./questionService');
 
 
 class SqlService {
@@ -13,9 +14,9 @@ class SqlService {
         req.on('end', async () => {
             try {
 
-                const { sql } = JSON.parse(body)
-                // console.log(sql);
-                const data = await SqlService.validateQuery(sql)
+                const { sql, questionId } = JSON.parse(body)
+
+                const data = await SqlService.validateQuery(sql, questionId)
                 res.statusCode = 200
                 res.end(JSON.stringify(data))
 
@@ -27,24 +28,27 @@ class SqlService {
         })
     }
 
-    static async validateQuery(sql) {
-
+    static async validateQuery(sql, questionId) {
+        
         let message = "Your answer is correct! Well done :)"
+
         //1 is solved
         //2 is wrong
         let statusCode = 1
-        //should get the correct query considering the respective question ig
-        const correctQuery = 'SELECT s.id AS student_id, s.firstName, s.lastName FROM students s JOIN enrollments e ON s.id = e.student_id GROUP BY s.id, s.firstName, s.lastName HAVING COUNT(DISTINCT e.course_id) >= 2;';
+
+        const correctQuery = await QuestionService.getAnswerByID(questionId)
+        const correctAnswer = correctQuery.answer
+        
         try {
             await dbConnection.query("SET search_path TO sql_tutoring");
-            const correctResult = await dbConnection.query(correctQuery)
+            const correctResult = await dbConnection.query(correctAnswer)
             const userResult = await dbConnection.query(sql)
 
             const correctOutput = JSON.stringify(correctResult.rows)
             const userOutput = JSON.stringify(userResult.rows)
 
-            // console.log("Correct output: " + correctOutput);
-            // console.log("\nUser output: " + userOutput);
+            console.log("Correct output: " + correctOutput);
+            console.log("\nUser output: " + userOutput);
 
             if (!(userOutput == correctOutput)) {
                 message = "Your answer is wrong... Try again?"

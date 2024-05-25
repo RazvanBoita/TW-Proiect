@@ -54,6 +54,23 @@ class QuestionService{
         return questionData;
     }
 
+    static async getAnswerByID(id){
+        try {
+            const query = {
+                text: 'SELECT answer FROM sql_tutoring."Question" WHERE id = $1',
+                values: [id],
+            };
+    
+            const result = await dbConnection.query(query);
+            if (result.rows.length) {
+                return result.rows[0]
+            }
+        } catch (error) {
+            console.error('Error retrieving answer:', error.message);
+            return
+        }
+    }
+
     static async fetchQuestion(){
         // fetch it from somewhere
         const question = await this.getQuestionByID(79) //chosen id by the algo
@@ -82,7 +99,9 @@ class QuestionService{
 
         req.on('end', async () => {
             try{
-                const {index} = JSON.parse(body)
+                const {index, pickedQuestions} = JSON.parse(body)
+                console.log("Picked questions are: " + pickedQuestions);
+
                 let newIndex = parseInt(index)
                 let type = '';
                 if(newIndex<=4){
@@ -94,12 +113,14 @@ class QuestionService{
                     type = 'Hard'
                 } 
                 if(newIndex == 13){
-                    res.writeHead(200, { 'Content-Type': 'plain/text' });
+                    res.writeHead(200, { 'Content-Type': 'application/json' });
                     res.end("STOP THE APP")
                     return
                 }
-                this.chooseQuestionAlgo(type)
-                const {id, title, difficulty, description} = await this.getQuestionByID(64)
+                const pickedQuestion = await this.chooseQuestionAlgo(type, pickedQuestions)
+
+                const {id, title, difficulty, description} = pickedQuestion
+                console.log(id, title, difficulty, description);
                 const data = {id, title, difficulty, description}
 
                 console.log("Currently on question: " + index);
@@ -124,11 +145,73 @@ class QuestionService{
     }
 
 
-    static async chooseQuestionAlgo(difficulty){
+    static async chooseQuestionAlgo(difficulty, pickedQuestions) {
         // console.log("Choosing a " + difficulty + " question!");
-        const questions = await this.getQuestionsByDifficulty(difficulty)
-        //TODO dont pick the same question twice, also choose it based on the counter
+      
+        const questions = await this.getQuestionsByDifficulty(difficulty);
+      
+        if (questions.length === 0) {
+          console.log('No ' + difficulty + ' questions found.');
+          return null;
+        }
+      
+        const filteredQuestions = questions.filter(question => !pickedQuestions.includes(question.id));
+      
+        if (filteredQuestions.length === 0) {
+          console.log('No unpicked ' + difficulty + ' questions found.');
+          return null;
+        }
+      
+        let minCounterQuestion = filteredQuestions[0];
+        for (const question of filteredQuestions) {
+          if (question.counter < minCounterQuestion.counter) {
+            minCounterQuestion = question;
+          }
+        }
+        await this.updateQuestionCounter(minCounterQuestion.id)
+        return minCounterQuestion;
+      }
+
+
+    static async chooseFirstQuestion() {
+        try {
+            const easyQuestions = await this.getQuestionsByDifficulty('Easy');
+            if (easyQuestions.length === 0) {
+                console.log('No easy questions found.');
+                return null;
+            }
+            let minCounterQuestion = easyQuestions[0];
+            for (const question of easyQuestions) {
+                if (question.counter < minCounterQuestion.counter) {
+                    minCounterQuestion = question;
+                }
+            }
+            await this.updateQuestionCounter(minCounterQuestion.id)
+            const title = minCounterQuestion.title
+            const description = minCounterQuestion.description
+            const data = {
+                currentQuestion : 1,
+                questionContent: title,
+                tableDescription: description,
+                questionId: minCounterQuestion.id
+            }
+            return data;
+        } catch (error) {
+            console.error('Error choosing the first question:', error);
+        }
     }
+
+
+    static async updateQuestionCounter(questionId) {
+        try {
+            const query = 'UPDATE sql_tutoring."Question" SET counter = counter + 1 WHERE id = $1';
+            const values = [questionId];
+            await dbConnection.query(query, values);
+        } catch (error) {
+            console.error('Error updating question counter:', error);
+        }
+    }
+
 }
 
 module.exports = QuestionService

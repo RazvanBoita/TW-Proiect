@@ -26,6 +26,10 @@ function routeCss(){
         Loader.loadCSS(req, res, 'quiz.css')
     })
 
+    addRoute('GET', '/css/quiz.css', (req, res) => {
+        Loader.loadCSS(req, res, 'quiz.css')
+    })
+
     addRoute('GET', '/frontend/css/menu.css', (req, res) => {
         Loader.loadCSS(req, res, 'menu.css')
     })

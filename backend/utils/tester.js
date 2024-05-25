@@ -1,5 +1,7 @@
 const QuestionService = require('../services/questionService')
 
-QuestionService.getQuestionByID(62).then(result => {
+const givenid = 60;
+
+QuestionService.getAnswerByID(givenid).then(result => {
     console.log(result);
 })

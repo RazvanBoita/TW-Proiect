@@ -35,6 +35,10 @@ function routeJs(){
         Loader.loadJs(req, res, 'quiz.js')
     })
 
+    addRoute('GET', '/js/quiz.js', (req, res) => {
+        Loader.loadJs(req, res, 'quiz.js')
+    })
+
 }
 
 module.exports = routeJs
