@@ -99,10 +99,15 @@ class QuestionService{
 
         req.on('end', async () => {
             try{
-                const {index, pickedQuestions} = JSON.parse(body)
-                console.log("Picked questions are: " + pickedQuestions);
+                
+                //? Easy questions are 5 points  
+                //? Medium questions are 8 points  
+                //? Hard questions are 12 points  
+                const {index, pickedQuestions, isCorrect} = JSON.parse(body)
+                // console.log("Picked questions are: " + pickedQuestions);
 
                 let newIndex = parseInt(index)
+                let points = 0
                 let type = '';
                 if(newIndex<=4){
                     type = 'Easy'
@@ -117,13 +122,21 @@ class QuestionService{
                     res.end("STOP THE APP")
                     return
                 }
+                
+                if(isCorrect){
+                   if(newIndex - 1 <=4) points = 5
+                   else if(newIndex - 1 <=8) points = 8
+                   else if(newIndex-1 <=12) points = 12
+                   else console.log("Unknown points");
+                }
+
                 const pickedQuestion = await this.chooseQuestionAlgo(type, pickedQuestions)
 
                 const {id, title, difficulty, description} = pickedQuestion
-                console.log(id, title, difficulty, description);
-                const data = {id, title, difficulty, description}
+                // console.log(id, title, difficulty, description);
+                const data = {id, title, difficulty, description, points}
 
-                console.log("Currently on question: " + index);
+                // console.log("Currently on question: " + index);
 
                 res.writeHead(200, { 'Content-Type': 'application/json' });
                 res.end(JSON.stringify(data))

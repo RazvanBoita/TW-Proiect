@@ -1,7 +1,55 @@
 
 document.addEventListener('DOMContentLoaded', function() {
 
-    
+
+    //votes
+    const thumbsUpIcon = document.querySelector('.thumbs-up');
+    const thumbsDownIcon = document.querySelector('.thumbs-down');
+
+    let vote = 0
+
+    thumbsUpIcon.addEventListener('click', function() {
+        if(vote == 1){
+            this.classList.remove('clicked')
+            vote = 0
+            console.log("Vote: " + vote);
+            return
+        }
+        this.classList.toggle('clicked');
+        thumbsDownIcon.classList.remove('clicked')
+        if (this.classList.contains('clicked')) {
+            vote = 1;
+        } else {
+            vote = 0;
+        }
+        console.log("Vote: " + vote);
+
+    });
+
+    thumbsDownIcon.addEventListener('click', function() {
+        if(vote == 2){
+            this.classList.remove('clicked')
+            vote = 0
+            console.log("Vote: " + vote);
+            return
+        }
+        this.classList.toggle('clicked');
+        thumbsUpIcon.classList.remove('clicked');
+        if (this.classList.contains('clicked')) {
+            vote = 2;
+        } else {
+            vote = 0;
+        }
+        console.log("Vote: " + vote);
+    });
+
+
+
+
+   let score = 0 
+
+   
+
    fetch('/load-quiz')
    .then(response => response.json())
    .then(data => {
@@ -15,6 +63,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Store question ID in localStorage
         localStorage.setItem('currentQuestionId', data.questionId);
+        localStorage.setItem('score', score)
         chosenQuestionIds.push(data.questionId)
         localStorage.setItem('pickedQuestions', JSON.stringify(chosenQuestionIds))
     })
@@ -36,18 +85,22 @@ document.addEventListener('DOMContentLoaded', function() {
     submitButton.addEventListener('click', function() {
         console.log('User is trying to submit with index:  ' + currIdx);
         currIdx++;
+
         fetch('/next-question', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ index: currIdx, pickedQuestions: localStorage.getItem('pickedQuestions') })
+            body: JSON.stringify({ index: currIdx, pickedQuestions: localStorage.getItem('pickedQuestions'), isCorrect: isCorrect })
         })
         .then(response => response.json())
         .then(data => {
             if(data.message){
                 console.log(data.message);
             } else{
+                const currScore = parseInt(localStorage.getItem('score'))
+                localStorage.setItem('score', currScore + data.points)
+                data.points = parseInt(localStorage.getItem('score'))
                 updateQuestion(data, currIdx)
             }
         })
@@ -61,6 +114,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const statusSpan = document.querySelector('.status');
         const consoleDiv = document.querySelector('.console');
         const sqlEditor = document.querySelector('#sql-editor');
+        const scoreValue = document.querySelector('.score-value')
         const codeMirrorInstance = sqlEditor.nextSibling.CodeMirror;
 
         questionIndexSpan.innerText = currentQuestionIndex;
@@ -73,6 +127,7 @@ document.addEventListener('DOMContentLoaded', function() {
         submitButton.classList.add('disabled');
         isCorrect = false;
         statusCodeReceived = false;
+        scoreValue.innerText = data.points
 
         localStorage.setItem('currentQuestionId', data.id)
         chosenQuestionIds.push(data.id)
@@ -107,7 +162,20 @@ document.addEventListener('DOMContentLoaded', function() {
                     case 1:
                         statusSpan.innerText = 'Solved!';
                         statusSpan.style.color = 'lightgreen';
-                        isCorrect = true; 
+                        isCorrect = true;
+                        // fetch('/update-score', {
+                        //     method: 'POST',
+                        //     headers: {
+                        //         'Content-Type': 'application/json'
+                        //     },
+                        //     body: JSON.stringify({ index: currIdx})
+                        // })
+                        // .then(response => response.json())
+                        // .then(data => {
+                        //     //add data which is score to the localstorage existing item
+                        //     const currScore = localStorage.getItem('score')
+                        //     localStorage.setItem('score', currScore + data)
+                        // })
                         break;
                     case 2:
                         statusSpan.innerText = 'Wrong...';

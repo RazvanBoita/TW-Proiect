@@ -47,8 +47,8 @@ class SqlService {
             const correctOutput = JSON.stringify(correctResult.rows)
             const userOutput = JSON.stringify(userResult.rows)
 
-            console.log("Correct output: " + correctOutput);
-            console.log("\nUser output: " + userOutput);
+            // console.log("Correct output: " + correctOutput);
+            // console.log("\nUser output: " + userOutput);
 
             if (!(userOutput == correctOutput)) {
                 message = "Your answer is wrong... Try again?"
