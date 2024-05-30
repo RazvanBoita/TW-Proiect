@@ -41,9 +41,15 @@ class SqlService {
         
         try {
             await dbConnection.query("SET search_path TO sql_tutoring");
-            const correctResult = await dbConnection.query(correctAnswer)
+            await dbConnection.query('BEGIN');
             const userResult = await dbConnection.query(sql)
+            await dbConnection.query('ROLLBACK');
 
+            await dbConnection.query('BEGIN');
+            const correctResult = await dbConnection.query(correctAnswer)
+            await dbConnection.query('ROLLBACK');
+
+            
             const correctOutput = JSON.stringify(correctResult.rows)
             const userOutput = JSON.stringify(userResult.rows)
 
