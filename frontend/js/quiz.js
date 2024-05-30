@@ -1,8 +1,6 @@
 
 document.addEventListener('DOMContentLoaded', function() {
 
-
-    //votes
     const thumbsUpIcon = document.querySelector('.thumbs-up');
     const thumbsDownIcon = document.querySelector('.thumbs-down');
 
@@ -47,6 +45,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
    let score = 0 
+   let currQuestionId = 0
 
    
 
@@ -61,11 +60,8 @@ document.addEventListener('DOMContentLoaded', function() {
         questionContent.innerText = data.questionContent;
         tableDescriptionContent.innerText = data.tableDescription;
 
-        // Store question ID in localStorage
-        localStorage.setItem('currentQuestionId', data.questionId);
-        localStorage.setItem('score', score)
+        currQuestionId = data.questionId        
         chosenQuestionIds.push(data.questionId)
-        localStorage.setItem('pickedQuestions', JSON.stringify(chosenQuestionIds))
     })
     .catch(error => {
         console.error('Error fetching quiz:', error);
@@ -84,6 +80,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     submitButton.addEventListener('click', function() {
         console.log('User is trying to submit with index:  ' + currIdx);
+        console.log(currQuestionId, chosenQuestionIds, score);
         currIdx++;
 
         fetch('/next-question', {
@@ -91,16 +88,15 @@ document.addEventListener('DOMContentLoaded', function() {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ index: currIdx, pickedQuestions: localStorage.getItem('pickedQuestions'), isCorrect: isCorrect })
+            body: JSON.stringify({ index: currIdx, pickedQuestions: chosenQuestionIds, isCorrect: isCorrect })
         })
         .then(response => response.json())
         .then(data => {
             if(data.message){
                 console.log(data.message);
             } else{
-                const currScore = parseInt(localStorage.getItem('score'))
-                localStorage.setItem('score', currScore + data.points)
-                data.points = parseInt(localStorage.getItem('score'))
+                score += data.points
+                data.points = score
                 updateQuestion(data, currIdx)
             }
         })
@@ -129,9 +125,8 @@ document.addEventListener('DOMContentLoaded', function() {
         statusCodeReceived = false;
         scoreValue.innerText = data.points
 
-        localStorage.setItem('currentQuestionId', data.id)
+        currQuestionId = data.id
         chosenQuestionIds.push(data.id)
-        localStorage.setItem('pickedQuestions', JSON.stringify(chosenQuestionIds))
 
         consoleDiv.innerHTML = '<p>The results of your query will appear here!</p>';
         codeMirrorInstance.setValue('');
@@ -149,7 +144,7 @@ document.addEventListener('DOMContentLoaded', function() {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ sql: sqlContent, questionId: localStorage.getItem('currentQuestionId') })
+            body: JSON.stringify({ sql: sqlContent, questionId: currQuestionId })
         })
         .then(response => response.json())
         .then(data => {
@@ -163,19 +158,6 @@ document.addEventListener('DOMContentLoaded', function() {
                         statusSpan.innerText = 'Solved!';
                         statusSpan.style.color = 'lightgreen';
                         isCorrect = true;
-                        // fetch('/update-score', {
-                        //     method: 'POST',
-                        //     headers: {
-                        //         'Content-Type': 'application/json'
-                        //     },
-                        //     body: JSON.stringify({ index: currIdx})
-                        // })
-                        // .then(response => response.json())
-                        // .then(data => {
-                        //     //add data which is score to the localstorage existing item
-                        //     const currScore = localStorage.getItem('score')
-                        //     localStorage.setItem('score', currScore + data)
-                        // })
                         break;
                     case 2:
                         statusSpan.innerText = 'Wrong...';
