@@ -34,6 +34,24 @@ class QuizService{
             dbConnection.end();
         }
     }
+
+    static async finishQuiz(req, res){
+        let body = '';
+
+        req.on('data', chunk => {
+            body += chunk.toString();
+        });
+
+        req.on('end', async () => {
+            try{
+                const {score} = JSON.parse(body)    
+                res.statusCode = 200
+                res.end(JSON.stringify(score))
+            }catch(err){
+                console.log("Error at finishing quiz: " + err);
+            }
+        })
+    }
 }
 
-module.exports = new QuizService()
+module.exports = QuizService

@@ -13,6 +13,8 @@ const SqlService = require('../services/sqlService')
 const AdminPrivilages = require('../utils/adminPrivilages');
 const CategoryService = require('../services/categoryService');
 const QuestionService = require('../services/questionService');
+const QuizService = require('../services/quizService');
+const { getUserData } = require('../utils/cookieHandler');
 function routeHtml(){
 
     addRoute('GET', '/signup', (req, res) => {
@@ -165,6 +167,18 @@ function routeHtml(){
         QuestionService.handleNextQuestion(req, res)
     })
     
+    addRoute('POST', '/finish-quiz', (req, res) => {
+        const score = QuizService.finishQuiz(req, res)
+    })
+
+    addRoute('GET', '/finish-quiz', (req, res) => {
+        Loader.loadHTML(req, res, 'quizFinish.html')
+    })
+
+    addRoute('POST', '/load-result', (req, res) => {
+        const result = getUserData(req)
+        console.log(result);
+    })
 }
 
 module.exports = routeHtml

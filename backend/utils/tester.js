@@ -1,7 +1,7 @@
-const QuestionService = require('../services/questionService')
+const dbConnection = require('../config/postgresDB')
 
-const givenid = 60;
+async function terminate(){
+    await dbConnection.query('ROLLBACK')
+}
 
-QuestionService.getAnswerByID(givenid).then(result => {
-    console.log(result);
-})
+terminate()

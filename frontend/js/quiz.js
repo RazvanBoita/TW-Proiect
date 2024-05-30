@@ -1,5 +1,7 @@
 
 document.addEventListener('DOMContentLoaded', function() {
+    let quizFinished = false;
+
 
     const thumbsUpIcon = document.querySelector('.thumbs-up');
     const thumbsDownIcon = document.querySelector('.thumbs-down');
@@ -47,6 +49,7 @@ document.addEventListener('DOMContentLoaded', function() {
    let score = 0 
    let currQuestionId = 0
 
+   //change message at the last question
    
 
    fetch('/load-quiz')
@@ -78,28 +81,62 @@ document.addEventListener('DOMContentLoaded', function() {
     submitButton.classList.add('disabled');
 
 
+
+    let redirectFlag = 0
     submitButton.addEventListener('click', function() {
         console.log('User is trying to submit with index:  ' + currIdx);
         console.log(currQuestionId, chosenQuestionIds, score);
         currIdx++;
 
-        fetch('/next-question', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ index: currIdx, pickedQuestions: chosenQuestionIds, isCorrect: isCorrect })
-        })
-        .then(response => response.json())
-        .then(data => {
-            if(data.message){
-                console.log(data.message);
-            } else{
-                score += data.points
-                data.points = score
-                updateQuestion(data, currIdx)
-            }
-        })
+        if(currIdx<=12){
+            fetch('/next-question', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ index: currIdx, pickedQuestions: chosenQuestionIds, isCorrect: isCorrect })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if(data.message){
+                    console.log(data.message);
+                } else{
+                    score += data.points
+                    data.points = score
+                    updateQuestion(data, currIdx)
+                }
+            })
+        } else{
+            console.log("Am intrat in finish quiz");
+            fetch('/finish-quiz', {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({score: score})
+            })
+            .then(response => {
+                
+                if(response.ok){
+                    redirectFlag = 1
+                }
+                return response.json()
+            })
+            .then(data => {
+                if(redirectFlag){
+                    quizFinished = true
+                    window.location.href = '/finish-quiz'
+                    fetch('/load-result', {
+                        method: "POST",
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({score: score})
+                    })
+                    localStorage.setItem('finalScore', data)
+                }
+            })
+        }
     });
 
 
@@ -127,6 +164,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
         currQuestionId = data.id
         chosenQuestionIds.push(data.id)
+
+        if(currIdx == 12) submitButton.innerText = 'Submit & finish'
 
         consoleDiv.innerHTML = '<p>The results of your query will appear here!</p>';
         codeMirrorInstance.setValue('');
@@ -187,7 +226,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
-
+    
 
 
 
@@ -216,8 +255,13 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     window.addEventListener('beforeunload', function (e) {
-        const confirmationMessage = 'Are you sure you want to leave this page?';
-        (e || window.event).returnValue = confirmationMessage;
-        return confirmationMessage; 
+        if(!quizFinished){
+            const confirmationMessage = 'Are you sure you want to leave this page?';
+            (e || window.event).returnValue = confirmationMessage;
+            return confirmationMessage; 
+        }
     });
+    function removeBeforeUnloadListener() {
+        window.removeEventListener('beforeunload', beforeUnloadHandler);
+    }
 });
