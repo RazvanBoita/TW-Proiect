@@ -14,7 +14,8 @@ const handleCreateQuizz =  async (req, res, next) => {
         
         try 
         {
-            const questionData = await QuestionService.insertQuestion(formData.quizz_question, formData.difficulty, formData.answer_area, formData.description_area);
+            const difficulty = capitalizeFirstLetter(formData.difficulty);
+            const questionData = await QuestionService.insertQuestion(formData.quizz_question, difficulty, formData.answer_area, formData.description_area);
             // Error at inserting question into db
             if(questionData === null)
             {
@@ -59,5 +60,11 @@ async function showErrorMessage(req, res)
     };
     Loader.loadTemplateEngineHTML(req, res, 'createSqlQuery.hbs', data);
 }
+<<<<<<< HEAD
+=======
 
+>>>>>>> 41f7560f1c9ecc988d46874332dc6f9f7135646a
+function capitalizeFirstLetter(str) {
+    return str.charAt(0).toUpperCase() + str.slice(1);
+}
 module.exports = handleCreateQuizz;

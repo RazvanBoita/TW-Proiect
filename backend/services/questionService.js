@@ -15,12 +15,84 @@ class QuestionService{
             
             const result =  await dbConnection.query(insertQuery);
             const id = result.rows[0].id;
-            questionData = new QuestionData(id, title, difficulty, answer, counter, description);
+            questionData = new QuestionData(id, title, difficulty, answer, counter, description, 0);
         }
          catch (error) {
             console.error('Error executing INSERT query for Question table:', error);
         }
         return questionData;
+    }
+    static async getAllQuestions()
+    {
+        const results = await dbConnection.query('SELECT * FROM sql_tutoring."Question"');
+        const rows = results.rows;
+        const questions = rows.map(element => {
+            return { id: element.id, title: element.title, difficulty: element.difficulty, rating: element.rating };
+        });
+        return questions;
+        
+    }
+    static async getPageQuestions(pageIndex, difficulty, categoryId)
+    {
+        const maxQuestions = 10;
+        let queryText = 'SELECT q.* FROM sql_tutoring."Question" q ';
+        let params = [];
+        let index = 1;
+        if(categoryId !== '')
+        {
+            queryText+=`JOIN sql_tutoring."Question_Category" qc ON q.id = qc.id_question JOIN sql_tutoring."Category" c ON qc.id_category = c.id AND c.id = $${index} `;
+            params.push(categoryId);
+            index++;
+        }
+
+        queryText+=`WHERE q.difficulty LIKE $${index} ORDER BY q.id LIMIT $${index + 1} OFFSET $${index + 2}`;
+        params.push(difficulty);
+        params.push(maxQuestions);
+        params.push(pageIndex * maxQuestions);
+        try{
+            const selectQuery = {
+                text: queryText,
+                values: params,
+            }
+
+            const result =  await dbConnection.query(selectQuery);
+            const rows = result.rows;
+            const questions = rows.map(element => {
+            return { id: element.id, title: element.title, difficulty: element.difficulty, rating: element.rating };
+            });
+            
+            return questions;
+        }
+        catch(error){
+            console.error('Error executing SELECT LIMIT query for Question table:', error);
+        }
+    }
+    static async getQuestionsCounter(difficulty, categoryId)
+    {
+        let queryText = 'SELECT COUNT(*) FROM sql_tutoring."Question" q ';
+        let params = [];
+        let index = 1;
+        if(categoryId !== '')
+        {
+            queryText+=`JOIN sql_tutoring."Question_Category" qc ON q.id = qc.id_question JOIN sql_tutoring."Category" c ON qc.id_category = c.id AND c.id = $${index} `;
+            params.push(categoryId);
+            index++;
+        }
+
+        queryText+=`WHERE q.difficulty like $${index}`;
+        params.push(difficulty);
+        try{
+            const selectQuery = {
+                text: queryText,
+                values: params,
+            }
+            const result =  await dbConnection.query(selectQuery);
+
+            return result.rows;
+        }
+        catch(error){
+            console.error('Error executing SELECT LIMIT query for Question table:', error);
+        }
     }
     
     static async deleteByID(id){
