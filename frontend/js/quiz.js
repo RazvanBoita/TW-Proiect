@@ -2,12 +2,13 @@
 document.addEventListener('DOMContentLoaded', function() {
     let quizFinished = false;
 
+    let start_date = 0;
 
     const thumbsUpIcon = document.querySelector('.thumbs-up');
     const thumbsDownIcon = document.querySelector('.thumbs-down');
 
     let vote = 0
-
+    //0 inseamna fara vot, 1 inseamna like, 2 inseamna dislike
     thumbsUpIcon.addEventListener('click', function() {
         if(vote == 1){
             this.classList.remove('clicked')
@@ -65,6 +66,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
         currQuestionId = data.questionId        
         chosenQuestionIds.push(data.questionId)
+        start_date = data.start_date
+        // console.log("Start date is: " + data.start_date);
     })
     .catch(error => {
         console.error('Error fetching quiz:', error);
@@ -94,7 +97,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ index: currIdx, pickedQuestions: chosenQuestionIds, isCorrect: isCorrect })
+                body: JSON.stringify({ index: currIdx, pickedQuestions: chosenQuestionIds, isCorrect: isCorrect, vote:vote, currentQuestion: currQuestionId })
             })
             .then(response => response.json())
             .then(data => {
@@ -113,7 +116,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({score: score})
+                body: JSON.stringify({score: score, start_date: start_date})
             })
             .then(response => {
                 
@@ -126,14 +129,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 if(redirectFlag){
                     quizFinished = true
                     window.location.href = '/finish-quiz'
-                    fetch('/load-result', {
-                        method: "POST",
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify({score: score})
-                    })
-                    localStorage.setItem('finalScore', data)
+                    //acolo tinem minte id-ul quizului tocmai facut
+                    localStorage.setItem('encrypted', data)
                 }
             })
         }
@@ -149,11 +146,15 @@ document.addEventListener('DOMContentLoaded', function() {
         const sqlEditor = document.querySelector('#sql-editor');
         const scoreValue = document.querySelector('.score-value')
         const codeMirrorInstance = sqlEditor.nextSibling.CodeMirror;
+        const thumbsUpIcon = document.querySelector('.thumbs-up');
+        const thumbsDownIcon = document.querySelector('.thumbs-down');
 
         questionIndexSpan.innerText = currentQuestionIndex;
         questionContent.innerText = data.title;
         tableDescriptionContent.innerText = data.description;
 
+        thumbsDownIcon.classList.remove('clicked')
+        thumbsUpIcon.classList.remove('clicked')
         statusSpan.innerText = 'Waiting...';
         statusSpan.style.color = 'violet';
         submitButton.disabled = true;
@@ -161,6 +162,7 @@ document.addEventListener('DOMContentLoaded', function() {
         isCorrect = false;
         statusCodeReceived = false;
         scoreValue.innerText = data.points
+        vote = 0
 
         currQuestionId = data.id
         chosenQuestionIds.push(data.id)

@@ -62,7 +62,9 @@ class SqlService {
             }
 
         } catch (err) {
-            // console.log("Error: " + err);
+            //aici daca trimite niste sql care nu e corect, sare direct in catch si nu termina tranzactia
+            //de asta dau rollback, ca sa termin si in cazul asta tranzactia
+            await dbConnection.query('ROLLBACK')
             message = err.message
             statusCode = 2
             //aici sunt erorile de sintaxa pe care le trimitem

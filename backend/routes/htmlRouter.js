@@ -167,17 +167,16 @@ function routeHtml(){
         QuestionService.handleNextQuestion(req, res)
     })
     
-    addRoute('POST', '/finish-quiz', (req, res) => {
-        const score = QuizService.finishQuiz(req, res)
+    addRoute('POST', '/finish-quiz', async (req, res) => {
+        await QuizService.finishQuiz(req, res)
     })
 
     addRoute('GET', '/finish-quiz', (req, res) => {
         Loader.loadHTML(req, res, 'quizFinish.html')
     })
 
-    addRoute('POST', '/load-result', (req, res) => {
-        const result = getUserData(req)
-        console.log(result);
+    addRoute('POST', '/load-quiz-result', async (req, res) => {
+        await QuizService.getQuizResults(req, res)
     })
 }
 

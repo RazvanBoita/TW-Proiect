@@ -103,7 +103,7 @@ class QuestionService{
                 //? Easy questions are 5 points  
                 //? Medium questions are 8 points  
                 //? Hard questions are 12 points  
-                const {index, pickedQuestions, isCorrect} = JSON.parse(body)
+                const {index, pickedQuestions, isCorrect, vote, currentQuestion} = JSON.parse(body)
                 // console.log("Picked questions are: " + pickedQuestions);
 
                 let newIndex = parseInt(index)
@@ -128,6 +128,12 @@ class QuestionService{
                    else if(newIndex - 1 <=8) points = 8
                    else if(newIndex-1 <=12) points = 12
                    else console.log("Unknown points");
+                }
+                
+                const voteNo = parseInt(vote)
+                const currQuestionId = parseInt(currentQuestion)
+                if(vote!=0){
+                    this.updateQuestionRating(voteNo, currQuestionId)
                 }
 
                 const pickedQuestion = await this.chooseQuestionAlgo(type, pickedQuestions)
@@ -202,11 +208,13 @@ class QuestionService{
             await this.updateQuestionCounter(minCounterQuestion.id)
             const title = minCounterQuestion.title
             const description = minCounterQuestion.description
+            const now = new Date()
             const data = {
                 currentQuestion : 1,
                 questionContent: title,
                 tableDescription: description,
-                questionId: minCounterQuestion.id
+                questionId: minCounterQuestion.id,
+                start_date: now
             }
             return data;
         } catch (error) {
@@ -223,6 +231,21 @@ class QuestionService{
         } catch (error) {
             console.error('Error updating question counter:', error);
         }
+    }
+
+
+    static async updateQuestionRating(vote, currQuestionId){
+        try{
+            const incrementValue = vote === 1 ? 1 : -1;
+            const query = {
+                text: 'UPDATE sql_tutoring."Question" SET rating = rating + $1 WHERE id = $2',
+                values: [incrementValue, currQuestionId],
+            };
+
+            await dbConnection.query(query);
+        } catch (error) {
+            console.error('Error updating question rating:', error.message);
+        }   
     }
 
 }
