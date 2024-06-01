@@ -6,12 +6,15 @@ const checkSession = require('../utils/middleWare/checkSession');
 const logoutUser = require('../utils/middleWare/logoutUser');
 const checkAdminPrivileges = require('../utils/middleWare/checkAdminPrivilages');
 const handleCreateQuizz = require('../utils/middleWare/handleCreateQuizz');
-//
+
 
 const SignUpService = require('../services/signUpService');
+const SqlService = require('../services/sqlService')
 const AdminPrivilages = require('../utils/adminPrivilages');
 const CategoryService = require('../services/categoryService');
 const QuestionService = require('../services/questionService');
+const QuizService = require('../services/quizService');
+const { getUserData } = require('../utils/cookieHandler');
 function routeHtml(){
 
     addRoute('GET', '/signup', (req, res) => {
@@ -55,11 +58,14 @@ function routeHtml(){
         Loader.loadTemplateEngineHTML(req, res, 'intermediary.hbs', data)
     })
 
+    
     addRoute('GET', '/quiz', async (req, res) => {
         const data = await QuestionService.serveQuestion();
         //insert as data
         Loader.loadTemplateEngineHTML(req, res, 'quiz.hbs', data)
-    }) //pe viitor sa am si checksession aici
+    }) 
+
+    //pe viitor sa am si checksession aici
 
     addRoute('GET', '/login', (req, res) => {
         Loader.loadHTML(req, res, 'logIn.html')
@@ -68,6 +74,49 @@ function routeHtml(){
     addRoute('POST', '/login', (req, res) => {
         Loader.redirect(req, res, 'index.html', '/')
     }, checkCredentialsExist);
+
+    addRoute('GET', '/signup/verify', (req, res) => {
+        SignUpService.verifyEmail(req, res)
+    })
+
+    addRoute('GET', '/signup/verify', async (req, res) => {
+
+        const result = await SignUpService.verifyEmail(req, res)
+        
+        const code = result.code
+        const message = result.message
+        const label = result.label
+        const destination = result.destination
+
+        const data = {
+            title: 'Email verification',
+            message: message,
+            buttonLabel: label,
+            destination: destination
+        }
+        Loader.loadTemplateEngineHTML(req, res, 'intermediary.hbs', data)
+    })
+
+
+    addRoute('GET', '/quiz', async(req, res) => {
+        Loader.loadHTML(req, res, 'quizz.html')
+    })
+
+    addRoute('GET', '/load-quiz', async (req, res) => {
+
+        //this will always be the first question, so it should be an easy one
+        const data = await QuestionService.chooseFirstQuestion()
+        res.setHeader('Content-Type', 'application/json');
+
+        // Send the JSON response
+        res.end(JSON.stringify(data));
+
+
+        //insert as data
+        // Loader.loadTemplateEngineHTML(req, res, 'quiz.hbs', data)
+    }) 
+    
+
 
     addRoute('GET', '/navbar.html', async (req, res)=>{
         const result = AdminPrivilages.getCreateQuizzButton(req);
@@ -111,6 +160,26 @@ function routeHtml(){
 
     addRoute('GET', '/forbidden', (req, res) =>{
         Loader.loadHTML(req, res, 'forbidden.html');
+    })
+
+    addRoute('POST', '/run-sql', (req, res) => {
+        SqlService.processQuery(req, res)
+    })
+
+    addRoute('POST', '/next-question', (req, res) => {
+        QuestionService.handleNextQuestion(req, res)
+    })
+    
+    addRoute('POST', '/finish-quiz', async (req, res) => {
+        await QuizService.finishQuiz(req, res)
+    })
+
+    addRoute('GET', '/finish-quiz', (req, res) => {
+        Loader.loadHTML(req, res, 'quizFinish.html')
+    })
+
+    addRoute('POST', '/load-quiz-result', async (req, res) => {
+        await QuizService.getQuizResults(req, res)
     })
 }
 

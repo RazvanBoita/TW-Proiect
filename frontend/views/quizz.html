@@ -19,16 +19,16 @@
     <main class="whole-container">
         <div class="left-container">
             <div class="top-side">
-                <p class="question-index"><em>Question</em> <span class="sharp-number">{{currentQuestion}}</span> of <span class="sharp-number">12</span></p>
+                <p class="question-index"><em>Question</em> <span class="sharp-number">1</span> of <span class="sharp-number">12</span></p>
                 <div class="votes">
                     <ion-icon name="thumbs-up-sharp" class="thumbs-up"></ion-icon>
                     <ion-icon name="thumbs-down-sharp" class="thumbs-down"></ion-icon>
                 </div>
             </div>
             <div class="question-side">
-                <h4 class="question-content">{{questionContent}}</h4>
+                <h4 class="question-content"></h4>
                 <div class="table-description">
-                    <p id="table-description-content">{{tableDescription}}</p>
+                    <p id="table-description-content"></p>
                 </div>
             </div>
             <div class="bottom-side">
@@ -39,7 +39,11 @@
             <div class="top-side">
                 <p class="mini-title question-index">SQL Tutoring</p>
                 <div class="helpers">
-                    <ion-icon name="help-circle"></ion-icon>
+                    <p class="score">Score: <span class="score-value">0</span></p>
+                    <div class="helpers-tipbox">
+                        <ion-icon name="help-circle" class="helpers-icon"></ion-icon>
+                        <div class="scoretip">Easy - 5 points</br>Medium - 8 points</br>Hard - 12 points</div>
+                    </div>
                 </div>
             </div>
             <textarea id="sql-editor"></textarea>
@@ -63,11 +67,11 @@
         </div>
         
     </main>
+    <script src="../js/quiz.js"></script>
     <script src="../js/navbar.js"></script>
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.0/codemirror.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.0/mode/sql/sql.min.js"></script>
-    <script src="../frontend/js/quiz.js"></script>
 </body>
 </html>

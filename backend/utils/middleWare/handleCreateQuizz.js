@@ -60,10 +60,6 @@ async function showErrorMessage(req, res)
     };
     Loader.loadTemplateEngineHTML(req, res, 'createSqlQuery.hbs', data);
 }
-<<<<<<< HEAD
-=======
-
->>>>>>> 41f7560f1c9ecc988d46874332dc6f9f7135646a
 function capitalizeFirstLetter(str) {
     return str.charAt(0).toUpperCase() + str.slice(1);
 }

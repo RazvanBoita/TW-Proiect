@@ -7,6 +7,10 @@ const routeHtml = require('./backend/routes/htmlRouter');
 const routeJs = require('./backend/routes/jsRouter');
 const routeJSON = require('./backend/routes/jsonRouter');
 
+const fs = require('fs');
+const path = require('path');
+
+
 dotenv.config();
 
 //Routes
@@ -16,7 +20,8 @@ routeHtml();
 routeJs();
 routeJSON();
 
+
 const server = http.createServer(handleRequest);
 
 const PORT = process.env.SERVER_PORT;
-server.listen(PORT, ()=>console.log('Server: ' + `http://localhost:${process.env.SERVER_PORT}`));
+server.listen(PORT, ()=>console.log('Server: ' + `${process.env.BASE_URL}`));

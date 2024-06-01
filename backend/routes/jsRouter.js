@@ -43,6 +43,17 @@ function routeJs(){
         Loader.loadJs(req, res, '/templates/quizzCounter.js')
     })
 
+    addRoute('GET', '/frontend/js/quiz.js', (req, res) => {
+        Loader.loadJs(req, res, 'quiz.js')
+    })
+
+    addRoute('GET', '/js/quiz.js', (req, res) => {
+        Loader.loadJs(req, res, 'quiz.js')
+    })
+    addRoute('GET', '/js/quizFinish.js', (req, res) => {
+        Loader.loadJs(req, res, 'quizFinish.js')
+    })
+
 }
 
 module.exports = routeJs
