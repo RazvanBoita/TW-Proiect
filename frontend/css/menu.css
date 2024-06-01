@@ -4,13 +4,239 @@ h1{
     text-align: center;
     justify-content: center;
     font-family: var(--font-family);
-    color: var(--secondary-color);
+    color: var(--accent-color);
     font-weight: 700;
-    font-size: 8vw;
+    font-size: 3.5rem;
+    margin: 0;
+    text-decoration: overline;
 }
 
-@media (min-width: 1200px) {
-    h1 {
-        font-size: 7rem; 
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+.mainpage-content{
+    margin-top: 5vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5rem;
+    overflow-y: scroll;
+    scrollbar-width: none; 
+    -ms-overflow-style: none;
+}
+
+.title-side{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.cards-side{
+    border-top: 3px solid white;
+    display: flex;
+    width: 100%;
+    justify-content: space-around;
+}
+
+.card{
+    margin-top: .5rem;
+    width: 18%;
+    height: 35vh;
+    border-radius: 2rem;
+    background: #2980B9;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #FFFFFF, #6DD5FA, #2980B9);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #FFFFFF, #6DD5FA, #2980B9); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.card-title{
+    text-align: center;
+    padding: .5rem;
+    font-size: 1.25rem;
+}
+
+
+
+.card-btn {  
+    padding: 0.6em 2em;
+    border: none;
+    outline: none;
+    color: rgb(255, 255, 255);
+    background: #111;
+    cursor: pointer;
+    position: relative;
+    z-index: 0;
+    border-radius: 10px;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    /* margin-bottom: 1.5rem; */
+    font-weight: 700;
+}
+
+.card-btn:before {
+    content: "";
+    background: linear-gradient(
+    45deg,
+    #ff0000,
+    #ff7300,
+    #fffb00,
+    #48ff00,
+    #00ffd5,
+    #002bff,
+    #7a00ff,
+    #ff00c8,
+    #ff0000
+    );
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    background-size: 400%;
+    z-index: -1;
+    filter: blur(5px);
+    -webkit-filter: blur(5px);
+    width: calc(100% + 4px);
+    height: calc(100% + 4px);
+    animation: glowing-card-btn 20s linear infinite;
+    transition: opacity 0.3s ease-in-out;
+    border-radius: 10px;
+}
+
+@keyframes glowing-card-btn {
+    0% {
+    background-position: 0 0;
     }
+    50% {
+    background-position: 400% 0;
+    }
+    100% {
+    background-position: 0 0;
+    }
+}
+
+.card-btn:after {
+    z-index: -1;
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: #222;
+    left: 0;
+    top: 0;
+    border-radius: 10px;
+}
+
+
+
+.actual-title{
+    color: var(--accent-color);
+    font-style: italic;
+    letter-spacing: 1px;
+    font-weight: 800;
+    text-decoration: underline;
+}
+
+.extra-info{
+    font-size: 1.5rem;
+    color: white;
+    font-weight: 800;
+}
+
+
+.screenshots{
+    align-self: flex-start;
+    color: var(--accent-color);
+    font-size: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    gap: 3rem;
+}
+
+.ss-index{
+    margin: 0;
+}
+
+.screenshot{
+    display: flex;
+    width: 100%;
+    padding-left: 5rem;
+    gap: 1rem;
+}
+
+.ss-content{
+    max-width: 40%;
+}
+
+.pre-title{
+    align-self: flex-start;
+    padding-left: 5rem;
+    font-size: 2rem;
+    color: var(--button-color);
+    margin: 0;
+    font-weight: 700;
+    font-style: oblique;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+
+@media (max-width: 900px){
+    .ss-content{
+        max-width: 60%;
+    }
+    .screenshot{
+        display: flex;
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 650px){
+    .ss-content{
+        max-width: 80%;
+    }
+    .desktop-icon{
+        display: none;
+    }
+    .screenshot, .pre-title{
+        padding-left: 1rem;
+    }
+}
+
+@media (max-width: 400px){
+    .ss-content{
+        max-width: 90%;
+    }
+    .welcome-title{
+        font-size: 2rem;
+    }
+}
+
+
+footer{
+    width: 100%;
+    background-color: var(--body-color);
+    display: flex;
+    justify-content: center;
+    border-top: 4px solid black;
+}
+
+.authors{
+    font-size: 1.25rem;
+    color: var(--accent-color);
+    text-align: center;
+}
+
+.author-name{
+    color: var(--button-color);
+    font-weight: 700;
+    font-family: 'Courier New', Courier, monospace;
+    font-style: italic;
+    text-decoration: underline;
 }

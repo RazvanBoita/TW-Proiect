@@ -75,6 +75,11 @@ function routeHtml(){
         Loader.redirect(req, res, 'index.html', '/')
     }, checkCredentialsExist);
 
+
+    addRoute('GET', '/login-error', (req, res) => {
+        Loader.loadHTML(req, res, 'error.html')
+    })
+
     addRoute('GET', '/signup/verify', (req, res) => {
         SignUpService.verifyEmail(req, res)
     })
