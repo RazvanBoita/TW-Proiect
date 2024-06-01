@@ -53,12 +53,10 @@ function routeJs(){
     addRoute('GET', '/js/quizFinish.js', (req, res) => {
         Loader.loadJs(req, res, 'quizFinish.js')
     })
-    
+
     addRoute('GET', '/js/main.js', (req, res) => {
         Loader.loadJs(req, res, 'main.js')
     })
-
-
 
 }
 
