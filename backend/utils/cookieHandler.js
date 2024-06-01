@@ -44,6 +44,8 @@ function clearSessionId(req)
 function getRawCookie(req, cookieName)
 {
     const cookie = req.headers.cookie || '';
+    if(!cookie.includes(cookieName))
+        return '';
     return cookie === '' ? cookie : cookie.split(cookieName)[1].trim();
 }
 

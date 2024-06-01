@@ -60,7 +60,7 @@ function routeHtml(){
 
     
     addRoute('GET', '/quiz', async (req, res) => {
-        const data = await QuestionService.serveQuestion()
+        const data = await QuestionService.serveQuestion();
         //insert as data
         Loader.loadTemplateEngineHTML(req, res, 'quiz.hbs', data)
     }) 
@@ -154,6 +154,9 @@ function routeHtml(){
         Loader.loadHTML(req, res, 'importQuizz.html')
     }, logoutUser)
 
+    addRoute('GET', '/quizzes', async (req, res)=>{
+        Loader.loadHTML(req, res, 'quizzes.html');
+    })
 
     addRoute('GET', '/forbidden', (req, res) =>{
         Loader.loadHTML(req, res, 'forbidden.html');

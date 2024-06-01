@@ -5,3 +5,6 @@ async function terminate(){
 }
 
 terminate()
+QuestionService.serveQuestion().then(result => {
+    console.log(result);
+})

@@ -5,6 +5,7 @@ const routeCss = require('./backend/routes/cssRouter');
 const routeImgs = require('./backend/routes/imgRouter');
 const routeHtml = require('./backend/routes/htmlRouter');
 const routeJs = require('./backend/routes/jsRouter');
+const routeJSON = require('./backend/routes/jsonRouter');
 
 const fs = require('fs');
 const path = require('path');
@@ -17,7 +18,7 @@ routeCss()
 routeImgs()
 routeHtml();
 routeJs();
-
+routeJSON();
 
 
 const server = http.createServer(handleRequest);

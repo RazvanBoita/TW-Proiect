@@ -30,6 +30,18 @@ function routeJs(){
     addRoute('GET', '/js/liveView.js', (req, res) => {
         Loader.loadJs(req, res, 'liveView.js')
     })
+    addRoute('GET', '/js/getQuizzesPage.js', (req, res) => {
+        Loader.loadJs(req, res, 'getQuizzesPage.js')
+    })
+    addRoute('GET', '/js/templates/quizzList.js', (req, res)=>{
+        Loader.loadJs(req, res, '/templates/quizzList.js')
+    })
+    addRoute('GET', '/js/templates/categoryList.js', (req, res)=>{
+        Loader.loadJs(req, res, '/templates/categoryList.js')
+    })
+    addRoute('GET', '/js/templates/quizzCounter.js', (req, res)=>{
+        Loader.loadJs(req, res, '/templates/quizzCounter.js')
+    })
 
     addRoute('GET', '/frontend/js/quiz.js', (req, res) => {
         Loader.loadJs(req, res, 'quiz.js')
