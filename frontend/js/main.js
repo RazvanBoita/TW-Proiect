@@ -1,19 +1,25 @@
-// js/main.js
-fetch('/data')
-  .then(response => {
-    if (!response.ok) {
-      throw new Error('Network response was not ok');
-    }
-    return response.json();
-  })
-  .then(data => {
-    // Assuming `data` is an object with a `username` field
-    const username = data.username;
-
-    // Update the content of the <h2> element with the username
-    const h2Element = document.querySelector('main h2');
-    h2Element.textContent = `Welcome, ${username}!`;
-  })
-  .catch(error => {
-    console.error('There was a problem with your fetch operation:', error);
+document.addEventListener('DOMContentLoaded', () => {
+  // Select all the buttons with the class 'card-btn'
+  const buttons = document.querySelectorAll('.card-btn');
+  
+  // Add event listener for each button
+  buttons[0].addEventListener('click', () => {
+      window.location.href = '/login';
   });
+  
+  buttons[1].addEventListener('click', () => {
+      window.location.href = '/quiz';
+  });
+  
+  buttons[2].addEventListener('click', () => {
+      window.location.href = '/quizzes';
+  });
+  
+  buttons[3].addEventListener('click', () => {
+      window.location.href = '/dashboard';
+  });
+  
+  buttons[4].addEventListener('click', () => {
+      window.location.href = '/review';
+  });
+});
