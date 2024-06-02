@@ -6,6 +6,7 @@ async function fetchQuizzes() {
         const response = await fetch('/quizzList'); // Fetch quizzes from the first page
         const quizzesJSON = await response.json();
         document.getElementById("list").innerHTML = displayQuizzes(quizzesJSON);
+        redirectQuizzHandler();
     } catch (error) {
         console.error('Error fetching quizzes:', error);
     }

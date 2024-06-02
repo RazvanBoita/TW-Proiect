@@ -64,6 +64,7 @@
     </main>
     <script src="../js/navbar.js"></script>
     <script src="../js/getQuizzesPage.js"></script>
+    <script src="../js/redirectToSelectedQuizz.js"></script>
 
     <script  id="template-list-category" type="text/template">
         <option class="options" value="{{type}}">{{type}}</option>
@@ -71,7 +72,7 @@
     <script id="template-list-quizzes" type="text/template">
         <tr>
             <td id="status-field"></td>
-            <td><a href="/quizzes/{{id}}">{{title}}</a></td>
+            <td><a href = "/quiz?id={{id}}">{{title}}</a></td>
             <td>{{rating}}</td>
             <td class="{{difficulty}}">{{difficulty}}</td>
         </tr>

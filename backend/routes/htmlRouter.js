@@ -1,3 +1,4 @@
+const url = require('url');
 const {addRoute} = require('../../router');
 const Loader = require('../loaders/Loader');
 //middlewares
@@ -103,17 +104,34 @@ function routeHtml(){
     })
 
     addRoute('GET', '/load-quiz', async (req, res) => {
-
-        //this will always be the first question, so it should be an easy one
-        const data = await QuestionService.chooseFirstQuestion()
+        const parsedUrl = url.parse(req.url, true);
+        const quizzId = parsedUrl.query.id;
+        let data = null;
+        if(!quizzId)
+            //this will always be the first question, so it should be an easy one
+            data = await QuestionService.chooseFirstQuestion()
+        else
+        {
+            quizzData = await QuestionService.getQuestionByID(quizzId);
+            if(quizzData === null)
+            {
+                res.setHeader('Content-Type', 'application/json');
+                res.end(JSON.stringify(quizzData));
+                return;
+            }
+            data = {
+                currentQuestion : 1,
+                questionContent: quizzData.title,
+                tableDescription: quizzData.description,
+                questionId: quizzId,
+                start_date: new Date()
+            }
+        }
         res.setHeader('Content-Type', 'application/json');
 
         // Send the JSON response
         res.end(JSON.stringify(data));
 
-
-        //insert as data
-        // Loader.loadTemplateEngineHTML(req, res, 'quiz.hbs', data)
     }) 
     
 

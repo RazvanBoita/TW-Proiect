@@ -53,6 +53,9 @@ function routeJs(){
     addRoute('GET', '/js/quizFinish.js', (req, res) => {
         Loader.loadJs(req, res, 'quizFinish.js')
     })
+    addRoute('GET', '/js/redirectToSelectedQuizz.js', (req, res) => {
+        Loader.loadJs(req, res, 'redirectToSelectedQuizz.js')
+    })
 
 }
 
