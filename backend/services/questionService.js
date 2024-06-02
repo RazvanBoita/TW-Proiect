@@ -210,9 +210,9 @@ class QuestionService{
 
                 const pickedQuestion = await this.chooseQuestionAlgo(type, pickedQuestions)
 
-                const {id, title, difficulty, description} = pickedQuestion
+                const {id, title, difficulty, description, hint} = pickedQuestion
                 // console.log(id, title, difficulty, description);
-                const data = {id, title, difficulty, description, points}
+                const data = {id, title, difficulty, description, points, hint}
 
                 // console.log("Currently on question: " + index);
 
@@ -281,12 +281,14 @@ class QuestionService{
             const title = minCounterQuestion.title
             const description = minCounterQuestion.description
             const now = new Date()
+            const hint = minCounterQuestion.hint
             const data = {
                 currentQuestion : 1,
                 questionContent: title,
                 tableDescription: description,
                 questionId: minCounterQuestion.id,
-                start_date: now
+                start_date: now,
+                hint: hint
             }
             return data;
         } catch (error) {
