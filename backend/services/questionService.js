@@ -1,6 +1,7 @@
 const dbConnection = require('../config/postgresDB')
 const QuestionData = require('../models/questionData');
-
+const SolvedQuestionsService = require('./solvedQuestionsService');
+const {getUserData} = require('../utils/cookieHandler');
 class QuestionService{
 
     static async insertQuestion(title, difficulty, answer, description){
@@ -177,6 +178,9 @@ class QuestionService{
                 //? Hard questions are 12 points  
                 const {index, pickedQuestions, isCorrect, vote, currentQuestion} = JSON.parse(body)
                 // console.log("Picked questions are: " + pickedQuestions);
+                const currQuestionId = parseInt(currentQuestion)
+                
+          
 
                 let newIndex = parseInt(index)
                 let points = 0
@@ -195,15 +199,17 @@ class QuestionService{
                     return
                 }
                 
+                SolvedQuestionsService.addQuestion(currQuestionId, getUserData(req).userId, new Date());
+
                 if(isCorrect){
-                   if(newIndex - 1 <=4) points = 5
-                   else if(newIndex - 1 <=8) points = 8
-                   else if(newIndex-1 <=12) points = 12
-                   else console.log("Unknown points");
+                    // Question solved, add it to the Solved_Questions table
+                    if(newIndex - 1 <=4) points = 5
+                    else if(newIndex - 1 <=8) points = 8
+                    else if(newIndex-1 <=12) points = 12
+                    else console.log("Unknown points");
                 }
                 
                 const voteNo = parseInt(vote)
-                const currQuestionId = parseInt(currentQuestion)
                 if(vote!=0){
                     this.updateQuestionRating(voteNo, currQuestionId)
                 }

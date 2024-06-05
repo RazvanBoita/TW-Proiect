@@ -33,14 +33,23 @@ function routeJs(){
     addRoute('GET', '/js/getQuizzesPage.js', (req, res) => {
         Loader.loadJs(req, res, 'getQuizzesPage.js')
     })
-    addRoute('GET', '/js/templates/quizzList.js', (req, res)=>{
-        Loader.loadJs(req, res, '/templates/quizzList.js')
+    addRoute('GET', '/js/templates/quizzes/quizzList.js', (req, res)=>{
+        Loader.loadJs(req, res, '/templates/quizzes/quizzList.js')
     })
-    addRoute('GET', '/js/templates/categoryList.js', (req, res)=>{
-        Loader.loadJs(req, res, '/templates/categoryList.js')
+    addRoute('GET', '/js/templates/quizzes/categoryList.js', (req, res)=>{
+        Loader.loadJs(req, res, '/templates/quizzes/categoryList.js')
     })
-    addRoute('GET', '/js/templates/quizzCounter.js', (req, res)=>{
-        Loader.loadJs(req, res, '/templates/quizzCounter.js')
+    addRoute('GET', '/js/templates/quizzes/quizzCounter.js', (req, res)=>{
+        Loader.loadJs(req, res, '/templates/quizzes/quizzCounter.js')
+    })
+    addRoute('GET', '/js/templates/progress/problemsProgress.js', (req, res)=>{
+        Loader.loadJs(req, res, '/templates/progress/problemsProgress.js');
+    })
+    addRoute('GET', '/js/templates/progress/solvedQuizzList.js', (req, res)=>{
+        Loader.loadJs(req, res, '/templates/progress/solvedQuizzList.js');
+    })
+    addRoute('GET', '/js/templates/progress/userStats.js', (req, res)=>{
+        Loader.loadJs(req, res, '/templates/progress/userStats.js');
     })
 
     addRoute('GET', '/frontend/js/quiz.js', (req, res) => {
@@ -50,6 +59,7 @@ function routeJs(){
     addRoute('GET', '/js/quiz.js', (req, res) => {
         Loader.loadJs(req, res, 'quiz.js')
     })
+
     addRoute('GET', '/js/quizFinish.js', (req, res) => {
         Loader.loadJs(req, res, 'quizFinish.js')
     })

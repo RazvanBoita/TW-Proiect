@@ -174,7 +174,10 @@ function routeHtml(){
 
     addRoute('GET', '/quizzes', async (req, res)=>{
         Loader.loadHTML(req, res, 'quizzes.html');
-    })
+    }, checkSession)
+    addRoute('GET', '/progress', async (req, res)=>{
+        Loader.loadHTML(req, res, 'progress.html');
+    }, checkSession)
 
     addRoute('GET', '/forbidden', (req, res) =>{
         Loader.loadHTML(req, res, 'forbidden.html');

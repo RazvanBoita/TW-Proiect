@@ -19,6 +19,23 @@ class TakenQuizService{
             console.error('Error inserting into Taken_quizzes table:', error.message);
         }
     }
+    static async getHighestScore(userId)
+    {
+        try {
+            const query = {
+                text: 'SELECT MAX(score) from sql_tutoring."taken_quizzes" WHERE user_id = $1',
+                values: [userId],
+            };
+    
+            const result = await dbConnection.query(query);
+            if(result.rows[0].max === null)
+                return 0;
+            
+            return result.rows[0].max;
+        } catch (error) {
+            console.error('Error inserting into Taken_quizzes table:', error.message);
+        }
+    }
 }
 
 
