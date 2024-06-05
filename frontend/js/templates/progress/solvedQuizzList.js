@@ -8,7 +8,6 @@ async function fetchSolvedQuizzes() {
         const response = await fetch(`/solvedQuizzesList?page=${pageIndex}`); // Fetch quizzes from the first page
         const quizzesJSON = await response.json();
         document.getElementById("list").innerHTML = displaySolvedQuizzes(quizzesJSON);
-       // redirectQuizzHandler();
     } catch (error) {
         console.error('Error fetching solved quizz:', error);
     }

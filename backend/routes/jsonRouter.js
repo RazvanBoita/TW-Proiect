@@ -29,7 +29,8 @@ function routeJSON()
             categoryId = '';
         }
         
-        const questions = await QuestionService.getPageQuestions(pageIndex, difficulty, categoryId);
+        const userId = getUserData(req).userId;
+        const questions = await QuestionService.getPageQuestions(pageIndex, difficulty, categoryId, userId);
         Loader.loadJSON(req, res, questions);
     }, checkSession)
 
@@ -53,7 +54,7 @@ function routeJSON()
     }, checkSession)
 
     addRoute('GET', '/categoryList', async (req, res) => {
-        const categories = await CategoryService.getCategoriesAsHTML();
+        const categories = await CategoryService.getCategories();
         Loader.loadJSON(req, res, categories);
     }, checkSession)
   

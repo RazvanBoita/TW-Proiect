@@ -48,10 +48,13 @@ th {
     font-weight: 700;
 }
 
-#status-field {
+.status-field {
     padding: auto;
-    text-align: left;
-    padding-left: 0;
+    text-align: start;
+
+}
+.move-left{
+    margin-right: 7vw;
 }
 
 .Medium {

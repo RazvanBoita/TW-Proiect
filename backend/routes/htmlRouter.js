@@ -153,7 +153,7 @@ function routeHtml(){
     }, logoutUser)
 
     addRoute('GET', '/createQuiz', async (req, res) =>{
-        const categories = await CategoryService.getCategoriesAsHTML();
+        const categories = await CategoryService.getCategories();
         const data = {
             categories
         };
@@ -161,7 +161,7 @@ function routeHtml(){
     }, checkAdminPrivileges)
 
     addRoute('POST', '/createQuiz', async (req, res)=>{
-        const categories = await CategoryService.getCategoriesAsHTML();
+        const categories = await CategoryService.getCategories();
         const data = {
             categories
         };

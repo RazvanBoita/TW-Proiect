@@ -33,10 +33,10 @@ class QuestionService{
         return questions;
         
     }
-    static async getPageQuestions(pageIndex, difficulty, categoryId)
+    static async getPageQuestions(pageIndex, difficulty, categoryId, userId)
     {
         const maxQuestions = 10;
-        let queryText = 'SELECT q.* FROM sql_tutoring."Question" q ';
+        let queryText = 'SELECT q.*, CASE WHEN sq.id_question IS NOT NULL THEN true ELSE false END AS is_solved FROM sql_tutoring."Question" q ';
         let params = [];
         let index = 1;
         if(categoryId !== '')
@@ -46,7 +46,8 @@ class QuestionService{
             index++;
         }
 
-        queryText+=`WHERE q.difficulty LIKE $${index} ORDER BY q.id LIMIT $${index + 1} OFFSET $${index + 2}`;
+        queryText+=`LEFT JOIN sql_tutoring."Solved_Questions" sq ON sq.id_question = q.id AND sq.id_user = $${index} WHERE q.difficulty LIKE $${index + 1} ORDER BY q.id LIMIT $${index + 2} OFFSET $${index + 3}`;
+        params.push(userId);
         params.push(difficulty);
         params.push(maxQuestions);
         params.push(pageIndex * maxQuestions);
@@ -59,7 +60,7 @@ class QuestionService{
             const result =  await dbConnection.query(selectQuery);
             const rows = result.rows;
             const questions = rows.map(element => {
-            return { id: element.id, title: element.title, difficulty: element.difficulty, rating: element.rating };
+            return { id: element.id, is_solved: element.is_solved, title: element.title, difficulty: element.difficulty, rating: element.rating };
             });
             
             return questions;
@@ -198,11 +199,11 @@ class QuestionService{
                     res.end("STOP THE APP")
                     return
                 }
-                
-                SolvedQuestionsService.addQuestion(currQuestionId, getUserData(req).userId, new Date());
 
                 if(isCorrect){
                     // Question solved, add it to the Solved_Questions table
+                    SolvedQuestionsService.addQuestion(currQuestionId, getUserData(req).userId, new Date());
+
                     if(newIndex - 1 <=4) points = 5
                     else if(newIndex - 1 <=8) points = 8
                     else if(newIndex-1 <=12) points = 12

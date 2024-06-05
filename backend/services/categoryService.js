@@ -31,7 +31,7 @@ class CategoryService{
             throw error;
         }
     }
-    static async getCategoriesAsHTML()
+    static async getCategories()
     {
         const result = await CategoryService.getAllCategories();
         if(result === null)

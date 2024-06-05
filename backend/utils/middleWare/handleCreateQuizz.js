@@ -53,7 +53,7 @@ const handleCreateQuizz =  async (req, res, next) => {
 
 async function showErrorMessage(req, res)
 {
-    const categories = await CategoryService.getCategoriesAsHTML();
+    const categories = await CategoryService.getCategories();
     const data = {
         categories,
         errorMessage: "Question already exists!",
