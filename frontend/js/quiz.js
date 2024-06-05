@@ -49,6 +49,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
    let score = 0 
    let currQuestionId = 0
+   let curr_hint = 'No hint found for this question'
 
    //change message at the last question
    
@@ -69,15 +70,17 @@ document.addEventListener('DOMContentLoaded', function() {
         const questionIndexSpan = document.querySelector('.question-index .sharp-number');
         const questionContent = document.querySelector('.question-content');
         const tableDescriptionContent = document.querySelector('#table-description-content');
+        const difficulty = document.querySelector('.difficulty')
 
         questionIndexSpan.innerText = data.currentQuestion;
         questionContent.innerText = data.questionContent;
         tableDescriptionContent.innerText = data.tableDescription;
+        difficulty.innerText = 'Difficulty: Easy'
 
         currQuestionId = data.questionId        
         chosenQuestionIds.push(data.questionId)
         start_date = data.start_date
-        // console.log("Start date is: " + data.start_date);
+        curr_hint = data.hint
     })
     .catch(error => {
         console.error('Error fetching quiz:', error);
@@ -160,6 +163,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const codeMirrorInstance = sqlEditor.nextSibling.CodeMirror;
         const thumbsUpIcon = document.querySelector('.thumbs-up');
         const thumbsDownIcon = document.querySelector('.thumbs-down');
+        const difficulty = document.querySelector('.difficulty')
 
         questionIndexSpan.innerText = currentQuestionIndex;
         questionContent.innerText = data.title;
@@ -179,7 +183,17 @@ document.addEventListener('DOMContentLoaded', function() {
         currQuestionId = data.id
         chosenQuestionIds.push(data.id)
 
+        if(currIdx<=4){
+            difficulty.innerText = 'Difficulty: Easy'
+        } else if(currIdx<=8){
+            difficulty.innerText = 'Difficulty: Medium'
+        } else if(currIdx <= 12){
+            difficulty.innerText = 'Difficulty: Hard'
+        }
+
         if(currIdx == 12) submitButton.innerText = 'Submit & finish'
+
+        curr_hint = data.hint
 
         consoleDiv.innerHTML = '<p>The results of your query will appear here!</p>';
         codeMirrorInstance.setValue('');
@@ -239,9 +253,51 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
 
+    const hintBtn = document.querySelector('.modify-color');
+    let hintInserted = false;
 
-    
+    function insertHint() {
+        if (!hintInserted) {
+            const sqlEditor = document.querySelector('#sql-editor');
+            const codeMirrorInstance = sqlEditor.nextSibling.CodeMirror;
+            let currentContent = codeMirrorInstance.getValue();
+            const hintComment = `-- Hint: ${curr_hint}\n`;
 
+            currentContent = `${hintComment}${currentContent}`;
+            codeMirrorInstance.setValue(currentContent);
+
+            hintInserted = true;
+        }
+    }
+
+
+    function removeHint() {
+        if (hintInserted) {
+            const sqlEditor = document.querySelector('#sql-editor');
+            const codeMirrorInstance = sqlEditor.nextSibling.CodeMirror;
+            let currentContent = codeMirrorInstance.getValue();
+            const hintComment = `-- Hint: ${curr_hint}\n`;
+
+            if (currentContent.startsWith(hintComment)) {
+                currentContent = currentContent.slice(hintComment.length);
+                codeMirrorInstance.setValue(currentContent);
+            }
+
+            hintInserted = false;
+        }
+    }
+
+    hintBtn.addEventListener('mouseenter', insertHint);
+    hintBtn.addEventListener('mouseleave', removeHint);
+
+    hintBtn.addEventListener('touchstart', function(e) {
+        insertHint();
+        e.preventDefault();
+    });
+    hintBtn.addEventListener('touchend', function(e) {
+        removeHint();
+        e.preventDefault();
+    });
 
 
 
