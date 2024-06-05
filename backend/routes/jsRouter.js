@@ -14,6 +14,9 @@ function routeJs(){
     addRoute('GET', '/js/navbar.js', (req, res) => {
         Loader.loadJs(req, res, 'navbar.js')
     })
+    addRoute('GET', '/js/createQuizzButtonVisibility.js', (req, res) => {
+        Loader.loadJs(req, res, 'createQuizzButtonVisibility.js')
+    })
     addRoute('GET', '/js/logout.js', (req, res) => {
         Loader.loadJs(req, res, 'logout.js')
     })

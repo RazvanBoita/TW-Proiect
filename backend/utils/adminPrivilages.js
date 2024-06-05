@@ -2,10 +2,7 @@ const cookieHandler = require('./cookieHandler');
 
 class AdminPrivilages{
     static getCreateQuizzButton(req) {
-        if(!cookieHandler.isUserAdmin(req))
-            return "display: none;";
-
-        return "visibility: visible;"
+        return cookieHandler.isUserAdmin(req);
     }
 }
 module.exports = AdminPrivilages;

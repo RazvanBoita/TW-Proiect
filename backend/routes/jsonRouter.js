@@ -10,8 +10,18 @@ const CategoryService = require('../services/categoryService');
 const SolvedQuestionsService = require('../services/solvedQuestionsService');
 const TakenQuizService = require('../services/takenQuizService');
 const LeaderboardService = require('../services/leaderboardService');
+const checkAdminPrivileges = require('../utils/middleWare/checkAdminPrivilages');
+const AdminPrivilages = require('../utils/adminPrivilages');
 function routeJSON()
 {
+    addRoute('GET', '/createQuizzButton', async (req, res) => {
+        const visibility = AdminPrivilages.getCreateQuizzButton(req);
+        const data = {
+            visibility,
+        }
+        Loader.loadJSON(req, res, data);
+    }, checkSession);
+
     addRoute('GET', '/quizzList', async (req, res) => {
         const parsedUrl = url.parse(req.url, true);
         const pageIndex = parsedUrl.query.page || 0;

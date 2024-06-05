@@ -15,7 +15,7 @@ const AdminPrivilages = require('../utils/adminPrivilages');
 const CategoryService = require('../services/categoryService');
 const QuestionService = require('../services/questionService');
 const QuizService = require('../services/quizService');
-const { getUserData } = require('../utils/cookieHandler');
+const { getUserData,  checkSessionId} = require('../utils/cookieHandler');
 function routeHtml(){
 
     addRoute('GET', '/signup', (req, res) => {
@@ -101,7 +101,7 @@ function routeHtml(){
 
     addRoute('GET', '/quiz', async(req, res) => {
         Loader.loadHTML(req, res, 'quizz.html')
-    })
+    }, checkSession)
 
     addRoute('GET', '/load-quiz', async (req, res) => {
         const parsedUrl = url.parse(req.url, true);
@@ -136,36 +136,27 @@ function routeHtml(){
     
 
 
-    addRoute('GET', '/navbar.html', async (req, res)=>{
-        const result = AdminPrivilages.getCreateQuizzButton(req);
-        const data = {
-            result
-        }
-        Loader.loadTemplateEngineHTML(req, res, 'navbar.hbs', data);
+    addRoute('GET', '/navbar.html', (req, res)=>{
+        if(!checkSessionId(req))
+            Loader.loadHTML(req, res, 'navbar.html', 404);
+        else
+            Loader.loadHTML(req, res, 'navbar.html');
     })
 
     addRoute('GET', '/', (req, res) => {
         Loader.loadHTML(req, res, 'index.html')
-    }, checkSession); 
+    }); 
 
     addRoute('POST', '/logout', (req, res) =>{
         Loader.loadHTML(req, res, 'logIn.html')
     }, logoutUser)
 
     addRoute('GET', '/createQuiz', async (req, res) =>{
-        const categories = await CategoryService.getCategories();
-        const data = {
-            categories
-        };
-        Loader.loadTemplateEngineHTML(req, res, 'createSqlQuery.hbs', data);
+        Loader.loadHTML(req, res, 'createSqlQuery.html');
     }, checkAdminPrivileges)
 
     addRoute('POST', '/createQuiz', async (req, res)=>{
-        const categories = await CategoryService.getCategories();
-        const data = {
-            categories
-        };
-        Loader.loadTemplateEngineHTML(req, res, 'createSqlQuery.hbs', data);
+        Loader.loadHTML(req, res, 'createSqlQuery.html');
     }, handleCreateQuizz)
 
     addRoute('GET', '/importQuizz', (req, res) =>{
