@@ -54,6 +54,9 @@ function routeJs(){
     addRoute('GET', '/js/templates/progress/userStats.js', (req, res)=>{
         Loader.loadJs(req, res, '/templates/progress/userStats.js');
     })
+    addRoute('GET', '/js/templates/leaderboards/leaderboardsList.js', (req, res)=>{
+        Loader.loadJs(req, res, '/templates/leaderboards/leaderboardsList.js');
+    })
 
     addRoute('GET', '/frontend/js/quiz.js', (req, res) => {
         Loader.loadJs(req, res, 'quiz.js')

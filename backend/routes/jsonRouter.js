@@ -118,6 +118,12 @@ function routeJSON()
         }
         Loader.loadJSON(req, res, data);
     }, checkSession)
+    addRoute('GET', '/leaderboardsList', async (req, res)=>{
+
+        const user = getUserData(req);
+        const data = await LeaderboardService.getTopUsers(user.userId, 10);
+        Loader.loadJSON(req, res, data);
+    }, checkSession)
 }
 
 

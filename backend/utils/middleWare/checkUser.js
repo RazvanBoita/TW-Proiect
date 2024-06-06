@@ -22,7 +22,6 @@ const checkCredentialsExist = async (req, res, next) => {
             // console.log(email, password);
             // Check if the user exists in the database based on the provided email
             const result = await UserService.getUser(email);
-
             if(!result)
             {
                 // If user does not exist, respond with an error message
@@ -44,7 +43,7 @@ const checkCredentialsExist = async (req, res, next) => {
                 return res.end(JSON.stringify({ error: 'Forbidden!' }));
             }
             
-            const userData = new UserData(result[0].idUser, result[0].name, result[0].email, result[0].isAdmin);
+            const userData = new UserData(result[0].id, result[0].name, result[0].email, result[0].isAdmin);
             cookieHandler.setSessionId(res, userData);
             
             next();

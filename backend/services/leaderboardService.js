@@ -69,6 +69,21 @@ class LeaderboardService{
             console.log("Error at selecting Leaderboard table: " + error);
         }
     }
+    static async getTopUsers(userId, limit)
+    {
+        try{
+            const selectQuery = {
+                text: 'SELECT u.name, l.solved_questions as problems, (SELECT MAX(score) FROM sql_tutoring."taken_quizzes" WHERE user_id = u.id) as highScore FROM sql_tutoring."Leaderboard" l JOIN sql_tutoring."User" u ON l.id_user = u.id ORDER BY problems DESC, highScore DESC LIMIT $1',
+                values: [limit],
+            }
+            const result = await dbConnection.query(selectQuery);
+            return result.rows;
+
+        }
+        catch(error){
+            console.log("Error at selecting Leaderboard table: " + error);
+        }
+    }
    
 }
 

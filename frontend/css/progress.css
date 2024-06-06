@@ -15,6 +15,7 @@ main {
     margin: 0;
 }
 p{
+    font-family: var(--font-family);
     word-wrap: break-word;
 }
 a{
@@ -22,6 +23,7 @@ a{
     color: var(--accent-color);
 }
 a:hover{
+    font-family: var(--font-family);
     color: var(--secondary-color);
 }
 .container {
@@ -129,6 +131,7 @@ tbody tr:nth-child(even) {
 }
 
 th, td {
+    font-family: var(--font-family);
     height: 5vh;
     border-style: none;
     text-align: left;
