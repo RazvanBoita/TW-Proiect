@@ -58,7 +58,7 @@ async function showErrorMessage(req, res)
         categories,
         errorMessage: "Question already exists!",
     };
-    Loader.loadTemplateEngineHTML(req, res, 'createSqlQuery.hbs', data);
+    Loader.loadHTML(req, res, 'createSqlQuery.html');
 }
 function capitalizeFirstLetter(str) {
     return str.charAt(0).toUpperCase() + str.slice(1);

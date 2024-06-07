@@ -1,6 +1,6 @@
 const url = require('url');
 const {addRoute, use} = require('../../router');
-const {getUserData} = require('../utils/cookieHandler');
+const {getUserData, isUserAdmin} = require('../utils/cookieHandler');
 const Loader = require('../loaders/Loader');
 
 const checkSession = require('../utils/middleWare/checkSession');
@@ -41,7 +41,11 @@ function routeJSON()
         
         const userId = getUserData(req).userId;
         const questions = await QuestionService.getPageQuestions(pageIndex, difficulty, categoryId, userId);
-        Loader.loadJSON(req, res, questions);
+        const data={
+            questions,
+            isUserAdmin: isUserAdmin(req),
+        }
+        Loader.loadJSON(req, res, data);
     }, checkSession)
 
     addRoute('GET', '/quizzCounter', async (req, res) => {
@@ -124,6 +128,18 @@ function routeJSON()
         const data = await LeaderboardService.getTopUsers(user.userId, 10);
         Loader.loadJSON(req, res, data);
     }, checkSession)
+
+    //DELETE
+    addRoute('DELETE', '/quizzList', async(req, res) => {
+        const parsedUrl = url.parse(req.url, true);
+
+        const id = parsedUrl.query.id;
+        const deletedData = await QuestionService.delete(id);
+        data={
+            message: `Question with ID ${id} has been deleted!`,
+        }
+        Loader.loadJSON(req, res, data);
+    }, checkAdminPrivileges)
 }
 
 

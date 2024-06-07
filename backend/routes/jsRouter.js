@@ -74,6 +74,12 @@ function routeJs(){
         Loader.loadJs(req, res, 'main.js')
     })
 
+    addRoute('GET', '/js/deleteQuestion.js', (req, res) => {
+        Loader.loadJs(req, res, 'deleteQuestion.js')
+    })
+
+    
+
 }
 
 module.exports = routeJs

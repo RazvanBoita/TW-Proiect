@@ -103,6 +103,8 @@ function routeHtml(){
         Loader.loadHTML(req, res, 'quizz.html')
     }, checkSession)
 
+
+
     addRoute('GET', '/load-quiz', async (req, res) => {
         const parsedUrl = url.parse(req.url, true);
         const quizzId = parsedUrl.query.id;
@@ -195,6 +197,7 @@ function routeHtml(){
     addRoute('POST', '/load-quiz-result', async (req, res) => {
         await QuizService.getQuizResults(req, res)
     })
+
 }
 
 module.exports = routeHtml

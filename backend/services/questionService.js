@@ -97,15 +97,19 @@ class QuestionService{
         }
     }
     
-    //! deprecated
-    static async deleteByID(id){
-        try {
-            await dbConnection.query('DELETE FROM quiz_questions WHERE id = ?', [id]);
-            console.log('Question removed successfully.');
-        } catch (error) {
-            console.error('Error removing question:', error.message);
-        } finally {
-            dbConnection.end();
+    static async delete(id){
+        try{
+            // Perform DELETE operation
+            const deleteQuery = {
+                text: 'DELETE FROM sql_tutoring."Question" WHERE id=$1',
+                values: [id],
+            };
+            const result = await dbConnection.query(deleteQuery);
+        
+            return result.rows;
+        }
+        catch(error){
+            console.error('Error executing DELETE query for Question table:', error);
         }
     }
 
