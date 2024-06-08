@@ -28,15 +28,15 @@
                 <h5 id="topics"></h5>
             </div>
             <div class="bottom-side">
-                <button id="submit-button">Submit quizz</button>
+                <button id="update-button">Update quizz</button>
                 <input type="file" id="input-json" accept=".json" style="display: none;">
                 <button id="import-button" type="button" onclick="document.getElementById('input-json').click()">Import quizz</button>
             </div>
         </div>
         <div class="right-container">
-            <form id="create-quiz-form" action="/createQuiz" method="post">
+            <form id="update-quiz-form" action="/api/quiz" method="post">
             <div id="left-form">
-                <h4 id="subtitle">Create Quizz</h4>
+                <h4 id="subtitle">Update Quizz</h4>
                 <label for="category">Category</label>
                 <select name="category" id="category" required multiple size="6">
                   
@@ -70,7 +70,7 @@
     </main>
     <script src="../js/navbar.js"></script>
     <script src="../js/importQuestion.js"></script>
-    <script src="../js/submitCreateQuizzForm.js"></script>
+    <script src="../js/updateQuestionForm.js"></script>
     <script src="../js/liveView.js"></script>
 
     <script  id="template-list-category" type="text/template">
@@ -89,6 +89,7 @@
         window.addEventListener('resize', adjustContainerHeight);
     </script>
 
-<script src="../js/templates/quizzes/categoryList.js" type="text/javascript"> </script>
+    <script src="../js/templates/quizzes/categoryList.js" type="text/javascript"> </script>
+    <script src="../js/templates/updateQuizz/quizzData.js"></script>
 </body>
 </html>

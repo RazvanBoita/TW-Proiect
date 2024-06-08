@@ -15,7 +15,10 @@ const handleCreateQuizz =  async (req, res, next) => {
         try 
         {
             const difficulty = capitalizeFirstLetter(formData.difficulty);
-            const questionData = await QuestionService.insertQuestion(formData.quizz_question, difficulty, formData.answer_area, formData.description_area);
+            if(formData.hint_area === '')
+                formData.hint_area = 'None';
+                
+            const questionData = await QuestionService.insertQuestion(formData.quizz_question, difficulty, formData.answer_area, formData.description_area, formData.hint_area);
             // Error at inserting question into db
             if(questionData === null)
             {

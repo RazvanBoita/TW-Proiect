@@ -4,7 +4,7 @@ async function onDelete(button)
         return;
 
     const questionId = button.id;
-    const url = `/quizzList?id=${questionId}`;
+    const url = `/api/quiz?id=${questionId}`;
     try {
         const response = await fetch(url,  {
             method: 'DELETE',

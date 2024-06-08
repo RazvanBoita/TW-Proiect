@@ -1,6 +1,7 @@
 const url = require('url');
 const {addRoute, use} = require('../../router');
 const {getUserData, isUserAdmin} = require('../utils/cookieHandler');
+const {getData} = require('../utils/getFormData');
 const Loader = require('../loaders/Loader');
 
 const checkSession = require('../utils/middleWare/checkSession');
@@ -12,6 +13,7 @@ const TakenQuizService = require('../services/takenQuizService');
 const LeaderboardService = require('../services/leaderboardService');
 const checkAdminPrivileges = require('../utils/middleWare/checkAdminPrivilages');
 const AdminPrivilages = require('../utils/adminPrivilages');
+const QuestionCategoryService = require('../services/questionCategoryService');
 function routeJSON()
 {
     addRoute('GET', '/createQuizzButton', async (req, res) => {
@@ -129,14 +131,79 @@ function routeJSON()
         Loader.loadJSON(req, res, data);
     }, checkSession)
 
-    //DELETE
-    addRoute('DELETE', '/quizzList', async(req, res) => {
+    // Delete the quiz    
+    addRoute('DELETE', '/api/quiz', async(req, res) => {
         const parsedUrl = url.parse(req.url, true);
 
         const id = parsedUrl.query.id;
         const deletedData = await QuestionService.delete(id);
         data={
             message: `Question with ID ${id} has been deleted!`,
+        }
+        Loader.loadJSON(req, res, data);
+    }, checkAdminPrivileges)
+
+    // Get quiz data
+    addRoute('GET', '/api/quiz', async(req, res)=>{
+        const parsedUrl = url.parse(req.url, true);
+
+        const id = parsedUrl.query.id;
+        const questionData = await QuestionService.getQuestionByID(id);
+
+        // If user is not admin, hide the answer
+        if(!isUserAdmin(req))
+            questionData.answer = '';
+        
+        const categoryData = await CategoryService.getQuestionCategories(id);
+        data={
+            questionData,
+            categoryData
+        }
+        Loader.loadJSON(req, res, data);
+    }, checkSession)
+
+    // Update the quiz data
+    addRoute('PUT', '/api/quiz', async (req, res)=>{
+        const parsedUrl = url.parse(req.url, true);
+
+        const id = parsedUrl.query.id;
+        const questionData = await getData(req);
+        
+        const rowsUpdated = await QuestionService.updateQuestion(questionData);
+        if(rowsUpdated === 0)
+        {
+            const data = {
+                success: false,
+                message: 'Could not update the question.',
+            }
+            Loader.loadJSON(req, res, data);
+            return;
+        }
+        if (!Array.isArray(questionData.category)) {
+            questionData.category = [questionData.category];
+        }
+        const categoriesUpdated = await QuestionCategoryService.updateQuestionCategories(id, questionData.category);
+        if(categoriesUpdated === 0)
+        {
+            const data = {
+                success: false,
+                message: 'Could not update categories.',
+            }
+            Loader.loadJSON(req, res, data);
+            return;
+        }
+
+        const data = {
+            success: true,
+            message: `Question with id ${id} has been updated!`,
+        }
+        Loader.loadJSON(req, res, data);
+    }, checkAdminPrivileges)
+
+    addRoute('POST', '/admin/updateQuizUrl', (req, res)=>{
+        data={
+            success: true,
+            redirectUrl: '/updateQuiz',
         }
         Loader.loadJSON(req, res, data);
     }, checkAdminPrivileges)

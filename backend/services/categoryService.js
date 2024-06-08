@@ -43,5 +43,22 @@ class CategoryService{
         });
         return categoriesHTML;
     }
+    static async getQuestionCategories(questionId)
+    {
+        try{
+            const selectQuery = {
+                text: 'SELECT c.* FROM sql_tutoring."Category" c JOIN sql_tutoring."Question_Category" qc ON c.id = qc.id_category JOIN sql_tutoring."Question" q ON q.id = qc.id_question AND q.id = $1',
+                values: [questionId],
+              };
+            const result = await dbConnection.query(selectQuery);
+
+            return result.rows;
+        }
+        catch(error)
+        {
+            console.error('Error executing SELECT query for sql_tutoring."Category" table:', error);
+        }
+        return null;
+    }
 }
 module.exports = CategoryService;

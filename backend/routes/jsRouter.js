@@ -57,6 +57,9 @@ function routeJs(){
     addRoute('GET', '/js/templates/leaderboards/leaderboardsList.js', (req, res)=>{
         Loader.loadJs(req, res, '/templates/leaderboards/leaderboardsList.js');
     })
+    addRoute('GET', '/js/templates/updateQuizz/quizzData.js', (req, res) => {
+        Loader.loadJs(req, res, 'templates/updateQuizz/quizzData.js')
+    })
 
     addRoute('GET', '/frontend/js/quiz.js', (req, res) => {
         Loader.loadJs(req, res, 'quiz.js')
@@ -77,6 +80,14 @@ function routeJs(){
     addRoute('GET', '/js/deleteQuestion.js', (req, res) => {
         Loader.loadJs(req, res, 'deleteQuestion.js')
     })
+    
+    addRoute('GET', '/js/updateQuestion.js', (req, res) => {
+        Loader.loadJs(req, res, 'updateQuestion.js')
+    })
+    addRoute('GET', '/js/updateQuestionForm.js', (req, res) => {
+        Loader.loadJs(req, res, 'updateQuestionForm.js')
+    })
+  
 
     
 

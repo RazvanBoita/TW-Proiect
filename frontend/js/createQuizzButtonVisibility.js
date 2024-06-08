@@ -2,7 +2,7 @@ handleCreateQuizzButton();
 
 async function handleCreateQuizzButton()
 {
-    const response = await fetch('createQuizzButton');
+    const response = await fetch('/createQuizzButton');
     const responseJSON = await response.json();
     
     if(!responseJSON.visibility)

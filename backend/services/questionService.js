@@ -4,19 +4,19 @@ const SolvedQuestionsService = require('./solvedQuestionsService');
 const {getUserData} = require('../utils/cookieHandler');
 class QuestionService{
 
-    static async insertQuestion(title, difficulty, answer, description){
+    static async insertQuestion(title, difficulty, answer, description, hint){
         let questionData = null;
         let counter = 0;
         try 
         {
             const insertQuery = {
-                text: 'INSERT INTO sql_tutoring."Question" (title, difficulty, answer, counter, description) VALUES ($1, $2, $3, $4, $5) RETURNING id',
-                values: [title, difficulty, answer, counter, description],
+                text: 'INSERT INTO sql_tutoring."Question" (title, difficulty, answer, counter, description, hint) VALUES ($1, $2, $3, $4, $5, $6) RETURNING id',
+                values: [title, difficulty, answer, counter, description, hint],
               };
             
             const result =  await dbConnection.query(insertQuery);
             const id = result.rows[0].id;
-            questionData = new QuestionData(id, title, difficulty, answer, counter, description, 0);
+            questionData = new QuestionData(id, title, difficulty, answer, counter, description, hint, 0);
         }
          catch (error) {
             console.error('Error executing INSERT query for Question table:', error);
@@ -114,7 +114,6 @@ class QuestionService{
     }
 
     static async getQuestionByID(id) {
-        let questionData = null;
         try {
             const query = {
                 text: 'SELECT * FROM sql_tutoring."Question" WHERE id = $1',
@@ -123,13 +122,12 @@ class QuestionService{
     
             const result = await dbConnection.query(query);
             if (result.rows.length === 1) {
-                const { id, title, difficulty, answer, counter, description, rating } = result.rows[0];
-                questionData = new QuestionData(id, title, difficulty, answer, counter, description, rating);
+                return result.rows[0];
             }
         } catch (error) {
             console.error('Error retrieving question:', error.message);
         }
-        return questionData;
+        return null;
     }
 
     static async getAnswerByID(id){
@@ -331,6 +329,21 @@ class QuestionService{
         } catch (error) {
             console.error('Error updating question rating:', error.message);
         }   
+    }
+    static async updateQuestion(questionData)
+    {
+        try{
+            const updateQuery = {
+                text: 'UPDATE sql_tutoring."Question" SET title = $1, difficulty = $2, description = $3, answer = $4, hint = $5 WHERE id = $6',
+                values: [questionData.quizz_question, questionData.difficulty, questionData.description_area, questionData.answer_area, questionData.hint_area, questionData.id],
+            };
+
+            const result = await dbConnection.query(updateQuery);
+            return result.rowCount;
+        } catch (error) {
+            console.error('Error updating question rating:', error.message);
+        } 
+        return 0;
     }
 
 }

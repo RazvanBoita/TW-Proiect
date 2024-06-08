@@ -135,8 +135,6 @@ function routeHtml(){
         res.end(JSON.stringify(data));
 
     }) 
-    
-
 
     addRoute('GET', '/navbar.html', (req, res)=>{
         if(!checkSessionId(req))
@@ -197,6 +195,10 @@ function routeHtml(){
     addRoute('POST', '/load-quiz-result', async (req, res) => {
         await QuizService.getQuizResults(req, res)
     })
+
+    addRoute('GET', '/updateQuiz', async(req, res)=>{
+        Loader.loadHTML(req, res, 'updateSqlQuery.html');
+    }, checkAdminPrivileges)
 
 }
 

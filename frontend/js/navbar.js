@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', async function() {
         try {
-            const response = await fetch('navbar.html'); 
+            const response = await fetch('/navbar.html'); 
             if(response.status === 404)
                 return;
             const data = await response.text();
