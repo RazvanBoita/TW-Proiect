@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/logIn.css" type="text/css">
-    <title>Log In</title>
+    <title>Recover Password</title>
 </head>
 <body>
     <main class="container">
@@ -16,24 +16,15 @@
                 </div>
                 <div class="fields">
                     <header class="main-title">Start learning SQL!</header>
-                    <form action="/login" method="post" class="form-fields" id="login-form">
+                    <form action="/recover" method="post" class="form-fields" id="pass-form">
                         <div class="form-group">
                             <ion-icon name="mail-outline"></ion-icon>
                             <input type="email" id="email" name="email" placeholder="Email" required>
                         </div>
-                        <div class="form-group">
-                            <ion-icon name="lock-closed-outline"></ion-icon>
-                            <input type="password" id="password" name="password" placeholder="Password" required>
-                        </div>
-                        <div class="error-message" id="error-message">Invalid credentials. Please try again.</div>
-                        <button type="submit" class="submit-button" style="margin-bottom: .25rem;">Log in</button>
+                        <button type="submit" class="submit-button" style="margin-bottom: .25rem;">Recover password</button>
                         <div class="bottom-link-wrapper">
                             <ion-icon name="return-down-forward-outline"></ion-icon>
-                            <a href="/recover" class="bottom-link" id="forgot-pass">Forgot your password?</a>
-                        </div>
-                        <div class="bottom-link-wrapper">
-                            <ion-icon name="return-down-forward-outline"></ion-icon>
-                            <a href="/signup" class="bottom-link">Don't have an account yet?</a>
+                            <a href="/login" class="bottom-link" id="forgot-pass">Want to login?</a>
                         </div>
                     </form>
                 </div>
@@ -43,7 +34,7 @@
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
     <script type="module">
         import ButtonHandler from '../js/ButtonHandler.js'
-        document.getElementById('login-form').addEventListener('submit', ButtonHandler.loginSubmit);
+        document.getElementById('pass-form').addEventListener('submit', ButtonHandler.recoverPass);
     </script>
 </body>
 </html>

@@ -1,0 +1,3 @@
+functioneaza partea de resetare a parolei, dar ar trebui evident sa fie si niste mesaje intermediare
+pt ux, in sensul ca de ex cand trimit emailul si urmeaza sa primesc mail, sa ma anunte, la fel si dupa ce 
+am resetat parola, sa ma trimita pe login sau cv
