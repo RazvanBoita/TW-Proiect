@@ -52,9 +52,9 @@ document.getElementById('input-json').addEventListener('change', function(event)
             
             switch(difficulty)
             {
-                case "easy": 
-                case "medium": 
-                case "hard": document.getElementById(difficulty).checked = true; break;
+                case "Easy": 
+                case "Medium": 
+                case "Hard": document.getElementById(difficulty).checked = true; break;
                 default: alert('Invalid difficulty!. Choose easy, medium or hard.');
             }
 
@@ -62,11 +62,7 @@ document.getElementById('input-json').addEventListener('change', function(event)
             document.getElementById("description-area").value = description;
             document.getElementById("answer-area").value=answer;
 
-            document.getElementById("quizz-question").dispatchEvent(new Event('input'));
-            selectContainer.dispatchEvent(new Event('change'));
-            document.getElementById(difficulty).dispatchEvent(new Event('click'));
-            document.getElementById("description-area").dispatchEvent(new Event('input'));
-            document.getElementById("answer-area").dispatchEvent(new Event('input'));
+            updateLiveView(difficulty);
         } catch (error) {
             console.error('Error parsing JSON:', error);
             alert('Invalid JSON file selected. Please select a valid JSON file.');

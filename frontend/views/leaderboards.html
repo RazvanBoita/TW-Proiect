@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/navbar.css" type="text/css">
+    <link rel="stylesheet" href="../css/leaderboards.css" type="text/css">
+    <title>Leaderboards</title>
+</head>
+<body>
+    <div id="navbar"></div>
+    <header>
+        <h1>Top 10</h1>
+    </header>
+    <main>
+        <table>
+            <thead>
+                <tr>
+                    <th></th>
+                    <th class="name-column">Name</th>
+                    <th class="problems-column">Problems</th>
+                    <th class="high-score-column">High Score</th>
+                </tr>
+            </thead>
+            <tbody id="list">
+               
+            </tbody>
+        </table>
+    </main>
+    <script src="../js/navbar.js"></script>
+
+    <script id="template-leaderboards" type="text/template">
+        <tr>
+            <td>{{rank}}</td>
+            <td class="name-column">{{name}}</td>
+            <td class="problems-column">{{problems}}</td>
+            <td class="high-score-column">{{highScore}}</td>
+        </tr>
+    </script>
+    <script src="../js/templates/leaderboards/leaderboardsList.js"></script>
+</body>
+</html>

@@ -48,10 +48,13 @@ th {
     font-weight: 700;
 }
 
-#status-field {
+.status-field {
     padding: auto;
-    text-align: left;
-    padding-left: 0;
+    text-align: start;
+
+}
+.move-left{
+    margin-right: 7vw;
 }
 
 .Medium {
@@ -69,6 +72,9 @@ th {
 a{
     text-decoration: none;
     color: var(--accent-color);
+}
+a:hover{
+    color: var(--secondary-color);
 }
 #pagination{
     display: flex;

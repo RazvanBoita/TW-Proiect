@@ -15,7 +15,10 @@ const handleCreateQuizz =  async (req, res, next) => {
         try 
         {
             const difficulty = capitalizeFirstLetter(formData.difficulty);
-            const questionData = await QuestionService.insertQuestion(formData.quizz_question, difficulty, formData.answer_area, formData.description_area);
+            if(formData.hint_area === '')
+                formData.hint_area = 'None';
+                
+            const questionData = await QuestionService.insertQuestion(formData.quizz_question, difficulty, formData.answer_area, formData.description_area, formData.hint_area);
             // Error at inserting question into db
             if(questionData === null)
             {
@@ -53,12 +56,12 @@ const handleCreateQuizz =  async (req, res, next) => {
 
 async function showErrorMessage(req, res)
 {
-    const categories = await CategoryService.getCategoriesAsHTML();
+    const categories = await CategoryService.getCategories();
     const data = {
         categories,
         errorMessage: "Question already exists!",
     };
-    Loader.loadTemplateEngineHTML(req, res, 'createSqlQuery.hbs', data);
+    Loader.loadHTML(req, res, 'createSqlQuery.html');
 }
 function capitalizeFirstLetter(str) {
     return str.charAt(0).toUpperCase() + str.slice(1);

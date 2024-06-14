@@ -1,3 +1,4 @@
+const url = require('url');
 const {addRoute} = require('../../router');
 const Loader = require('../loaders/Loader');
 //middlewares
@@ -14,7 +15,7 @@ const AdminPrivilages = require('../utils/adminPrivilages');
 const CategoryService = require('../services/categoryService');
 const QuestionService = require('../services/questionService');
 const QuizService = require('../services/quizService');
-const { getUserData } = require('../utils/cookieHandler');
+const { getUserData,  checkSessionId} = require('../utils/cookieHandler');
 function routeHtml(){
 
     addRoute('GET', '/signup', (req, res) => {
@@ -100,54 +101,62 @@ function routeHtml(){
 
     addRoute('GET', '/quiz', async(req, res) => {
         Loader.loadHTML(req, res, 'quizz.html')
-    })
+    }, checkSession)
+
+
 
     addRoute('GET', '/load-quiz', async (req, res) => {
-
-        //this will always be the first question, so it should be an easy one
-        const data = await QuestionService.chooseFirstQuestion()
+        const parsedUrl = url.parse(req.url, true);
+        const quizzId = parsedUrl.query.id;
+        let data = null;
+        if(!quizzId)
+            //this will always be the first question, so it should be an easy one
+            data = await QuestionService.chooseFirstQuestion()
+        else
+        {
+            quizzData = await QuestionService.getQuestionByID(quizzId);
+            if(quizzData === null)
+            {
+                res.setHeader('Content-Type', 'application/json');
+                res.end(JSON.stringify(quizzData));
+                return;
+            }
+            data = {
+                currentQuestion : 1,
+                questionContent: quizzData.title,
+                tableDescription: quizzData.description,
+                questionId: quizzId,
+                start_date: new Date()
+            }
+        }
         res.setHeader('Content-Type', 'application/json');
 
         // Send the JSON response
         res.end(JSON.stringify(data));
 
-
-        //insert as data
-        // Loader.loadTemplateEngineHTML(req, res, 'quiz.hbs', data)
     }) 
-    
 
-
-    addRoute('GET', '/navbar.html', async (req, res)=>{
-        const result = AdminPrivilages.getCreateQuizzButton(req);
-        const data = {
-            result
-        }
-        Loader.loadTemplateEngineHTML(req, res, 'navbar.hbs', data);
+    addRoute('GET', '/navbar.html', (req, res)=>{
+        if(!checkSessionId(req))
+            Loader.loadHTML(req, res, 'navbar.html', 404);
+        else
+            Loader.loadHTML(req, res, 'navbar.html');
     })
 
     addRoute('GET', '/', (req, res) => {
         Loader.loadHTML(req, res, 'index.html')
-    }, checkSession); 
+    }); 
 
     addRoute('POST', '/logout', (req, res) =>{
         Loader.loadHTML(req, res, 'logIn.html')
     }, logoutUser)
 
     addRoute('GET', '/createQuiz', async (req, res) =>{
-        const categories = await CategoryService.getCategoriesAsHTML();
-        const data = {
-            categories
-        };
-        Loader.loadTemplateEngineHTML(req, res, 'createSqlQuery.hbs', data);
+        Loader.loadHTML(req, res, 'createSqlQuery.html');
     }, checkAdminPrivileges)
 
     addRoute('POST', '/createQuiz', async (req, res)=>{
-        const categories = await CategoryService.getCategoriesAsHTML();
-        const data = {
-            categories
-        };
-        Loader.loadTemplateEngineHTML(req, res, 'createSqlQuery.hbs', data);
+        Loader.loadHTML(req, res, 'createSqlQuery.html');
     }, handleCreateQuizz)
 
     addRoute('GET', '/importQuizz', (req, res) =>{
@@ -156,8 +165,13 @@ function routeHtml(){
 
     addRoute('GET', '/quizzes', async (req, res)=>{
         Loader.loadHTML(req, res, 'quizzes.html');
-    })
-
+    }, checkSession)
+    addRoute('GET', '/progress', async (req, res)=>{
+        Loader.loadHTML(req, res, 'progress.html');
+    }, checkSession)
+    addRoute('GET', '/leaderboards', async (req, res)=>{
+        Loader.loadHTML(req, res, 'leaderboards.html');
+    }, checkSession)
     addRoute('GET', '/forbidden', (req, res) =>{
         Loader.loadHTML(req, res, 'forbidden.html');
     })
@@ -181,6 +195,11 @@ function routeHtml(){
     addRoute('POST', '/load-quiz-result', async (req, res) => {
         await QuizService.getQuizResults(req, res)
     })
+
+    addRoute('GET', '/updateQuiz', async(req, res)=>{
+        Loader.loadHTML(req, res, 'updateSqlQuery.html');
+    }, checkAdminPrivileges)
+
 }
 
 module.exports = routeHtml

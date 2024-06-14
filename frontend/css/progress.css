@@ -1,0 +1,176 @@
+@import './vars.css';
+
+body{
+    background-color: var(--main-color-container);
+    background-image: none;
+}
+main {
+    color: var(--accent-color);
+    font: var(--font-family);
+    background-color: var(--main-color-container);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    margin: 0;
+}
+p{
+    font-family: var(--font-family);
+    word-wrap: break-word;
+}
+a{
+    text-decoration: none;
+    color: var(--accent-color);
+}
+a:hover{
+    font-family: var(--font-family);
+    color: var(--secondary-color);
+}
+.container {
+    width: 90%;
+    height: 90%;
+    display: grid;
+    justify-content: center;
+    grid-template-rows: 1fr 2fr;
+    grid-template-columns: 1fr 1fr;
+    gap: 1vh;
+}
+
+#top-left {
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--main-color);
+    grid-row: 1;
+    grid-column: 1;
+}
+#top-right {
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--main-color);
+    grid-row: 1;
+    grid-column: 2;
+}
+#bottom {
+    border-radius: 20px;
+    background-color: var(--main-color);
+    grid-row: 2 / span 1;
+    grid-column: 1 / span 2;
+}
+.text {
+    margin-right: 10px; /* Adjust spacing between text and slider */
+}
+.slider-container{
+    flex-direction: row;
+    align-items: center;
+}
+
+#easy-bar {
+    width: 20vw;
+    height: 1em;
+    border-radius: 8px;
+    background-color: rgb(0, 85, 11);
+  }
+#easy-bar div {
+    height: 100%;
+    border-radius: 8px;
+    background-color: rgb(0, 167, 22);
+}
+
+#medium-bar{
+    width: 20vw;
+    height: 1em;
+    border-radius: 8px;
+    background-color: rgb(72, 85, 0);
+    margin-top: 1vh;
+}
+#medium-bar div {
+    height: 100%;
+    width: 30%;
+    border-radius: 8px;
+    background-color: rgb(159, 187, 0);
+}
+
+#hard-bar{
+    width: 20vw;
+    height: 1em;
+    border-radius: 8px;
+    background-color: rgb(85, 0, 0);
+    margin-top: 1vh;
+    margin-bottom: 1vh;
+}
+#hard-bar div {
+    height: 100%;
+    width: 30%;
+    border-radius: 8px;
+    background-color: rgb(187, 0, 0);
+}
+
+#table-container {
+    width: 90%;
+    margin: auto;
+}
+table {
+    width: 100%;
+    border-style: none;
+    border-collapse: collapse;
+}
+ td:last-child {
+    text-align: left;
+}
+td:first-child {
+    text-align: left;
+}
+tbody tr:nth-child(even) {
+    background-color: var(--main-color-container);
+}
+
+th, td {
+    font-family: var(--font-family);
+    height: 5vh;
+    border-style: none;
+    text-align: left;
+}
+
+th {
+    font-weight: 700;
+}
+.Medium {
+    color: gold;
+}
+
+.Easy {
+    color: rgb(0, 182, 0);
+}
+
+.Hard {
+    color: red;
+}
+
+#pagination{
+    display: flex;
+    justify-content: center;
+    margin-top: 1rem;
+    gap: 1rem; 
+    margin-bottom: 1rem;
+}
+#pagination button{
+    border-style: none;
+}
+.disabled {
+    cursor: default;
+    
+  }
+.enabled{
+    background-color: var(--main-color-container);
+    cursor: pointer;
+}
+#page-numbers{
+    display: flex;
+    justify-content: center;
+}

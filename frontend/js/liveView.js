@@ -7,15 +7,15 @@ document.getElementById('description-area').addEventListener('input', (event)=>{
     document.getElementById('table-description-content').textContent  = event.target.value;
 })
 // Difficulties
-document.getElementById('easy').addEventListener('click', (event)=>{
+document.getElementById('Easy').addEventListener('click', (event)=>{
     document.getElementById('difficulty-title').textContent ='Difficulty: ' + event.target.value;
 })
 
-document.getElementById('medium').addEventListener('click', (event)=>{
+document.getElementById('Medium').addEventListener('click', (event)=>{
     document.getElementById('difficulty-title').textContent ='Difficulty: ' + event.target.value;
 })
 
-document.getElementById('hard').addEventListener('click', (event)=>{
+document.getElementById('Hard').addEventListener('click', (event)=>{
     document.getElementById('difficulty-title').textContent ='Difficulty: ' + event.target.value;
 })
 // Categories
@@ -27,3 +27,12 @@ document.getElementById('category').addEventListener('change', function(event){
      const outputElement = document.getElementById('topics');
      outputElement.textContent = 'Topics: ' + selectedValues.join(', ');
 })
+
+function updateLiveView(difficulty)
+{
+    document.getElementById("quizz-question").dispatchEvent(new Event('input'));
+    document.getElementById('category').dispatchEvent(new Event('change'));
+    document.getElementById(difficulty).dispatchEvent(new Event('click'));
+    document.getElementById("description-area").dispatchEvent(new Event('input'));
+    document.getElementById("answer-area").dispatchEvent(new Event('input'));
+}

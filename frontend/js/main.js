@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
   
   buttons[3].addEventListener('click', () => {
-      window.location.href = '/dashboard';
+      window.location.href = '/progress';
   });
   
   buttons[4].addEventListener('click', () => {

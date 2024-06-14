@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/navbar.css" type="text/css">
+    <link rel="stylesheet" href="../css/progress.css" type="text/css">
+    <title>Progress</title>
+</head>
+<body>
+    <div id="navbar"></div>
+    <main>
+        <div class="container">
+            <div id="top-left">
+              
+            </div>
+
+            <div id="top-right">
+                
+            </div>
+
+            <div id="bottom">
+                <div id="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th>Difficulty</th>
+                                <th>Date</th>
+                            </tr>
+                        </thead>
+                        <tbody id="list">
+                         
+                        </tbody>
+                    </table>
+                    <footer>
+                        <div id="pagination">
+                            <button id="prev" >
+                                <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m15 19-7-7 7-7"/>
+                                </svg>
+                            </button>
+                            <button id="next">
+                                <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m9 5 7 7-7 7"/>
+                                </svg>
+                            </button>
+                        </div>
+                        
+                       
+                    </footer>
+
+                </div>
+            </div>
+        </div>
+    </main>
+    <script src="../js/navbar.js"></script>
+
+    <!-- Top left panel -->
+    <script id="template-user-stats" type="text/template">
+        <h2>{{Name}}</h2>
+        <p><strong>Rank: </strong>{{rank}}</p>
+        <p><strong>High Score Quizz: </strong>{{highScore}}</p>
+        <br>
+        <a href="/leaderboards"><strong>Check leaderboards</strong></a>
+    </script>
+    <!-- Top right panel -->
+    <script id="template-problems-progress" type="text/template">
+        <p>{{problemsSolved}} / {{allProblems}} <strong>Solved</strong></p>
+        <div class="slider-container">
+            <div class="text"><p>Easy: {{easyProblemsSolved}} / {{allEasyProblems}}</p></div>
+            <div id="easy-bar" class="slider">
+                <div id="easy-bar-fill"></div>
+            </div>
+        </div>
+        <div class="slider-container">
+            <div class="text"><p>Medium: {{mediumProblemsSolved}} / {{allMediumProblems}}</p></div>
+            <div id="medium-bar" class="slider">
+                <div id="medium-bar-fill"></div>
+            </div>
+        </div>
+        <div class="slider-container">
+            <div class="text"><p>Hard: {{hardProblemsSolved}} / {{allHardProblems}}</p></div>
+            <div id="hard-bar" class="slider">
+                <div id="hard-bar-fill"></div>
+            </div>
+        </div>
+    </script>
+    <!-- Bottom panel -->
+    <script id="template-problems-solved-list" type="text/template">
+        <tr>
+            <td><a href ="/quiz?id={{id}}">{{title}}</a></td>
+            <td class="{{difficulty}}">{{difficulty}}</td>
+            <td class="{{date}}">{{date}}</td>
+        </tr>
+    </script>
+    <script src="../js/templates/progress/problemsProgress.js" type="text/javascript"> </script>
+    <script src="../js/templates/progress/solvedQuizzList.js" type="text/javascript"> </script>
+    <script src="../js/templates/progress/userStats.js" type="text/javascript"> </script>
+</body>
+</html>

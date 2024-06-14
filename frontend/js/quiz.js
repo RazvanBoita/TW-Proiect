@@ -53,10 +53,20 @@ document.addEventListener('DOMContentLoaded', function() {
 
    //change message at the last question
    
+   // Get the quizz id variable from the url if present
+   const url = new URL(window.location.href);
+   const quizzId = url.searchParams.get('id');
+   let loadQuizzApi = './load-quiz';
+   if(quizzId !== null)
+        loadQuizzApi += `?id=${quizzId}`;
 
-   fetch('/load-quiz')
+   fetch(loadQuizzApi)
    .then(response => response.json())
    .then(data => {
+        if(data === null)
+        {
+            window.location.href = '/notFound';
+        }
         const questionIndexSpan = document.querySelector('.question-index .sharp-number');
         const questionContent = document.querySelector('.question-content');
         const tableDescriptionContent = document.querySelector('#table-description-content');
@@ -93,8 +103,10 @@ document.addEventListener('DOMContentLoaded', function() {
         console.log('User is trying to submit with index:  ' + currIdx);
         console.log(currQuestionId, chosenQuestionIds, score);
         currIdx++;
-
+        
         if(currIdx<=12){
+            const newUrl = window.location.origin + window.location.pathname;
+            history.pushState({}, '', newUrl);
             fetch('/next-question', {
                 method: 'POST',
                 headers: {

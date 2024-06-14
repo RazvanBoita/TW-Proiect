@@ -1,0 +1,58 @@
+@import './vars.css';
+
+body{
+    background-color: var(--main-color-container);
+    background-image: none;
+
+}
+main{
+    color: var(--accent-color);
+    background-color: var(--main-color-container);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+h1{
+    color: var(--accent-color);
+    justify-content: center;
+    align-items: center;
+    display: flex;
+}
+table {
+    border-style: none;
+    border-collapse: collapse;
+}
+th{
+    font-size:x-large;
+    padding-bottom: 2vh;
+}
+
+td{
+    font-family: var(--font-family);
+    text-align: center;
+    padding-top: 2vh;
+    padding-bottom: 2vh;
+}
+tbody tr:first-child {
+    color: var(--main-color);
+    background-color: gold;
+}
+tbody tr:nth-child(2) {
+    color: var(--main-color);
+    background-color: silver;
+}
+tbody tr:nth-child(3) {
+    color: var(--main-color);
+    background-color: #CD7F32;
+}
+tbody tr:nth-child(n+4):nth-child(odd) {
+    background-color: var(--main-color);
+}
+
+.name-column{
+    padding-right: 14vw;
+}
+.high-score-column{
+    padding-left: 12vw;
+}

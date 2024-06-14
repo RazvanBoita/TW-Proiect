@@ -60,7 +60,7 @@ option{
     padding-top: 2vh;
 }
 
-#submit-button{
+#submit-button, #update-button{
     background-color: var(--main-color);
     padding: 1rem;
     font-size: 1rem;
@@ -73,7 +73,7 @@ option{
     font-family: var(--font-family);
 }
 
-#submit-button:hover {
+#submit-button:hover, #update-button:hover {
     cursor: pointer;
     background-color: var(--secondary-color-container);
     opacity: 0.9;
@@ -126,7 +126,7 @@ option{
 }
 
 
-#answer-area, #description-area{
+#answer-area, #description-area, #hint-area{
     resize: none;
     width: 50vw;
     height: 7vh;

@@ -1,21 +1,22 @@
 const dbConnection = require('../config/postgresDB')
 const QuestionData = require('../models/questionData');
-
+const SolvedQuestionsService = require('./solvedQuestionsService');
+const {getUserData} = require('../utils/cookieHandler');
 class QuestionService{
 
-    static async insertQuestion(title, difficulty, answer, description){
+    static async insertQuestion(title, difficulty, answer, description, hint){
         let questionData = null;
         let counter = 0;
         try 
         {
             const insertQuery = {
-                text: 'INSERT INTO sql_tutoring."Question" (title, difficulty, answer, counter, description) VALUES ($1, $2, $3, $4, $5) RETURNING id',
-                values: [title, difficulty, answer, counter, description],
+                text: 'INSERT INTO sql_tutoring."Question" (title, difficulty, answer, counter, description, hint) VALUES ($1, $2, $3, $4, $5, $6) RETURNING id',
+                values: [title, difficulty, answer, counter, description, hint],
               };
             
             const result =  await dbConnection.query(insertQuery);
             const id = result.rows[0].id;
-            questionData = new QuestionData(id, title, difficulty, answer, counter, description, 0);
+            questionData = new QuestionData(id, title, difficulty, answer, counter, description, hint, 0);
         }
          catch (error) {
             console.error('Error executing INSERT query for Question table:', error);
@@ -32,10 +33,10 @@ class QuestionService{
         return questions;
         
     }
-    static async getPageQuestions(pageIndex, difficulty, categoryId)
+    static async getPageQuestions(pageIndex, difficulty, categoryId, userId)
     {
         const maxQuestions = 10;
-        let queryText = 'SELECT q.* FROM sql_tutoring."Question" q ';
+        let queryText = 'SELECT q.*, CASE WHEN sq.id_question IS NOT NULL THEN true ELSE false END AS is_solved FROM sql_tutoring."Question" q ';
         let params = [];
         let index = 1;
         if(categoryId !== '')
@@ -45,7 +46,8 @@ class QuestionService{
             index++;
         }
 
-        queryText+=`WHERE q.difficulty LIKE $${index} ORDER BY q.id LIMIT $${index + 1} OFFSET $${index + 2}`;
+        queryText+=`LEFT JOIN sql_tutoring."Solved_Questions" sq ON sq.id_question = q.id AND sq.id_user = $${index} WHERE q.difficulty LIKE $${index + 1} ORDER BY q.id LIMIT $${index + 2} OFFSET $${index + 3}`;
+        params.push(userId);
         params.push(difficulty);
         params.push(maxQuestions);
         params.push(pageIndex * maxQuestions);
@@ -58,7 +60,7 @@ class QuestionService{
             const result =  await dbConnection.query(selectQuery);
             const rows = result.rows;
             const questions = rows.map(element => {
-            return { id: element.id, title: element.title, difficulty: element.difficulty, rating: element.rating };
+            return { id: element.id, is_solved: element.is_solved, title: element.title, difficulty: element.difficulty, rating: element.rating };
             });
             
             return questions;
@@ -95,20 +97,23 @@ class QuestionService{
         }
     }
     
-    //! deprecated
-    static async deleteByID(id){
-        try {
-            await dbConnection.query('DELETE FROM quiz_questions WHERE id = ?', [id]);
-            console.log('Question removed successfully.');
-        } catch (error) {
-            console.error('Error removing question:', error.message);
-        } finally {
-            dbConnection.end();
+    static async delete(id){
+        try{
+            // Perform DELETE operation
+            const deleteQuery = {
+                text: 'DELETE FROM sql_tutoring."Question" WHERE id=$1',
+                values: [id],
+            };
+            const result = await dbConnection.query(deleteQuery);
+        
+            return result.rows;
+        }
+        catch(error){
+            console.error('Error executing DELETE query for Question table:', error);
         }
     }
 
     static async getQuestionByID(id) {
-        let questionData = null;
         try {
             const query = {
                 text: 'SELECT * FROM sql_tutoring."Question" WHERE id = $1',
@@ -117,13 +122,12 @@ class QuestionService{
     
             const result = await dbConnection.query(query);
             if (result.rows.length === 1) {
-                const { id, title, difficulty, answer, counter, description, rating } = result.rows[0];
-                questionData = new QuestionData(id, title, difficulty, answer, counter, description, rating);
+                return result.rows[0];
             }
         } catch (error) {
             console.error('Error retrieving question:', error.message);
         }
-        return questionData;
+        return null;
     }
 
     static async getAnswerByID(id){
@@ -177,6 +181,9 @@ class QuestionService{
                 //? Hard questions are 12 points  
                 const {index, pickedQuestions, isCorrect, vote, currentQuestion} = JSON.parse(body)
                 // console.log("Picked questions are: " + pickedQuestions);
+                const currQuestionId = parseInt(currentQuestion)
+                
+          
 
                 let newIndex = parseInt(index)
                 let points = 0
@@ -194,16 +201,18 @@ class QuestionService{
                     res.end("STOP THE APP")
                     return
                 }
-                
+
                 if(isCorrect){
-                   if(newIndex - 1 <=4) points = 5
-                   else if(newIndex - 1 <=8) points = 8
-                   else if(newIndex-1 <=12) points = 12
-                   else console.log("Unknown points");
+                    // Question solved, add it to the Solved_Questions table
+                    SolvedQuestionsService.addQuestion(currQuestionId, getUserData(req).userId, new Date());
+
+                    if(newIndex - 1 <=4) points = 5
+                    else if(newIndex - 1 <=8) points = 8
+                    else if(newIndex-1 <=12) points = 12
+                    else console.log("Unknown points");
                 }
                 
                 const voteNo = parseInt(vote)
-                const currQuestionId = parseInt(currentQuestion)
                 if(vote!=0){
                     this.updateQuestionRating(voteNo, currQuestionId)
                 }
@@ -320,6 +329,21 @@ class QuestionService{
         } catch (error) {
             console.error('Error updating question rating:', error.message);
         }   
+    }
+    static async updateQuestion(questionData)
+    {
+        try{
+            const updateQuery = {
+                text: 'UPDATE sql_tutoring."Question" SET title = $1, difficulty = $2, description = $3, answer = $4, hint = $5 WHERE id = $6',
+                values: [questionData.quizz_question, questionData.difficulty, questionData.description_area, questionData.answer_area, questionData.hint_area, questionData.id],
+            };
+
+            const result = await dbConnection.query(updateQuery);
+            return result.rowCount;
+        } catch (error) {
+            console.error('Error updating question rating:', error.message);
+        } 
+        return 0;
     }
 
 }
