@@ -83,7 +83,7 @@ class LoginService {
                 } else {
                     const token = generateToken(email);
                     const verificationLink = `${process.env.BASE_URL}/recover/verify?token=${token}`;
-                    await EmailSender.sendVerificationEmail(email, verificationLink);
+                    await EmailSender.sendChangePassEmail(email, verificationLink);
                     resCode = 1;
                 }
     

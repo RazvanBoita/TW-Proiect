@@ -224,7 +224,6 @@ function routeHtml(){
         try{
             const decoded = jwt.verify(token, process.env.JWT_SECRET);
             currEmail = decoded.email
-            console.log("Set curremail to be: " + currEmail);
             Loader.loadHTML(req, res, 'resetPass.html');
         } catch(err){
             console.error('JWT Verification Error:', err);

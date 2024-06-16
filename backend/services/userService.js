@@ -75,7 +75,6 @@ class UserService{
             values: [email, hashedPass]
         }
         try{
-            console.log(`User trying to update their password to ${hashedPass}.`);
             await dbConnection.query(updateQuery)
             return 1 //SUCCESS
         } catch(err){

@@ -121,6 +121,28 @@ input{
     display: none;
 }
 
+.success-message{
+    display: none;
+    margin-top: 1rem;
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+    text-align: center;
+    color: #00a000;
+    background-color: #dfd;
+}
+
+/* for hidden messages to re pop pt ux mai bun */
+.rebounce {
+    animation: rebounce 0.5s ease-in-out;
+}
+
+
+.bottom-link-reset{
+    font-weight: bold;
+    color: black;
+    text-decoration: underline;
+}
+
 @keyframes bounce {
     0%, 100% {
         transform: translateX(0);
@@ -167,5 +189,21 @@ input{
     }
     .fields{
         margin: 0;
+    }
+}
+
+
+@keyframes rebounce {
+    0%, 100% {
+        transform: translateX(0);
+    }
+    25% {
+        transform: translateX(-10px);
+    }
+    50% {
+        transform: translateX(10px);
+    }
+    75% {
+        transform: translateX(-5px);
     }
 }

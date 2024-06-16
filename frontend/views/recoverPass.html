@@ -10,25 +10,27 @@
 </head>
 <body>
     <main class="container">
-            <div class="content">
-                <div class="logo">
-                    <img src="../img/liliac.png" alt="" class="logo-img">
-                </div>
-                <div class="fields">
-                    <header class="main-title">Start learning SQL!</header>
-                    <form action="/recover" method="post" class="form-fields" id="pass-form">
-                        <div class="form-group">
-                            <ion-icon name="mail-outline"></ion-icon>
-                            <input type="email" id="email" name="email" placeholder="Email" required>
-                        </div>
-                        <button type="submit" class="submit-button" style="margin-bottom: .25rem;">Recover password</button>
-                        <div class="bottom-link-wrapper">
-                            <ion-icon name="return-down-forward-outline"></ion-icon>
-                            <a href="/login" class="bottom-link" id="forgot-pass">Want to login?</a>
-                        </div>
-                    </form>
-                </div>
+        <div class="content">
+            <div class="logo">
+                <img src="../img/liliac.png" alt="" class="logo-img">
             </div>
+            <div class="fields">
+                <header class="main-title">Start learning SQL!</header>
+                <form action="/recover" method="post" class="form-fields" id="pass-form">
+                    <div class="form-group">
+                        <ion-icon name="mail-outline"></ion-icon>
+                        <input type="email" id="email" name="email" placeholder="Email" required>
+                    </div>
+                    <button type="submit" class="submit-button" style="margin-bottom: .25rem;">Recover password</button>
+                    <div class="bottom-link-wrapper">
+                        <ion-icon name="return-down-forward-outline"></ion-icon>
+                        <a href="/login" class="bottom-link" id="forgot-pass">Want to login?</a>
+                    </div>
+                    <div class="error-message" id="error-message">Email address does not exist.</div>
+                    <div class="success-message" id="success-message">Recovery email sent successfully.</div>
+                </form>
+            </div>
+        </div>
     </main>
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
