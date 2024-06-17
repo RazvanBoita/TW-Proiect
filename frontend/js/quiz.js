@@ -81,6 +81,8 @@ document.addEventListener('DOMContentLoaded', function() {
         chosenQuestionIds.push(data.questionId)
         start_date = data.start_date
         curr_hint = data.hint
+
+        fetchComments(currQuestionId)
     })
     .catch(error => {
         console.error('Error fetching quiz:', error);
@@ -197,6 +199,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         consoleDiv.innerHTML = '<p>The results of your query will appear here!</p>';
         codeMirrorInstance.setValue('');
+        fetchComments(currQuestionId)
     }
 
     const runButton = document.querySelector('.run-button');
@@ -251,6 +254,38 @@ document.addEventListener('DOMContentLoaded', function() {
             console.error('Error:', error);
         });
     });
+
+
+    
+    function fetchComments(questionId) {
+        fetch(`/comments?id=${questionId}`, {
+            method: 'GET'
+        })
+        .then(response => response.json())
+        .then(data => {
+            renderComments(data)
+        })
+        .catch(error => {
+            console.error('Error fetching comments:', error);
+        });
+    }
+
+    function renderComments(){
+        //TODO implementeaza
+    }
+
+
+    function addComment(questionId, parentId, description){
+        fetch(`/comments`, {
+            method : 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body : JSON.stringify({questionId: questionId, parentId: parentId, description: description})
+        })
+    }
+
+
 
 
     const hintBtn = document.querySelector('.modify-color');
