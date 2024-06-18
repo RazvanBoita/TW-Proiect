@@ -285,6 +285,24 @@ document.addEventListener('DOMContentLoaded', function() {
         })
     }
 
+    const addCommentBtn = document.querySelector(".comment-submit")
+    const commentContent = document.querySelector(".comment-input")
+    addCommentBtn.addEventListener('click', (e) => {
+        e.preventDefault()
+        const parentId = -1
+        const description = commentContent.value.trim();
+        if(description){
+            if(currQuestionId){
+                addComment(currQuestionId, parentId, description)
+                commentContent.value = '';
+            } else{
+                console.log("Can't add comment for question id null");
+            }
+        } else{
+            console.log("Can't add epmty comment");
+        }
+    })
+
 
 
 
