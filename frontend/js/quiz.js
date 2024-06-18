@@ -270,8 +270,48 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    function renderComments(){
-        //TODO implementeaza
+    function renderComments(comments){
+        const container = document.querySelector('.comments-container');
+        container.innerHTML = '';
+
+        comments.forEach(comment => {
+            const commentElement = document.createElement('div');
+            commentElement.className = 'comment';
+
+            // Comment content
+            const contentDiv = document.createElement('div');
+            contentDiv.className = 'comment-content';
+            contentDiv.textContent = comment.description;
+            commentElement.appendChild(contentDiv);
+
+            // Comment bottom section (user and date)
+            const bottomDiv = document.createElement('div');
+            bottomDiv.className = 'comment-bottom';
+
+            // Comment user section
+            const userDiv = document.createElement('div');
+            userDiv.className = 'comment-user';
+            const userIcon = document.createElement('ion-icon');
+            userIcon.setAttribute('name', 'person-circle-outline');
+            const usernameParagraph = document.createElement('p');
+            usernameParagraph.className = 'comment-username';
+            usernameParagraph.textContent = comment.idUser; // Assuming idUser is the username
+            userDiv.appendChild(userIcon);
+            userDiv.appendChild(usernameParagraph);
+            bottomDiv.appendChild(userDiv);
+
+            // Comment date
+            const dateParagraph = document.createElement('p');
+            dateParagraph.className = 'comment-date';
+            const createdAtDate = new Date(comment.createdAt).toLocaleDateString('en-US'); // Format the date
+            dateParagraph.textContent = `Date: ${createdAtDate}`;
+            bottomDiv.appendChild(dateParagraph);
+
+            commentElement.appendChild(bottomDiv);
+
+            // Append the constructed comment to the container
+            container.appendChild(commentElement);
+    });
     }
 
 
@@ -282,6 +322,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 'Content-Type': 'application/json'
             },
             body : JSON.stringify({questionId: questionId, parentId: parentId, description: description})
+        })
+        .then(res => res.json())
+        .then(data => {
+            console.log(data);
+            const commentSection = document.querySelector('.comments-container')
+            commentSection.insertAdjacentHTML('beforeend', data)
         })
     }
 

@@ -83,6 +83,19 @@ class UserService{
         }
     }
 
+    static async getNameById(userId){
+        const query = {
+            text: 'SELECT name FROM sql_tutoring."User" WHERE id = $1',
+            values: [userId]
+        }
+        try{
+            const result = await dbConnection.query(query)
+            return result.rows[0].name
+        } catch(err){
+            console.log("Error getting name by id");
+            return null
+        }
+    }
     
 }
 
