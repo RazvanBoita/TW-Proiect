@@ -1,3 +1,6 @@
 const CategoryService = require('../services/categoryService')
 
-CategoryService.getQuestionCategories(59).then(res => console.log(res[0].type))
+CategoryService.getQuestionCategories(59).then(res => {
+    const types =  res.map(item => item.type)
+    console.log(types.toString());
+})

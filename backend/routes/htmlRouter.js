@@ -20,8 +20,9 @@ const LoginService = require('../services/LoginService')
 const QuizService = require('../services/quizService');
 const CommentService = require('../services/commentService')
 
-const { getUserData,  checkSessionId} = require('../utils/cookieHandler');
+const { getUserData,  checkSessionId, setQuizCompleted, unsetQuizCompleted} = require('../utils/cookieHandler');
 const UserService = require('../services/userService');
+const checkCreateQuizPrivileges = require('../utils/middleWare/checkCreateQuizPrivileges');
 
 let currEmail;
 function routeHtml(){
@@ -161,9 +162,10 @@ function routeHtml(){
 
     addRoute('GET', '/createQuiz', async (req, res) =>{
         Loader.loadHTML(req, res, 'createSqlQuery.html');
-    }, checkAdminPrivileges)
+    }, checkCreateQuizPrivileges)
 
     addRoute('POST', '/createQuiz', async (req, res)=>{
+        unsetQuizCompleted(req) 
         Loader.loadHTML(req, res, 'createSqlQuery.html');
     }, handleCreateQuizz)
 
@@ -197,6 +199,7 @@ function routeHtml(){
     })
 
     addRoute('GET', '/finish-quiz', (req, res) => {
+        setQuizCompleted(req)
         Loader.loadHTML(req, res, 'quizFinish.html')
     })
 
@@ -247,6 +250,13 @@ function routeHtml(){
         CommentService.addComment(req, res)
     })
 
+    addRoute('GET', '/after-create-quiz', async (req, res) => {
+        await QuizService.handleFinishedCreateQuiz(req, res)
+    })
+
+    addRoute('GET', '/going-home', async (req, res) => {
+        Loader.loadHTML(req, res, 'goingHome.html')
+    })
 
 }
 

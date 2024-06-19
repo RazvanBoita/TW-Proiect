@@ -3,6 +3,7 @@ const QuestionService = require('../../services/questionService');
 const CategoryService = require('../../services/categoryService');
 const QuestionCategoryService = require('../../services/questionCategoryService');
 const Loader = require('../../loaders/Loader');
+const { unsetQuizCompleted } = require('../cookieHandler');
 
 const handleCreateQuizz =  async (req, res, next) => {
       let body = '';
@@ -24,7 +25,7 @@ const handleCreateQuizz =  async (req, res, next) => {
             {
                 throw 'Question already exists';
             }
-              let categoryList = [];
+            let categoryList = [];
 
             if (Array.isArray(formData.category)) {
                 categoryList.push(...formData.category);

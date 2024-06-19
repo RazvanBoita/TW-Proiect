@@ -72,6 +72,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const tableDescriptionContent = document.querySelector('#table-description-content');
         const difficulty = document.querySelector('.difficulty')
         const category = document.querySelector('.category')
+        console.log(data.category);
         
 
         questionIndexSpan.innerText = data.currentQuestion;
@@ -175,6 +176,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const thumbsDownIcon = document.querySelector('.thumbs-down');
         const difficulty = document.querySelector('.difficulty')
         const category = document.querySelector('.category')
+        console.log(data.category);
 
         questionIndexSpan.innerText = currentQuestionIndex;
         questionContent.innerText = data.title;

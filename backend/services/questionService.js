@@ -222,7 +222,7 @@ class QuestionService{
 
                 const {id, title, difficulty, description, hint} = pickedQuestion
                 const categories = await CategoryService.getQuestionCategories(id)
-                const category = categories[categories.length-1].type
+                const category = categories.map(item => item.type).toString()
                 // console.log(id, title, difficulty, description);
                 const data = {id, title, difficulty, description, points, hint, category}
 
@@ -295,6 +295,7 @@ class QuestionService{
             const now = new Date()
             const hint = minCounterQuestion.hint
             const category = await CategoryService.getQuestionCategories(minCounterQuestion.id)
+            const categories = category.map(item => item.type).toString()
             const data = {
                 currentQuestion : 1,
                 questionContent: title,
@@ -302,7 +303,7 @@ class QuestionService{
                 questionId: minCounterQuestion.id,
                 start_date: now,
                 hint: hint,
-                category: category[category.length-1].type
+                category: categories
             }
             return data;
         } catch (error) {
