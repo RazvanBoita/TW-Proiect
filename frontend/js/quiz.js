@@ -51,7 +51,6 @@ document.addEventListener('DOMContentLoaded', function() {
    let currQuestionId = 0
    let curr_hint = 'No hint found for this question'
 
-   //change message at the last question
    
    // Get the quizz id variable from the url if present
    const url = new URL(window.location.href);
@@ -289,17 +288,14 @@ document.addEventListener('DOMContentLoaded', function() {
             const commentElement = document.createElement('div');
             commentElement.className = 'comment';
 
-            // Comment content
             const contentDiv = document.createElement('div');
             contentDiv.className = 'comment-content';
             contentDiv.textContent = comment.description;
             commentElement.appendChild(contentDiv);
 
-            // Comment bottom section (user and date)
             const bottomDiv = document.createElement('div');
             bottomDiv.className = 'comment-bottom';
 
-            // Comment user section
             const userDiv = document.createElement('div');
             userDiv.className = 'comment-user';
             const userIcon = document.createElement('ion-icon');
@@ -311,7 +307,6 @@ document.addEventListener('DOMContentLoaded', function() {
             userDiv.appendChild(usernameParagraph);
             bottomDiv.appendChild(userDiv);
 
-            // Comment date
             const dateParagraph = document.createElement('p');
             dateParagraph.className = 'comment-date';
             const createdAtDate = new Date(comment.createdAt).toLocaleDateString('en-US'); // Format the date
@@ -320,7 +315,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
             commentElement.appendChild(bottomDiv);
 
-            // Append the constructed comment to the container
             container.appendChild(commentElement);
     });
     }
