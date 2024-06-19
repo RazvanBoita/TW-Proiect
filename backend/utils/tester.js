@@ -1,4 +1,3 @@
-const UserService = require('../services/userService')
-UserService.getNameById(13).then(res => {
-    console.log(res);
-})
+const CategoryService = require('../services/categoryService')
+
+CategoryService.getQuestionCategories(59).then(res => console.log(res[0].type))

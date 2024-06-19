@@ -67,15 +67,19 @@ document.addEventListener('DOMContentLoaded', function() {
         {
             window.location.href = '/notFound';
         }
+        console.log(data);
         const questionIndexSpan = document.querySelector('.question-index .sharp-number');
         const questionContent = document.querySelector('.question-content');
         const tableDescriptionContent = document.querySelector('#table-description-content');
         const difficulty = document.querySelector('.difficulty')
+        const category = document.querySelector('.category')
+        
 
         questionIndexSpan.innerText = data.currentQuestion;
         questionContent.innerText = data.questionContent;
         tableDescriptionContent.innerText = data.tableDescription;
         difficulty.innerText = 'Difficulty: Easy'
+        category.innerText = `Category: ${data.category}`
 
         currQuestionId = data.questionId        
         chosenQuestionIds.push(data.questionId)
@@ -123,6 +127,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 } else{
                     score += data.points
                     data.points = score
+                    //update vote
                     updateQuestion(data, currIdx)
                 }
             })
@@ -154,6 +159,10 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
 
+
+
+    
+
     function updateQuestion(data, currentQuestionIndex){
         const questionContent = document.querySelector('.question-content');
         const tableDescriptionContent = document.querySelector('#table-description-content');
@@ -166,10 +175,12 @@ document.addEventListener('DOMContentLoaded', function() {
         const thumbsUpIcon = document.querySelector('.thumbs-up');
         const thumbsDownIcon = document.querySelector('.thumbs-down');
         const difficulty = document.querySelector('.difficulty')
+        const category = document.querySelector('.category')
 
         questionIndexSpan.innerText = currentQuestionIndex;
         questionContent.innerText = data.title;
         tableDescriptionContent.innerText = data.description;
+        category.innerText = `Category: ${data.category}`
 
         thumbsDownIcon.classList.remove('clicked')
         thumbsUpIcon.classList.remove('clicked')

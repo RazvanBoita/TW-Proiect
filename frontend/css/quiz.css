@@ -61,9 +61,15 @@ p {
     overflow-y: auto;
 }
 
-.difficulty{
+.difficulty, .category{
     font-size: 1.2rem;
     font-weight: bold;
+}
+
+.question-side-bottom{
+    margin-top: 1rem;
+    display: flex;
+    justify-content: space-between;
 }
 
 .question-content {
