@@ -24,7 +24,7 @@ const { getUserData,  checkSessionId, setQuizCompleted, unsetQuizCompleted} = re
 const UserService = require('../services/userService');
 const checkCreateQuizPrivileges = require('../utils/middleWare/checkCreateQuizPrivileges');
 const PendingService = require('../services/pendingService');
-const { markAsUntransferable } = require('worker_threads');
+
 
 let currEmail;
 function routeHtml(){
@@ -271,7 +271,6 @@ function routeHtml(){
     addRoute('POST', '/pending', async (req, res) => {
         await PendingService.handleAdminDecision(req, res)
     })
-
 }
 
 module.exports = routeHtml
