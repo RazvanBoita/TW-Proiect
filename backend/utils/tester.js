@@ -1,6 +1,5 @@
-const CategoryService = require('../services/categoryService')
+const PendingService = require('../services/pendingService')
 
-CategoryService.getQuestionCategories(59).then(res => {
-    const types =  res.map(item => item.type)
-    console.log(types.toString());
+PendingService.getDataById(1).then(res => {
+    console.log(res);
 })

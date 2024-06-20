@@ -3,7 +3,8 @@ const QuestionService = require('../../services/questionService');
 const CategoryService = require('../../services/categoryService');
 const QuestionCategoryService = require('../../services/questionCategoryService');
 const Loader = require('../../loaders/Loader');
-const { unsetQuizCompleted } = require('../cookieHandler');
+const PendingService = require('../../services/pendingService');
+const { isUserAdmin } = require('../cookieHandler');
 
 const handleCreateQuizz =  async (req, res, next) => {
       let body = '';
@@ -15,36 +16,40 @@ const handleCreateQuizz =  async (req, res, next) => {
         
         try 
         {
-            const difficulty = capitalizeFirstLetter(formData.difficulty);
-            if(formData.hint_area === '')
-                formData.hint_area = 'None';
-                
-            const questionData = await QuestionService.insertQuestion(formData.quizz_question, difficulty, formData.answer_area, formData.description_area, formData.hint_area);
-            // Error at inserting question into db
-            if(questionData === null)
-            {
-                throw 'Question already exists';
-            }
-            let categoryList = [];
+            if(!isUserAdmin(req)){
+                await PendingService.insertQuestion(formData.difficulty, formData.quizz_question, formData.answer_area, formData.description_area, formData.hint_area)
+            } else{
+                const difficulty = capitalizeFirstLetter(formData.difficulty);
+                if(formData.hint_area === '')
+                    formData.hint_area = 'None';
+                    
+                const questionData = await QuestionService.insertQuestion(formData.quizz_question, difficulty, formData.answer_area, formData.description_area, formData.hint_area);
+                // Error at inserting question into db
+                if(questionData === null)
+                {
+                    throw 'Question already exists';
+                }
+                let categoryList = [];
 
-            if (Array.isArray(formData.category)) {
-                categoryList.push(...formData.category);
-            } 
-            else if (typeof formData.category === 'string') {
-                categoryList.push(formData.category); 
-            }
-            
-            categoryList.forEach(async category=>
-            {
-                const categoryData = await CategoryService.getCategory(category);
-                if(categoryData === null)
-                    return;
-
-                QuestionCategoryService.insertQuestionCategory(questionData.id, categoryData.id);
+                if (Array.isArray(formData.category)) {
+                    categoryList.push(...formData.category);
+                } 
+                else if (typeof formData.category === 'string') {
+                    categoryList.push(formData.category); 
+                }
                 
-            });
-            
-            console.log('Insert successful!');
+                categoryList.forEach(async category=>
+                {
+                    const categoryData = await CategoryService.getCategory(category);
+                    if(categoryData === null)
+                        return;
+
+                    QuestionCategoryService.insertQuestionCategory(questionData.id, categoryData.id);
+                    
+                });
+                
+                console.log('Insert successful!');
+            }
             
         } catch (error) {
             console.log(`Error at creating quizz:${error} `);

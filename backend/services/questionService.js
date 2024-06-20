@@ -13,7 +13,7 @@ class QuestionService{
             const insertQuery = {
                 text: 'INSERT INTO sql_tutoring."Question" (title, difficulty, answer, counter, description, hint) VALUES ($1, $2, $3, $4, $5, $6) RETURNING id',
                 values: [title, difficulty, answer, counter, description, hint],
-              };
+            };
             
             const result =  await dbConnection.query(insertQuery);
             const id = result.rows[0].id;

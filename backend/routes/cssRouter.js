@@ -64,6 +64,10 @@ function routeCss(){
     addRoute('GET', '/css/goingHome.css', (req, res) => {
         Loader.loadCSS(req, res, 'goingHome.css')
     })
+
+    addRoute('GET', '/css/verifyProblems.css', (req, res) => {
+        Loader.loadCSS(req, res, 'verifyProblems.css')
+    })
 }
 
 module.exports = routeCss

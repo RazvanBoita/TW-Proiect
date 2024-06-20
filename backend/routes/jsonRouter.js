@@ -11,7 +11,7 @@ const CategoryService = require('../services/categoryService');
 const SolvedQuestionsService = require('../services/solvedQuestionsService');
 const TakenQuizService = require('../services/takenQuizService');
 const LeaderboardService = require('../services/leaderboardService');
-const checkAdminPrivileges = require('../utils/middleWare/checkAdminPrivilages');
+const checkAdminPrivileges = require('../utils/middleWare/checkAdminPrivileges');
 const AdminPrivilages = require('../utils/adminPrivilages');
 const QuestionCategoryService = require('../services/questionCategoryService');
 function routeJSON()
