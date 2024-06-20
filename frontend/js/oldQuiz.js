@@ -51,6 +51,7 @@ document.addEventListener('DOMContentLoaded', function() {
    let currQuestionId = 0
    let curr_hint = 'No hint found for this question'
 
+   //change message at the last question
    
    // Get the quizz id variable from the url if present
    const url = new URL(window.location.href);
@@ -66,27 +67,20 @@ document.addEventListener('DOMContentLoaded', function() {
         {
             window.location.href = '/notFound';
         }
-        console.log(data);
         const questionIndexSpan = document.querySelector('.question-index .sharp-number');
         const questionContent = document.querySelector('.question-content');
         const tableDescriptionContent = document.querySelector('#table-description-content');
         const difficulty = document.querySelector('.difficulty')
-        const category = document.querySelector('.category')
-        console.log(data.category);
-        
 
         questionIndexSpan.innerText = data.currentQuestion;
         questionContent.innerText = data.questionContent;
         tableDescriptionContent.innerText = data.tableDescription;
         difficulty.innerText = 'Difficulty: Easy'
-        category.innerText = `Category: ${data.category}`
 
         currQuestionId = data.questionId        
         chosenQuestionIds.push(data.questionId)
         start_date = data.start_date
         curr_hint = data.hint
-
-        fetchComments(currQuestionId)
     })
     .catch(error => {
         console.error('Error fetching quiz:', error);
@@ -127,7 +121,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 } else{
                     score += data.points
                     data.points = score
-                    //update vote
                     updateQuestion(data, currIdx)
                 }
             })
@@ -159,10 +152,6 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
 
-
-
-    
-
     function updateQuestion(data, currentQuestionIndex){
         const questionContent = document.querySelector('.question-content');
         const tableDescriptionContent = document.querySelector('#table-description-content');
@@ -175,13 +164,10 @@ document.addEventListener('DOMContentLoaded', function() {
         const thumbsUpIcon = document.querySelector('.thumbs-up');
         const thumbsDownIcon = document.querySelector('.thumbs-down');
         const difficulty = document.querySelector('.difficulty')
-        const category = document.querySelector('.category')
-        console.log(data.category);
 
         questionIndexSpan.innerText = currentQuestionIndex;
         questionContent.innerText = data.title;
         tableDescriptionContent.innerText = data.description;
-        category.innerText = `Category: ${data.category}`
 
         thumbsDownIcon.classList.remove('clicked')
         thumbsUpIcon.classList.remove('clicked')
@@ -211,7 +197,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
         consoleDiv.innerHTML = '<p>The results of your query will appear here!</p>';
         codeMirrorInstance.setValue('');
-        fetchComments(currQuestionId)
     }
 
     const runButton = document.querySelector('.run-button');
@@ -266,97 +251,6 @@ document.addEventListener('DOMContentLoaded', function() {
             console.error('Error:', error);
         });
     });
-
-
-    
-    function fetchComments(questionId) {
-        fetch(`/comments?id=${questionId}`, {
-            method: 'GET'
-        })
-        .then(response => response.json())
-        .then(data => {
-            renderComments(data)
-        })
-        .catch(error => {
-            console.error('Error fetching comments:', error);
-        });
-    }
-
-    function renderComments(comments){
-        const container = document.querySelector('.comments-container');
-        container.innerHTML = '';
-
-        comments.forEach(comment => {
-            const commentElement = document.createElement('div');
-            commentElement.className = 'comment';
-
-            const contentDiv = document.createElement('div');
-            contentDiv.className = 'comment-content';
-            contentDiv.textContent = comment.description;
-            commentElement.appendChild(contentDiv);
-
-            const bottomDiv = document.createElement('div');
-            bottomDiv.className = 'comment-bottom';
-
-            const userDiv = document.createElement('div');
-            userDiv.className = 'comment-user';
-            const userIcon = document.createElement('ion-icon');
-            userIcon.setAttribute('name', 'person-circle-outline');
-            const usernameParagraph = document.createElement('p');
-            usernameParagraph.className = 'comment-username';
-            usernameParagraph.textContent = comment.idUser; // Assuming idUser is the username
-            userDiv.appendChild(userIcon);
-            userDiv.appendChild(usernameParagraph);
-            bottomDiv.appendChild(userDiv);
-
-            const dateParagraph = document.createElement('p');
-            dateParagraph.className = 'comment-date';
-            const createdAtDate = new Date(comment.createdAt).toLocaleDateString('en-US'); // Format the date
-            dateParagraph.textContent = `Date: ${createdAtDate}`;
-            bottomDiv.appendChild(dateParagraph);
-
-            commentElement.appendChild(bottomDiv);
-
-            container.appendChild(commentElement);
-    });
-    }
-
-
-    function addComment(questionId, parentId, description){
-        fetch(`/comments`, {
-            method : 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body : JSON.stringify({questionId: questionId, parentId: parentId, description: description})
-        })
-        .then(res => res.json())
-        .then(data => {
-            console.log(data);
-            const commentSection = document.querySelector('.comments-container')
-            commentSection.insertAdjacentHTML('beforeend', data)
-        })
-    }
-
-    const addCommentBtn = document.querySelector(".comment-submit")
-    const commentContent = document.querySelector(".comment-input")
-    addCommentBtn.addEventListener('click', (e) => {
-        e.preventDefault()
-        const parentId = -1
-        const description = commentContent.value.trim();
-        if(description){
-            if(currQuestionId){
-                addComment(currQuestionId, parentId, description)
-                commentContent.value = '';
-            } else{
-                console.log("Can't add comment for question id null");
-            }
-        } else{
-            console.log("Can't add epmty comment");
-        }
-    })
-
-
 
 
     const hintBtn = document.querySelector('.modify-color');

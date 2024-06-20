@@ -2,11 +2,13 @@ const url = require('url');
 const {addRoute} = require('../../router');
 const Loader = require('../loaders/Loader');
 //middlewares
+const {parse} = require('url')
 const checkCredentialsExist = require('../utils/middleWare/checkUser');
 const checkSession = require('../utils/middleWare/checkSession');
 const logoutUser = require('../utils/middleWare/logoutUser');
 const checkAdminPrivileges = require('../utils/middleWare/checkAdminPrivilages');
 const handleCreateQuizz = require('../utils/middleWare/handleCreateQuizz');
+const jwt = require('jsonwebtoken')
 
 
 const SignUpService = require('../services/signUpService');
@@ -14,8 +16,15 @@ const SqlService = require('../services/sqlService')
 const AdminPrivilages = require('../utils/adminPrivilages');
 const CategoryService = require('../services/categoryService');
 const QuestionService = require('../services/questionService');
+const LoginService = require('../services/LoginService')
 const QuizService = require('../services/quizService');
-const { getUserData,  checkSessionId} = require('../utils/cookieHandler');
+const CommentService = require('../services/commentService')
+
+const { getUserData,  checkSessionId, setQuizCompleted, unsetQuizCompleted} = require('../utils/cookieHandler');
+const UserService = require('../services/userService');
+const checkCreateQuizPrivileges = require('../utils/middleWare/checkCreateQuizPrivileges');
+
+let currEmail;
 function routeHtml(){
 
     addRoute('GET', '/signup', (req, res) => {
@@ -60,11 +69,11 @@ function routeHtml(){
     })
 
     
-    addRoute('GET', '/quiz', async (req, res) => {
-        const data = await QuestionService.serveQuestion();
-        //insert as data
-        Loader.loadTemplateEngineHTML(req, res, 'quiz.hbs', data)
-    }) 
+    // addRoute('GET', '/quiz', async (req, res) => {
+    //     const data = await QuestionService.serveQuestion();
+    //     //insert as data
+    //     Loader.loadTemplateEngineHTML(req, res, 'quiz.hbs', data)
+    // }) 
 
     //pe viitor sa am si checksession aici
 
@@ -73,8 +82,8 @@ function routeHtml(){
     });
 
     addRoute('POST', '/login', (req, res) => {
-        Loader.redirect(req, res, 'index.html', '/')
-    }, checkCredentialsExist);
+        LoginService.login(req, res)
+    });
 
     addRoute('GET', '/signup/verify', (req, res) => {
         SignUpService.verifyEmail(req, res)
@@ -153,9 +162,10 @@ function routeHtml(){
 
     addRoute('GET', '/createQuiz', async (req, res) =>{
         Loader.loadHTML(req, res, 'createSqlQuery.html');
-    }, checkAdminPrivileges)
+    }, checkCreateQuizPrivileges)
 
     addRoute('POST', '/createQuiz', async (req, res)=>{
+        unsetQuizCompleted(req) 
         Loader.loadHTML(req, res, 'createSqlQuery.html');
     }, handleCreateQuizz)
 
@@ -189,6 +199,7 @@ function routeHtml(){
     })
 
     addRoute('GET', '/finish-quiz', (req, res) => {
+        setQuizCompleted(req)
         Loader.loadHTML(req, res, 'quizFinish.html')
     })
 
@@ -199,6 +210,53 @@ function routeHtml(){
     addRoute('GET', '/updateQuiz', async(req, res)=>{
         Loader.loadHTML(req, res, 'updateSqlQuery.html');
     }, checkAdminPrivileges)
+
+    addRoute('GET', '/recover', async(req, res) => {
+        Loader.loadHTML(req, res, 'recoverPass.html')
+    })
+
+    addRoute('POST', '/recover', async(req, res) => {
+        LoginService.recoverPassword(req, res);
+    })
+
+    addRoute('GET', '/recover/verify', async(req, res) => {
+        const query = parse(req.url, true).query;
+        const token = query.token;
+        if(!token){
+            Loader.loadHTML(req, res, 'forbidden.html')
+        }
+        try{
+            const decoded = jwt.verify(token, process.env.JWT_SECRET);
+            currEmail = decoded.email
+            Loader.loadHTML(req, res, 'resetPass.html');
+        } catch(err){
+            console.error('JWT Verification Error:', err);
+            Loader.loadHTML(req, res, 'forbidden.html');
+        }
+        
+    })
+
+    addRoute('POST', '/recover/verify', async(req, res) => {
+        LoginService.updatePassword(req, res, currEmail)
+    })
+
+    addRoute('GET', '/comments', async(req, res) => {
+        const query = parse(req.url, true).query;
+        const id = query.id;
+        CommentService.getComments(req, res, id)
+    })
+
+    addRoute('POST', '/comments', async (req, res) => {
+        CommentService.addComment(req, res)
+    })
+
+    addRoute('GET', '/after-create-quiz', async (req, res) => {
+        await QuizService.handleFinishedCreateQuiz(req, res)
+    })
+
+    addRoute('GET', '/going-home', async (req, res) => {
+        Loader.loadHTML(req, res, 'goingHome.html')
+    })
 
 }
 

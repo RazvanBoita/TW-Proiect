@@ -1,0 +1,42 @@
+<!-- Author: Stefan -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/logIn.css" type="text/css">
+    <title>Reset Password</title>
+</head>
+<body>
+    <main class="container">
+        <div class="content">
+            <div class="logo">
+                <img src="../img/liliac.png" alt="" class="logo-img">
+            </div>
+            <div class="fields">
+                <header class="main-title">Start learning SQL!</header>
+                <form action="/reset" method="post" class="form-fields" id="reset-form">
+                    <div class="form-group">
+                        <ion-icon name="lock-closed-outline"></ion-icon>
+                        <input type="password" id="password" name="password" placeholder="Password" required>
+                    </div>
+                    <div class="form-group">
+                        <ion-icon name="lock-closed-outline"></ion-icon>
+                        <input type="password" id="confirm-password" name="password" placeholder="Confirm Password" required>
+                    </div>
+                    <button type="submit" class="submit-button" style="margin-bottom: .25rem;">Reset password</button>
+                </form>
+                <div class="error-message" id="error-message">An error occurred. Please try again.</div>
+                <div class="success-message" id="success-message">Password reset successfully! <a href="/login" class="bottom-link-reset">Login here</a></div>
+            </div>
+        </div>
+    </main>
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <script type="module">
+        import ButtonHandler from '../js/ButtonHandler.js'
+        document.getElementById('reset-form').addEventListener('submit', ButtonHandler.resetPass);
+    </script>
+</body>
+</html>

@@ -1,10 +1,6 @@
-const dbConnection = require('../config/postgresDB')
+const CategoryService = require('../services/categoryService')
 
-async function terminate(){
-    await dbConnection.query('ROLLBACK')
-}
-
-terminate()
-QuestionService.serveQuestion().then(result => {
-    console.log(result);
+CategoryService.getQuestionCategories(59).then(res => {
+    const types =  res.map(item => item.type)
+    console.log(types.toString());
 })
