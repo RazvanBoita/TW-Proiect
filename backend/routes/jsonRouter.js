@@ -40,9 +40,31 @@ function routeJSON()
         {
             categoryId = '';
         }
-        
+        let orderBy = parsedUrl.query.orderBy;
+        if(!orderBy)
+        {
+            orderBy = 'id';
+        }
+        let isAscending = parsedUrl.query.ascending;  
+        if(!isAscending)
+        {
+            isAscending = true;
+        }
+        else
+        {
+            isAscending = isAscending === 'true' ? true : false;
+        }
+        let questionTitle = parsedUrl.query.questionTitle;  
+        if(!questionTitle)
+        {
+            questionTitle = '%';
+        }
+        else
+        {
+            questionTitle+='%';
+        }
         const userId = getUserData(req).userId;
-        const questions = await QuestionService.getPageQuestions(pageIndex, difficulty, categoryId, userId);
+        const questions = await QuestionService.getPageQuestions(pageIndex, difficulty, categoryId, userId, orderBy, isAscending, questionTitle);
         const data={
             questions,
             isUserAdmin: isUserAdmin(req),
@@ -64,8 +86,18 @@ function routeJSON()
         {
             categoryId = '';
         }
+
+        let questionTitle = parsedUrl.query.questionTitle;  
+        if(!questionTitle)
+        {
+            questionTitle = '%';
+        }
+        else
+        {
+            questionTitle+='%';
+        }
         
-        const counter = await QuestionService.getQuestionsCounter(difficulty, categoryId);
+        const counter = await QuestionService.getQuestionsCounter(difficulty, categoryId, questionTitle);
         Loader.loadJSON(req, res, counter);
     }, checkSession)
 

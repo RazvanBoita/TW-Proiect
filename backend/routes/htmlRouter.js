@@ -112,6 +112,10 @@ function routeHtml(){
         Loader.loadHTML(req, res, 'quizz.html')
     }, checkSession)
 
+    addRoute('GET', '/question', async(req, res) => {
+        Loader.loadHTML(req, res, 'question.html')
+    }, checkSession)
+
 
 
     addRoute('GET', '/load-quiz', async (req, res) => {
@@ -130,12 +134,15 @@ function routeHtml(){
                 res.end(JSON.stringify(quizzData));
                 return;
             }
+            const category = await CategoryService.getQuestionCategories(quizzData.id)
+            const categories = category.map(item => item.type).toString()
             data = {
                 currentQuestion : 1,
                 questionContent: quizzData.title,
                 tableDescription: quizzData.description,
                 questionId: quizzId,
-                start_date: new Date()
+                start_date: new Date(),
+                category: categories
             }
         }
         res.setHeader('Content-Type', 'application/json');

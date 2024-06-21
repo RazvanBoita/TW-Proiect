@@ -61,7 +61,7 @@ p {
     overflow-y: auto;
 }
 
-.difficulty, .category{
+.difficulty, .category, #difficulty-area, #category-area{
     font-size: 1.2rem;
     font-weight: bold;
 }
@@ -82,7 +82,7 @@ p {
     font-size: 1.2rem;
 }
 
-.table-description {
+.table-description, #table-description {
     margin: 0;
     border-left: 2px solid var(--main-color);
     font-family: 'Source Code Pro', monospace;

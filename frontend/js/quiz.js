@@ -75,7 +75,8 @@ document.addEventListener('DOMContentLoaded', function() {
         console.log(data.category);
         
 
-        questionIndexSpan.innerText = data.currentQuestion;
+        if(questionIndexSpan != null)
+            questionIndexSpan.innerText = data.currentQuestion;
         questionContent.innerText = data.questionContent;
         tableDescriptionContent.innerText = data.tableDescription;
         difficulty.innerText = 'Difficulty: Easy'
@@ -111,8 +112,6 @@ document.addEventListener('DOMContentLoaded', function() {
         currIdx++;
         
         if(currIdx<=12){
-            const newUrl = window.location.origin + window.location.pathname;
-            history.pushState({}, '', newUrl);
             fetch('/next-question', {
                 method: 'POST',
                 headers: {
@@ -125,10 +124,23 @@ document.addEventListener('DOMContentLoaded', function() {
                 if(data.message){
                     console.log(data.message);
                 } else{
-                    score += data.points
-                    data.points = score
-                    //update vote
-                    updateQuestion(data, currIdx)
+                    const quizUrl = window.location.search;
+                    const params = new URLSearchParams(quizUrl);
+                    let quizId;
+                    try{
+                        quizId = params.get(id); // If it doesn't find the id, it will throw an exception
+                        if(quizId !== null) // if it is not null, it means that we are in the page where we display only the question selected, don't update the question.
+                        {
+                            currIdx--;
+                        } 
+                    }
+                    catch(error)
+                    {
+                        score += data.points
+                        data.points = score
+                        //update vote
+                        updateQuestion(data, currIdx)
+                    }
                 }
             })
         } else{
