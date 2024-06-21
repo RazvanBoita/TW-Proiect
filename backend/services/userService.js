@@ -1,4 +1,5 @@
 const dbConnection = require('../config/postgresDB')
+const hashPassword = require('../utils/hashPassword')
 
 class UserService{
     async add(email, name, password){
@@ -66,6 +67,36 @@ class UserService{
             return { success: false, error: error.message };
         }    
     }
+
+    static async updatePassword(email, newPass){
+        const hashedPass = hashPassword(newPass)
+        const updateQuery = {
+            text: 'UPDATE sql_tutoring."User" SET password = $2 WHERE email = $1',
+            values: [email, hashedPass]
+        }
+        try{
+            await dbConnection.query(updateQuery)
+            return 1 //SUCCESS
+        } catch(err){
+            console.log("Error updating password: " + err);
+            return -1
+        }
+    }
+
+    static async getNameById(userId){
+        const query = {
+            text: 'SELECT name FROM sql_tutoring."User" WHERE id = $1',
+            values: [userId]
+        }
+        try{
+            const result = await dbConnection.query(query)
+            return result.rows[0].name
+        } catch(err){
+            console.log("Error getting name by id");
+            return null
+        }
+    }
+    
 }
 
 module.exports = UserService;

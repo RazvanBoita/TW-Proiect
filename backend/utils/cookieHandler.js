@@ -66,6 +66,31 @@ function isUserAdmin(req)
     return userData.isAdmin === 1 ? true : false;
 }
 
+
+function hasCompletedQuiz(req) {
+    const userData = getUserData(req);
+    return userData ? userData.hasCompletedQuiz === true : false;
+}
+
+function setQuizCompleted(req) {
+    const rawCookie = getRawCookie(req, 'sessionId=');
+    if (sessions.has(rawCookie)) {
+        const userData = sessions.get(rawCookie);
+        userData.hasCompletedQuiz = true;
+        sessions.set(rawCookie, userData);
+    }
+}
+
+function unsetQuizCompleted(req) {
+    const rawCookie = getRawCookie(req, 'sessionId=');
+    if (sessions.has(rawCookie)) {
+        const userData = sessions.get(rawCookie);
+        userData.hasCompletedQuiz = false;
+        sessions.set(rawCookie, userData);
+    }
+}
+
+
 module.exports = {
     generateSessionId,
     checkSessionId,
@@ -74,5 +99,8 @@ module.exports = {
     getUserData,
     isUserAdmin,
     setSessionId,
+    hasCompletedQuiz,
+    setQuizCompleted,
+    unsetQuizCompleted,
     sessions
 }

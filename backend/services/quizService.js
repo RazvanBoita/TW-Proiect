@@ -1,5 +1,5 @@
 const dbConnection = require('../config/postgresDB');
-const { getUserData } = require('../utils/cookieHandler');
+const { getUserData, hasCompletedQuiz, unsetQuizCompleted } = require('../utils/cookieHandler');
 const TakenQuizService = require('./takenQuizService');
 
 class QuizService{
@@ -111,6 +111,31 @@ class QuizService{
             console.log(err);
         }
     }
+
+    static async handleFinishedCreateQuiz(req, res){
+        let body = '';
+        
+        req.on('data', chunk => {
+            body += chunk.toString();
+        });
+
+        req.on('end', async () => {
+            try{
+                res.statusCode = 200
+                if(hasCompletedQuiz(req) == true){
+                    unsetQuizCompleted(req)
+                    res.end(JSON.stringify({resCode: "user"}))
+                } else{
+                    res.end(JSON.stringify({resCode: "admin"}))
+                }
+            } catch(err){
+                res.statusCode = 500
+                res.end(JSON.stringify({message: "Unexpected error"}))
+                console.log("Error at finishing : " + err);
+            }
+        })
+    }
+
 }
 
 module.exports = QuizService

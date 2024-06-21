@@ -2,6 +2,7 @@ const dbConnection = require('../config/postgresDB')
 const QuestionData = require('../models/questionData');
 const SolvedQuestionsService = require('./solvedQuestionsService');
 const {getUserData} = require('../utils/cookieHandler');
+const CategoryService = require('./categoryService');
 class QuestionService{
 
     static async insertQuestion(title, difficulty, answer, description, hint){
@@ -238,8 +239,10 @@ class QuestionService{
                 const pickedQuestion = await this.chooseQuestionAlgo(type, pickedQuestions)
 
                 const {id, title, difficulty, description, hint} = pickedQuestion
+                const categories = await CategoryService.getQuestionCategories(id)
+                const category = categories.map(item => item.type).toString()
                 // console.log(id, title, difficulty, description);
-                const data = {id, title, difficulty, description, points, hint}
+                const data = {id, title, difficulty, description, points, hint, category}
 
                 // console.log("Currently on question: " + index);
 
@@ -309,13 +312,16 @@ class QuestionService{
             const description = minCounterQuestion.description
             const now = new Date()
             const hint = minCounterQuestion.hint
+            const category = await CategoryService.getQuestionCategories(minCounterQuestion.id)
+            const categories = category.map(item => item.type).toString()
             const data = {
                 currentQuestion : 1,
                 questionContent: title,
                 tableDescription: description,
                 questionId: minCounterQuestion.id,
                 start_date: now,
-                hint: hint
+                hint: hint,
+                category: categories
             }
             return data;
         } catch (error) {
@@ -335,12 +341,13 @@ class QuestionService{
     }
 
 
-    static async updateQuestionRating(vote, currQuestionId){
+    static async updateQuestionRating(vote, questionId){
+        console.log("For question id: " + questionId + " setting rating to: " + vote);
         try{
-            const incrementValue = vote === 1 ? 1 : -1;
+            if(vote == 2) vote = -1
             const query = {
                 text: 'UPDATE sql_tutoring."Question" SET rating = rating + $1 WHERE id = $2',
-                values: [incrementValue, currQuestionId],
+                values: [vote, questionId],
             };
 
             await dbConnection.query(query);
@@ -348,6 +355,8 @@ class QuestionService{
             console.error('Error updating question rating:', error.message);
         }   
     }
+
+    
     static async updateQuestion(questionData)
     {
         try{

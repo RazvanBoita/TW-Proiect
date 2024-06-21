@@ -25,29 +25,54 @@ class EmailSender {
            }
        }
     }
-     static async sendVerificationEmail(name, verificationLink) {
-         const msg = {
-             to: name,
-             from: {
-                 name: 'SQLTwo@DoNotReply.com',
-                 email: process.env.FROM_EMAIL
-             },
-             templateId: process.env.VERIFICATION_TEMPLATE,
-             dynamic_template_data: {
-                verificationLink: verificationLink
+    static async sendVerificationEmail(name, verificationLink) {
+        const msg = {
+            to: name,
+            from: {
+                name: 'SQLTwo@DoNotReply.com',
+                email: process.env.FROM_EMAIL
+            },
+            templateId: process.env.VERIFICATION_TEMPLATE,
+            dynamic_template_data: {
+            verificationLink: verificationLink
+        }
+        };
+
+        try {
+            await sgMail.send(msg);
+            console.log("Sent email!");
+        } catch (error) {
+            console.error(error);
+
+            if (error.response) {
+                console.error(error.response.body);
             }
-         };
- 
-         try {
-             await sgMail.send(msg);
-             console.log("Sent email!");
-         } catch (error) {
-             console.error(error);
- 
-             if (error.response) {
-                 console.error(error.response.body);
-             }
-         }
-     } 
+        }
+    } 
+
+    static async sendChangePassEmail(name, verificationLink){
+        const msg = {
+            to: name,
+            from: {
+                name: 'SQLTwo@DoNotReply.com',
+                email: process.env.FROM_EMAIL
+            },
+            templateId: process.env.CHANGEPASS_TEMPLATE,
+            dynamic_template_data: {
+            verificationLink: verificationLink
+        }
+        };
+
+        try {
+            await sgMail.send(msg);
+            console.log("Sent email!");
+        } catch (error) {
+            console.error(error);
+
+            if (error.response) {
+                console.error(error.response.body);
+            }
+        }
+    }
  };
  module.exports = EmailSender;

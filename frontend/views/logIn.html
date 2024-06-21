@@ -16,7 +16,7 @@
                 </div>
                 <div class="fields">
                     <header class="main-title">Start learning SQL!</header>
-                    <form action="/login" method="post" class="form-fields">
+                    <form action="/login" method="post" class="form-fields" id="login-form">
                         <div class="form-group">
                             <ion-icon name="mail-outline"></ion-icon>
                             <input type="email" id="email" name="email" placeholder="Email" required>
@@ -25,10 +25,11 @@
                             <ion-icon name="lock-closed-outline"></ion-icon>
                             <input type="password" id="password" name="password" placeholder="Password" required>
                         </div>
+                        <div class="error-message" id="error-message">Invalid credentials. Please try again.</div>
                         <button type="submit" class="submit-button" style="margin-bottom: .25rem;">Log in</button>
                         <div class="bottom-link-wrapper">
                             <ion-icon name="return-down-forward-outline"></ion-icon>
-                            <a href="#" class="bottom-link">Forgot your password?</a>
+                            <a href="/recover" class="bottom-link" id="forgot-pass">Forgot your password?</a>
                         </div>
                         <div class="bottom-link-wrapper">
                             <ion-icon name="return-down-forward-outline"></ion-icon>
@@ -40,5 +41,9 @@
     </main>
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <script type="module">
+        import ButtonHandler from '../js/ButtonHandler.js'
+        document.getElementById('login-form').addEventListener('submit', ButtonHandler.loginSubmit);
+    </script>
 </body>
 </html>
