@@ -9,28 +9,33 @@ document.getElementById('input-json').addEventListener('change', function(event)
     reader.onload = function(e) {
         const content = e.target.result;
         try {
+            
             const jsonData = JSON.parse(content); 
             console.log('JSON file selected:', jsonData);
 
             const difficulty = jsonData.difficulty;
-            const category = jsonData.category;
+            let category = jsonData.category;
             const quizzTitle = jsonData.quizz_title;
             const answer = jsonData.answer;
             const description = jsonData.description;
-
             if(quizzTitle === null || answer === null || category === null || difficulty === null || description === null)
             {
                 alert('Title, answer or category are invalid!');
                 return;
             }
+            
             if(category.length === 0)
             {
                 alert('Category must contain an element!');
                 return;
             }
+            if(typeof category === 'string')
+            {
+                category = [category];
+            }
             
             const selectContainer = document.getElementById("category");
-
+            console.log(category)
             for(let i = 0; i< category.length; i++)
             {
                 let found = false;
@@ -47,6 +52,7 @@ document.getElementById('input-json').addEventListener('change', function(event)
                 if(!found)
                 {
                     alert('Category ' + category[i] + ' does not exist!');
+                    return;
                 }
             }
             
