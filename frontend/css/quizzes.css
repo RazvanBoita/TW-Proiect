@@ -107,6 +107,17 @@ a:hover{
     color: var(--accent-color);
     border-style: none;
 }
+#search-bar-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#search-bar{
+    width: 20rem;
+    background-color: var(--main-color);
+    border-style: none;
+    color: var(--accent-color);
+}
 #page-numbers{
     display: flex;
     justify-content: center;

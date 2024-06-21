@@ -23,6 +23,19 @@
              <select name="category" id="category">
                 
              </select>
+             <select name="order" id="order">
+                <option class="options id" value="id-asc">Id A-Z</option>
+                <option class="options id" value="id-desc">Id Z-A</option>
+                <option class="options title" value="title-asc">Title A-Z</option>
+                <option class="options title" value="title-desc">Title Z-A</option>
+                <option class="options rating" value="rating-asc">Rating A-Z</option>
+                <option class="options rating" value="rating-desc">Rating Z-A</option>
+                <option class="options difficulty" value="difficulty-asc">Difficulty A-Z</option>
+                <option class="options difficulty" value="difficulty-desc">Difficulty Z-A</option>
+             </select>
+        </div>
+        <div id="search-bar-container">
+            <input type="text" id="search-bar" placeholder="Search question">
         </div>
 
         <div id="table-container">
@@ -86,7 +99,7 @@
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.779 17.779 4.36 19.918 6.5 13.5m4.279 4.279 8.364-8.643a3.027 3.027 0 0 0-2.14-5.165 3.03 3.03 0 0 0-2.14.886L6.5 13.5m4.279 4.279L6.499 13.5m2.14 2.14 6.213-6.504M12.75 7.04 17 11.28"/>
                     </svg>
                 </button>
-                <a href = "/quiz?id={{id}}">{{title}}</a>
+                <a href = "/question?id={{id}}">{{title}}</a>
             </td>
             <td>{{rating}}</td>
             <td class="{{difficulty}}">{{difficulty}}</td>
