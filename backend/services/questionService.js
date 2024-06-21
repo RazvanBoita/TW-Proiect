@@ -87,7 +87,7 @@ class QuestionService{
             console.error('Error executing SELECT LIMIT query for Question table:', error);
         }
     }
-    static async getQuestionsCounter(difficulty, categoryId, questionTitle)
+    static async getQuestionsCounter(difficulty, categoryId, questionTitle = '%')
     {
         let queryText = 'SELECT COUNT(*) FROM sql_tutoring."Question" q ';
         let params = [];
