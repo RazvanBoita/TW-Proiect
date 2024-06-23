@@ -1,0 +1,129 @@
+body{
+    overflow-y: auto;
+}
+
+
+.pending-main{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+h2{
+    text-align: center;
+}
+
+p{
+    margin: .2rem 0;
+    padding: 0;
+}
+
+
+.vproblems-title{
+    color: var(--accent-color);
+    font-size: 3rem;
+    margin: 1rem 0;
+}
+
+.preface{
+    font-style: oblique;
+    font-weight: 600;
+    font-size: 1.2rem;
+}
+
+.pending-card{
+    display: flex;
+    flex-direction: column;
+    border: 3px solid orchid;
+    border-radius: 1rem;
+    background-color: rgb(8, 123, 224);
+    color: white;
+    font-size: 1.1rem;
+    padding: .5rem;
+    width: 50vw;   
+    box-sizing: border-box;
+    transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+    opacity: 1;
+    transform: scale(1);
+}
+
+.pending-card.removed {
+    opacity: 0;
+    transform: scale(0.95);
+    transition: transform 0.5s ease-out, opacity 0.5s ease-out;
+    height: 0;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+
+.pending-button {
+  background-color: #c2fbd7;
+  border-radius: 100px;
+  box-shadow: rgba(44, 187, 99, .2) 0 -25px 18px -14px inset,rgba(44, 187, 99, .2) 0 1px 2px,rgba(44, 187, 99, .2) 0 2px 4px,rgba(44, 187, 99, .2) 0 4px 8px,rgba(44, 187, 99, .2) 0 8px 16px,rgba(44, 187, 99, .15) 0 16px 32px;
+  color: green;
+  cursor: pointer;
+  display: inline-block;
+  font-family: CerebriSans-Regular,-apple-system,system-ui,Roboto,sans-serif;
+  padding: 7px 20px;
+  text-align: center;
+  text-decoration: none;
+  transition: all 250ms;
+  border: 0;
+  font-size: 16px;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.pending-button:hover {
+  box-shadow: rgba(44,187,99,.35) 0 -25px 18px -14px inset,rgba(44,187,99,.25) 0 1px 2px,rgba(44,187,99,.25) 0 2px 4px,rgba(44,187,99,.25) 0 4px 8px,rgba(44,187,99,.25) 0 8px 16px,rgba(44,187,99,.25) 0 16px 32px;
+  transform: scale(1.05) rotate(-1deg);
+}
+
+.pending-deny{
+    background-color: #e87a7a;
+    color: rgb(129, 0, 0);
+    box-shadow: rgba(207, 42, 37, 0.35) 0 -25px 18px -14px inset,rgba(207, 42, 37, 0.35) 0 1px 2px,rgba(207, 42, 37, 0.35) 0 2px 4px,rgba(207, 42, 37, 0.35) 0 4px 8px,rgba(207, 42, 37, 0.35) 0 8px 16px,rgba(207, 42, 37, 0.35) 0 16px 32px;
+}
+
+.pending-deny:hover {
+    box-shadow: rgba(207, 42, 37, 0.35) 0 -25px 18px -14px inset,rgba(207, 42, 37, 0.35) 0 1px 2px,rgba(207, 42, 37, 0.35) 0 2px 4px,rgba(207, 42, 37, 0.35) 0 4px 8px,rgba(207, 42, 37, 0.35) 0 8px 16px,rgba(207, 42, 37, 0.35) 0 16px 32px;
+    transform: scale(1.05) rotate(-1deg);
+}
+
+.pending-buttons{
+    margin-top: .25rem;
+}
+
+.pending-id{
+    display: none;
+}
+
+html {
+    -ms-overflow-style: none;  /* Internet Explorer 10+ */
+    scrollbar-width: none;  /* Firefox */
+}
+html::-webkit-scrollbar { 
+    display: none;  /* Safari and Chrome */
+}
+
+
+
+@media (max-width: 500px){
+    .pending-card{
+        width: 70%;
+    }
+}
+
+
+
+@keyframes fadeOut {
+    0% { opacity: 1; }
+    100% { opacity: 0; }
+}

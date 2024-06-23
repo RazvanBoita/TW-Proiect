@@ -92,6 +92,10 @@ function routeJs(){
     addRoute('GET', '/js/goingHome.js', (req, res) => {
         Loader.loadJs(req, res, 'goingHome.js')
     })
+
+    addRoute('GET', '/js/verifyProblems.js', (req, res) => {
+        Loader.loadJs(req, res, 'verifyProblems.js')
+    })
   
 
     

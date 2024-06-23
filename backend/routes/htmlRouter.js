@@ -6,7 +6,7 @@ const {parse} = require('url')
 const checkCredentialsExist = require('../utils/middleWare/checkUser');
 const checkSession = require('../utils/middleWare/checkSession');
 const logoutUser = require('../utils/middleWare/logoutUser');
-const checkAdminPrivileges = require('../utils/middleWare/checkAdminPrivilages');
+const checkAdminPrivileges = require('../utils/middleWare/checkAdminPrivileges');
 const handleCreateQuizz = require('../utils/middleWare/handleCreateQuizz');
 const jwt = require('jsonwebtoken')
 
@@ -23,6 +23,8 @@ const CommentService = require('../services/commentService')
 const { getUserData,  checkSessionId, setQuizCompleted, unsetQuizCompleted} = require('../utils/cookieHandler');
 const UserService = require('../services/userService');
 const checkCreateQuizPrivileges = require('../utils/middleWare/checkCreateQuizPrivileges');
+const PendingService = require('../services/pendingService');
+
 
 let currEmail;
 function routeHtml(){
@@ -265,6 +267,17 @@ function routeHtml(){
         Loader.loadHTML(req, res, 'goingHome.html')
     })
 
+    addRoute('GET', '/verify-problems', async(req, res) => {
+        Loader.loadHTML(req, res, 'verifyProblems.html')
+    }, checkAdminPrivileges)
+
+    addRoute('GET', '/pending', async (req, res) => {
+        await PendingService.getAll(req, res)
+    })
+
+    addRoute('POST', '/pending', async (req, res) => {
+        await PendingService.handleAdminDecision(req, res)
+    })
 }
 
 module.exports = routeHtml

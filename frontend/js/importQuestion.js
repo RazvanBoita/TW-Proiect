@@ -14,7 +14,7 @@ document.getElementById('input-json').addEventListener('change', function(event)
             console.log('JSON file selected:', jsonData);
 
             const difficulty = jsonData.difficulty;
-            let category = jsonData.category;
+            const category = jsonData.category.split(',').map(cat => cat.trim()); // Split and trim the category string
             const quizzTitle = jsonData.quizz_title;
             const answer = jsonData.answer;
             const description = jsonData.description;
@@ -47,7 +47,6 @@ document.getElementById('input-json').addEventListener('change', function(event)
                         found=true;
                         break;
                     }
-                    
                 }
                 if(!found)
                 {
@@ -66,13 +65,17 @@ document.getElementById('input-json').addEventListener('change', function(event)
 
             document.getElementById("quizz-question").value=quizzTitle;
             document.getElementById("description-area").value = description;
-            document.getElementById("answer-area").value=answer;
+            if(answer == undefined){
+                document.getElementById("answer-area").value = '';    
+            }else{
+                document.getElementById("answer-area").value=answer;
+            }
 
             updateLiveView(difficulty);
         } catch (error) {
             console.error('Error parsing JSON:', error);
             alert('Invalid JSON file selected. Please select a valid JSON file.');
         }
-};
+    };
     reader.readAsText(file); 
 });
