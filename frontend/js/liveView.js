@@ -8,15 +8,15 @@ document.getElementById('description-area').addEventListener('input', (event)=>{
 })
 // Difficulties
 document.getElementById('Easy').addEventListener('click', (event)=>{
-    document.getElementById('difficulty-title').textContent ='Difficulty: ' + event.target.value;
+    document.getElementById('difficulty-area').textContent ='Difficulty: ' + event.target.value;
 })
 
 document.getElementById('Medium').addEventListener('click', (event)=>{
-    document.getElementById('difficulty-title').textContent ='Difficulty: ' + event.target.value;
+    document.getElementById('difficulty-area').textContent ='Difficulty: ' + event.target.value;
 })
 
 document.getElementById('Hard').addEventListener('click', (event)=>{
-    document.getElementById('difficulty-title').textContent ='Difficulty: ' + event.target.value;
+    document.getElementById('difficulty-area').textContent ='Difficulty: ' + event.target.value;
 })
 // Categories
 document.getElementById('category').addEventListener('change', function(event){
@@ -24,8 +24,7 @@ document.getElementById('category').addEventListener('change', function(event){
 
      const selectedValues = selectedOptions.map(option => option.value);
 
-     const outputElement = document.getElementById('topics');
-     outputElement.textContent = 'Topics: ' + selectedValues.join(', ');
+     document.getElementById('category-area').textContent = 'Category: ' + selectedValues.join(', ');
 })
 
 function updateLiveView(difficulty)
@@ -33,6 +32,6 @@ function updateLiveView(difficulty)
     document.getElementById("quizz-question").dispatchEvent(new Event('input'));
     document.getElementById('category').dispatchEvent(new Event('change'));
     document.getElementById(difficulty).dispatchEvent(new Event('click'));
-    document.getElementById("description-area").dispatchEvent(new Event('input'));
+    document.getElementById("difficulty-area").dispatchEvent(new Event('input'));
     document.getElementById("answer-area").dispatchEvent(new Event('input'));
 }

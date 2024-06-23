@@ -1,6 +1,9 @@
 let pageIndex = 0;
 let currentDifficulty = '';
 let categoryId = '';
+let orderBy = 'id';
+let ascending = true;
+let questionTitle = '';
 
 const prevButton = document.getElementById('prev');
 prevButton.disabled = true;
@@ -103,13 +106,48 @@ document.getElementById("category").addEventListener("change", function() {
     fetchQuizzCounter();
 });
 
+// Listener for order select
+document.getElementById("order").addEventListener("change", function() {
+    let selectedValue = this.value;
+
+    const tokens = selectedValue.split('-');
+    orderBy = tokens[0];
+    ascending = tokens[1] === 'asc' ? true : false;
+
+    pageIndex = 0;
+    displayPage();
+    fetchQuizzCounter();
+});
+
+const searchBar = document.getElementById('search-bar');
+let typingTimer;                // Timer identifier
+const doneTypingInterval = 250; // Time in ms
+
+// Listener for search bar
+searchBar.addEventListener("input", function() {
+   
+    clearTimeout(typingTimer);
+    typingTimer = setTimeout(doneTyping, doneTypingInterval);
+});
+function doneTyping() {
+    // User has stopped typing
+    questionTitle = searchBar.value;
+    pageIndex = 0;
+    displayPage();
+    fetchQuizzCounter();
+}
+
 async function displayPage()
 {
     try {
-        const response = await fetch(`/quizzList?page=${pageIndex}&difficulty=${currentDifficulty}&categoryId=${categoryId}`); 
+        const response = await fetch(`/quizzList?page=${pageIndex}&difficulty=${currentDifficulty}&categoryId=${categoryId}&orderBy=${orderBy}&ascending=${ascending}&questionTitle=${questionTitle}`); 
         const quizzesJSON = await response.json();
         document.getElementById("list").innerHTML = displayQuizzes(quizzesJSON);
-        document.getElementById('currentPage').innerHTML = pageIndex + 1;
+        
+        if(!document.getElementById("list").innerHTML)
+            document.getElementById('currentPage').innerHTML = 0;
+        else
+            document.getElementById('currentPage').innerHTML = pageIndex + 1;
     } catch (error) {
         console.error('Error fetching quizzes:', error);
     }

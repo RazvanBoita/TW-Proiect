@@ -5,7 +5,7 @@ let pageCounter;
 fetchQuizzCounter();
 async function fetchQuizzCounter() {
     try {
-        const response = await fetch(`/quizzCounter?difficulty=${currentDifficulty}&categoryId=${categoryId}`); // Fetch quizzes from the first page
+        const response = await fetch(`/quizzCounter?difficulty=${currentDifficulty}&categoryId=${categoryId}&questionTitle=${questionTitle}`); // Fetch quizzes from the first page
         const counterJSON = await response.json();
         document.getElementById("quizz-counter").innerHTML = displayQuizzCounter(counterJSON);
         document.getElementById("total-questions").innerHTML = questionCounter;

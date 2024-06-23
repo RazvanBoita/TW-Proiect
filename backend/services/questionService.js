@@ -34,7 +34,7 @@ class QuestionService{
         return questions;
         
     }
-    static async getPageQuestions(pageIndex, difficulty, categoryId, userId)
+    static async getPageQuestions(pageIndex, difficulty, categoryId, userId, orderBy, isAscending, questionTitle)
     {
         const maxQuestions = 10;
         let queryText = 'SELECT q.*, CASE WHEN sq.id_question IS NOT NULL THEN true ELSE false END AS is_solved FROM sql_tutoring."Question" q ';
@@ -47,9 +47,26 @@ class QuestionService{
             index++;
         }
 
-        queryText+=`LEFT JOIN sql_tutoring."Solved_Questions" sq ON sq.id_question = q.id AND sq.id_user = $${index} WHERE q.difficulty LIKE $${index + 1} ORDER BY q.id LIMIT $${index + 2} OFFSET $${index + 3}`;
+        queryText+=`LEFT JOIN sql_tutoring."Solved_Questions" sq ON sq.id_question = q.id AND sq.id_user = $${index} WHERE q.difficulty LIKE $${index + 1} AND q.title LIKE $${index + 2} `;
+
+        if(orderBy === 'difficulty')
+        {
+            queryText+=`ORDER BY CASE q.difficulty WHEN 'Easy' THEN 1 WHEN 'Medium' THEN 2 WHEN 'Hard' THEN 3 ELSE 4 END `;
+        }
+        else
+        {
+            queryText+= `ORDER BY q.${orderBy} `;
+        }
+
+        if(!isAscending)
+        {
+            queryText+=`DESC `;
+        }
+        queryText+= `LIMIT $${index + 3} OFFSET $${index + 4}`;
+        
         params.push(userId);
         params.push(difficulty);
+        params.push(questionTitle);
         params.push(maxQuestions);
         params.push(pageIndex * maxQuestions);
         try{
@@ -70,7 +87,7 @@ class QuestionService{
             console.error('Error executing SELECT LIMIT query for Question table:', error);
         }
     }
-    static async getQuestionsCounter(difficulty, categoryId)
+    static async getQuestionsCounter(difficulty, categoryId, questionTitle = '%')
     {
         let queryText = 'SELECT COUNT(*) FROM sql_tutoring."Question" q ';
         let params = [];
@@ -82,8 +99,9 @@ class QuestionService{
             index++;
         }
 
-        queryText+=`WHERE q.difficulty like $${index}`;
+        queryText+=`WHERE q.difficulty LIKE $${index} AND q.title LIKE $${index + 1}`;
         params.push(difficulty);
+        params.push(questionTitle);
         try{
             const selectQuery = {
                 text: queryText,
