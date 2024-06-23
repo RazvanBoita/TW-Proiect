@@ -32,6 +32,6 @@ function updateLiveView(difficulty)
     document.getElementById("quizz-question").dispatchEvent(new Event('input'));
     document.getElementById('category').dispatchEvent(new Event('change'));
     document.getElementById(difficulty).dispatchEvent(new Event('click'));
-    document.getElementById("difficulty-area").dispatchEvent(new Event('input'));
+    document.getElementById("description-area").dispatchEvent(new Event('input'));
     document.getElementById("answer-area").dispatchEvent(new Event('input'));
 }
