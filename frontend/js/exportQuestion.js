@@ -5,8 +5,8 @@ document.querySelector('.button-export').addEventListener('click', function(even
     const difficulty = document.querySelector('.difficulty')
     
     const data ={
-        problem: cerinta.innerText,
-        tableDescription: tableContent.innerText,
+        quizz_title: cerinta.innerText,
+        description: tableContent.innerText,
         category: category.innerText.split(':')[1].trim(),
         difficulty: difficulty.innerText.split(':')[1].trim()
     }
