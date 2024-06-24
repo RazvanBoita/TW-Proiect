@@ -20,6 +20,6 @@ document.addEventListener('DOMContentLoaded', () => {
   });
   
   buttons[4].addEventListener('click', () => {
-      window.location.href = '/review';
+      window.location.href = 'https://www.trustpilot.com/search?query=Sql+Tutoring';
   });
 });
