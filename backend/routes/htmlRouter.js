@@ -278,6 +278,9 @@ function routeHtml(){
     addRoute('POST', '/pending', async (req, res) => {
         await PendingService.handleAdminDecision(req, res)
     })
+    addRoute('GET', '/documentation', (req, res)=>{
+        Loader.loadHTML(req, res, 'documentation.html')
+    })
 }
 
 module.exports = routeHtml
