@@ -1,58 +1,111 @@
 @import './vars.css';
 
-body{
+body {
     background-color: var(--main-color-container);
     background-image: none;
-
 }
-main{
+
+main {
     color: var(--accent-color);
     background-color: var(--main-color-container);
     display: flex;
     justify-content: center;
     align-items: center;
-
+    flex-direction: column;
+    padding: 20px;
 }
-h1{
+
+h1 {
     color: var(--accent-color);
     justify-content: center;
     align-items: center;
     display: flex;
+    margin-bottom: 20px;
 }
+
+.table-responsive {
+    justify-content: center;
+    display: flex;
+    width: 100%;
+    overflow-x: hidden;
+}
+
 table {
     border-style: none;
     border-collapse: collapse;
 }
-th{
-    font-size:x-large;
+
+th {
+    font-size: x-large;
     padding-bottom: 2vh;
 }
 
-td{
+td {
     font-family: var(--font-family);
     text-align: center;
     padding-top: 2vh;
     padding-bottom: 2vh;
 }
+
 tbody tr:first-child {
     color: var(--main-color);
     background-color: gold;
 }
+
 tbody tr:nth-child(2) {
     color: var(--main-color);
     background-color: silver;
 }
+
 tbody tr:nth-child(3) {
     color: var(--main-color);
     background-color: #CD7F32;
 }
+
 tbody tr:nth-child(n+4):nth-child(odd) {
     background-color: var(--main-color);
 }
 
-.name-column{
+.name-column {
     padding-right: 14vw;
 }
-.high-score-column{
+
+.high-score-column {
     padding-left: 12vw;
+}
+
+/* Responsive adjustments */
+@media screen and (max-width: 600px) {
+    table, thead, tbody, th, td, tr {
+        display: block;
+        width: 150%;
+    }
+
+    thead tr {
+        position: absolute;
+        top: -9999px;
+    }
+
+    tr {
+        margin-bottom: 10px;
+    }
+
+    td {
+        border: none;
+        text-align: start;
+        padding-left: 5rem;
+        position: relative;
+    }
+
+    td:before {
+        content: attr(data-label);
+        position: absolute;
+        left: 0;
+        font-weight: bold;
+        white-space: nowrap;
+    }
+
+    .high-score-column {
+        padding-left: 6rem;
+    }
 }

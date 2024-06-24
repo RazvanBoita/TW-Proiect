@@ -6,5 +6,8 @@ async function handleCreateQuizzButton()
     const responseJSON = await response.json();
     
     if(!responseJSON.visibility)
+    {
         document.getElementById('create-quizz').style.display = 'none';
+        document.getElementById('verify-problems').style.display = 'none';
+    }
 }

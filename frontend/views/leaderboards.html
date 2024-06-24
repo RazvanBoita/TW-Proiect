@@ -14,28 +14,29 @@
         <h1>Top 10</h1>
     </header>
     <main>
-        <table>
-            <thead>
-                <tr>
-                    <th></th>
-                    <th class="name-column">Name</th>
-                    <th class="problems-column">Problems</th>
-                    <th class="high-score-column">High Score</th>
-                </tr>
-            </thead>
-            <tbody id="list">
-               
-            </tbody>
-        </table>
+        <div class="table-responsive">
+            <table>
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th class="name-column">Name</th>
+                        <th class="problems-column">Problems</th>
+                        <th class="high-score-column">High Score</th>
+                    </tr>
+                </thead>
+                <tbody id="list">
+                </tbody>
+            </table>
+        </div>
     </main>
     <script src="../js/navbar.js"></script>
 
     <script id="template-leaderboards" type="text/template">
         <tr>
-            <td>{{rank}}</td>
-            <td class="name-column">{{name}}</td>
-            <td class="problems-column">{{problems}}</td>
-            <td class="high-score-column">{{highScore}}</td>
+            <td data-label="Rank">{{rank}}</td>
+            <td data-label="Name" class="name-column">{{name}}</td>
+            <td data-label="Problems" class="problems-column">{{problems}}</td>
+            <td data-label="High Score" class="high-score-column">{{highScore}}</td>
         </tr>
     </script>
     <script src="../js/templates/leaderboards/leaderboardsList.js"></script>

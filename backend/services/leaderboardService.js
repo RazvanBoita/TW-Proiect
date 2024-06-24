@@ -54,18 +54,22 @@ class LeaderboardService{
             console.log("Error at selecting Leaderboard table: " + error);
         }
     }
-    static async getUserRank(userId)
-    {
-        try{
+    static async getUserRank(userId) {
+        try {
             const selectQuery = {
-                text: 'SELECT id_user rank FROM (SELECT id_user, RANK() OVER (ORDER BY solved_questions DESC) AS rank FROM sql_tutoring."Leaderboard" ) ranked_users WHERE id_user = $1',
+                text: `
+                    SELECT id_user, rank FROM (
+                        SELECT id_user, RANK() OVER (ORDER BY l.solved_questions DESC, COALESCE((SELECT MAX(score) FROM sql_tutoring.taken_quizzes WHERE user_id = l.id_user), 0) DESC) AS rank
+                        FROM sql_tutoring."Leaderboard" l
+                    ) ranked_users
+                    WHERE id_user = $1
+                `,
                 values: [userId],
-            }
+            };
+    
             const result = await dbConnection.query(selectQuery);
             return result.rows[0].rank;
-
-        }
-        catch(error){
+        } catch (error) {
             console.log("Error at selecting Leaderboard table: " + error);
         }
     }
@@ -73,7 +77,7 @@ class LeaderboardService{
     {
         try{
             const selectQuery = {
-                text: 'SELECT u.name, l.solved_questions as problems, (SELECT MAX(score) FROM sql_tutoring."taken_quizzes" WHERE user_id = u.id) as highScore FROM sql_tutoring."Leaderboard" l JOIN sql_tutoring."User" u ON l.id_user = u.id ORDER BY problems DESC, highScore DESC LIMIT $1',
+                text: 'SELECT u.name, l.solved_questions as problems, (SELECT COALESCE((SELECT MAX(score) FROM sql_tutoring.taken_quizzes WHERE user_id = u.id), 0)) AS highScore FROM sql_tutoring."Leaderboard" l JOIN sql_tutoring."User" u ON l.id_user = u.id ORDER BY problems DESC, highScore DESC LIMIT $1',
                 values: [limit],
             }
             const result = await dbConnection.query(selectQuery);

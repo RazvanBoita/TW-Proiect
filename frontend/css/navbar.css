@@ -47,6 +47,15 @@
         width: 5vw;
         height: 8vh;
       }
+      #logout-button{
+        width: 6vw;
+      }
+    }
+    @media screen and (max-width: 300px) {
+    
+      #logout-button{
+        width: 9vw;
+      }
     }
     
     /* tablets */
