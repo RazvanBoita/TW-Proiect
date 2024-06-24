@@ -88,7 +88,7 @@
         <h4><em>2.3 Design and Implementation Constraints</em></h4>
         <ul>
           <li><strong>Nefolosirea Framework-urilor</strong>: Dezvoltatorii nu vor putea folosi framework-uri pentru dezvoltarea aplicației. Aceasta implică crearea de soluții personalizate pentru funcționalități precum gestionarea sesiunilor, rutarea URL-urilor și gestionarea bazelor de date.</li>
-          <li><strong>Tehnologii Specifice</strong>: Dezvoltarea aplicației se va realiza folosind Node.js pentru partea de backend și MySQL pentru baza de date.</li>
+          <li><strong>Tehnologii Specifice</strong>: Dezvoltarea aplicației se va realiza folosind Node.js pentru partea de backend și PostgreSQL pentru baza de date.</li>
         </ul>
       </section>
     </article>
@@ -107,7 +107,7 @@
       <section>
         <h4><em>3.2 Software Interfaces</em></h4>
         <ul>
-          <li><strong>Bază de Date MySQL</strong>: Aplicația va comunica cu o bază de date MySQL pentru stocarea întrebărilor, a răspunsurilor utilizatorilor și a altor date relevante.</li>
+          <li><strong>Bază de Date PostgreSQL</strong>: Aplicația va comunica cu o bază de date PostgreSQL pentru stocarea întrebărilor, a răspunsurilor utilizatorilor și a altor date relevante.</li>
           <li><strong>Node.js</strong>: Node.js va gestiona logica aplicației și va furniza servicii web pentru interacțiunea cu interfața utilizatorului și baza de date.</li>
           <li><strong>API (REST/GraphQL)</strong>: Acest API va permite accesul la întrebările disponibile, rezolvările utilizatorilor și alte date relevante.</li>
           <li><strong>Tehnologii Frontend</strong>: HTML, CSS și JavaScript vor fi utilizate pentru a crea interfața utilizatorului pe partea de frontend.</li>
@@ -147,6 +147,139 @@
           <li><strong>Prevenirea atacurilor cibernetice</strong>: Sistemul trebuie să fie protejat împotriva atacurilor de tip Cross Site Scripting sau SQL injection.</li>
         </ul>
       </section>
+    </article>
+    <hr>
+    <article>
+      <h3><strong>6 Documentation</strong></h3>
+
+      <p>Această secțiune oferă documentație detaliată despre paginile web.</p>
+      <section>
+        <h4>Log in</h4>
+        <p>Pagina de login este folosită pentru ca utilizatorul să se conecteze la contul acestuia. Email-ul și parola (parola este hash-uită) sunt comparate cu datele din baza de date pentru a verifica credențialele. În cazul în care datele sunt corecte, user-ul primește un cookie și este trimis către pagina principală (index).
+          În cazul în care parola sau email-ul sunt greșite, un mesaj de eroare este trimis către client.
+        </p>
+      </section>
+      <section>
+        <h4>Sign up</h4>
+        <p>
+          Răzvan
+        </p>
+      </section>
+      <section>
+        <h4>Forgot password</h4>
+        <p>
+          Răzvan
+        </p>
+      </section>
+      <section>
+        <h4>Navbar</h4>
+        <p>Deasupra fiecărei pagini unde este necesară logarea unui user, se va afla o bară de navigare. Pentru elevi, bara de navigare va conține următoarele elemente: menu, quiz, quizzes, progress, logout.
+          Pentru administratori, vor exista două elemente în plus: create quiz și verify problems.
+        </p>
+      </section>
+      <section>
+        <h4>Menu (index.html)</h4>
+        <p>
+          Răzvan
+        </p>
+      </section>
+      <section>
+        <h4>Create quiz</h4>
+        <p>
+         Această pagina poate fi acesată de administratori, sau de un utilizator dacă acesta a rezolvat cele 12 întrebări din pagina quiz. Pe partea dreaptă a paginii, sunt datele ce trebuie completate pentru întrebare. O întrebare conține: categorii, dificultate, titlu, descrierea problemei, răspunsul și un sfat(opțional).
+         În partea stângă este prezentată structura întrebării în pagină.
+        </p>
+        <p>
+         În partea de stânga jos, sunt două butoane: submit quiz, care va trimite întrebarea în tabela Question, în cazul în care titlul este unic, datele au fost completate și utilizatorul este admin. În cazul în care utilizatorul este elev, întrebarea va fi trimisă spre verificat, unde un admin se va uita și fie o va aproba, fie o va respinge.
+         Tot în aceeași zonă, mai există și butonul de import quiz, unde un utilizator va putea pune un fișier .json pentru a completa automat datele din form.
+        </p>
+        <p>
+         În dreapta jos, există un link ce arată un exemplu de json valid.
+        </p>
+
+        <p>
+          Când un elev dă submit la o întrebare, acesta va fi redirecționat către pagina principală. Administratorul va rămâne pe pagina de creare a întrebării.
+        </p>
+      </section>
+      <section>
+        <h4>Quiz</h4>
+        <p>
+          Răzvan
+        </p>
+      </section>
+      <section>
+        <h4>Quizzes</h4>
+        <p>
+          În această pagina utilizatorul va putea vedea toate întrebările existente. Ca pagina să fie responsive și să se încarce rapid, tabela de întrebări este încărcată în manieră AJAX.
+        </p>
+        <p>
+          Tabela are ca și coloane următoarele elemente: status (dacă utilizatorul a rezolvat întrebarea, un checkmark va apărea), titlul întrebării, rating și dificultatea. Fiecare întrebare are un link pentru rezolvarea acesteia.
+          Pentru a asigura că tabela se încarcă rapid, se listează întrebările în grupe de 10, iar jos avem butoane de next și de previous pentru a ne deplasa la următoarea grupă de 10 întrebări.
+        </p>
+        <p>
+          Putem filtra întrebările fie prin dificultatea ei (easy, medium, hard), fie prin categoria acesteia. Mai există și opțiunea de a ordona întrebările în funcție de id, titlu, rating și dificultate.
+          Nu în ultimul rând, pagina are și un search bar pentru a găsi întrebarea dorită.
+        </p>
+        <p>
+          Administratorul va avea acces la două butoane în plus: delete și update question. Aceste butoane vor fi vizibile pentru fiecare întrebare.
+        </p>
+        
+      </section>
+      <section>
+        <h4>Question</h4>
+        <p>
+          Această pagină este similară cu pagina quiz, doar că aici utilizatorul va rezolva problema pe care a ales-o. Când a verificat soluția este corectă, acesta poate să dea submit, astfel problema va fi marcată ca rezolvată de utilizator.
+        </p>
+      </section>
+      <section>
+        <h4>Update question</h4>
+        <p>
+          Această pagină este identică cu pagina de create quiz, doar că datele sunt deja populate cu întrebarea selectată, iar în loc de butonul de submit ce va crea întrebarea, acest buton doar va updata întrebarea.
+          Doar administratorii au acces la funcționalitatea de update.
+        </p>
+      </section>
+      <section>
+        <h4>Delete question</h4>
+        <p>
+          Nu există o pagină separată pentru delete, în schimb va exista un buton de delete pentru fiecare întrebare în secțiunea de întrebări (quizzes). Când este apăsată, va fi întrebat din nou utilizatorul dacă dorește să șteargă întrebarea.
+          Doar administratorii au acces la funcționalitatea de delete.
+        </p>
+      </section>
+      <section>
+        <h4>Progress</h4>
+        <p>
+          În secțiunea de progres, sunt dispuse mai multe statistici ale utilizatorului. Această pagină este împărțită în trei: statistici ale utilizatorului, statistici despre dificultatea problemelor rezolvate și lista de probleme rezolvate.
+        </p>
+        <p>
+          În stânga sus, sunt mai multe informații despre user, precum: numele, rank-ul și high-score-ul acestuia. Rank-ul este calculat prin numărul de probleme rezolvate, dacă un utilizator are mai multe probleme rezolvate, rank-ul este mai bun. În cazul în care doi utilizatori au același număr de probleme, se va face departajarea la high-score. High-score-ul este score-ul cel mai mare luat la un quiz.
+          Tot aici, se mai regăsește și un link spre leaderboard, unde se regăsesc primii 10 useri cu cel mai mare rank. 
+        </p>
+        <p>
+          În dreapta sus, sunt prezentate statisticile pentru problemele rezolvate: câte probleme a rezolvat, dar și câte probleme de dificultate diferită a rezolvat.
+        </p>
+        <p>
+          Jos, se află întrebările utilizatorului pe care le-a rezolvat, ordonate în funcție de data rezolvării.
+        </p>
+      </section>
+      <section>
+        <h4>Leaderboard</h4>
+        <p>
+          În această pagină sunt primii 10 utilizatori cu cel mai mare rank. Sunt afișate numele, problemele rezolvate și punctajul maxim luat la quiz.
+        </p>
+      </section>
+      <section>
+        <h4>Verify problems</h4>
+        <p>
+          Răzvan
+        </p>
+      </section>
+      <section>
+        <h4>Log out</h4>
+        <p>
+          Ultima iconiță de la navbar reprezintă delogarea. Aceasta șterge cookie-ul de pe partea clientului, dar și de pe partea serverului.
+        </p>
+      </section>
+      
     </article>
 </body>
 </html>
