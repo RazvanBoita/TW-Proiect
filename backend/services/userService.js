@@ -13,7 +13,7 @@ class UserService{
           };
         try {
             await dbConnection.query(insertQuery);
-            console.log('User inserted successfully:');
+            // console.log('User inserted successfully:');
         } catch (error) {
             console.error('Error inserting user:', error.message);
         }

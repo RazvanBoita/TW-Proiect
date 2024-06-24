@@ -41,6 +41,11 @@ class LoginService {
                     return res.end(JSON.stringify({ resCode: 3 }));
                 }
 
+                if(result[0].verifiedEmail == 0){
+                    res.writeHead(401, { 'Content-Type': 'application/json' });
+                    return res.end(JSON.stringify({ resCode: 4 }));
+                }
+
                 // User exists and credentials are correct
                 const userData = new UserData(result[0].id, result[0].name, result[0].email, result[0].isAdmin);
                 cookieHandler.setSessionId(res, userData);

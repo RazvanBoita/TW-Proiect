@@ -38,16 +38,35 @@ class ButtonHandler {
             },
             body: JSON.stringify(data)
         })
-        .then(response => {
+        .then(async response => {
             if (response.ok) {
                 window.location.href = '/verifyEmail';
             } else {
                 // Handle other status codes if needed
-                console.error('Error:', response.status);
+                const errorMessage = document.getElementById('error-message2');
+                
+                const showError = (message) => {
+                    errorMessage.style.display = 'none';
+                    errorMessage.textContent = message;
+                    errorMessage.classList.remove('rebounce');
+                    void errorMessage.offsetWidth;  
+                    errorMessage.classList.add('rebounce');
+                    setTimeout(() => {
+                        errorMessage.style.display = 'block';
+                    }, 50);
+                };
+                const mydata = await response.json()
+                showError(mydata.error)
             }
         })
         .catch((error) => {
             console.error('Error:', error);
+            const errorMessage = document.getElementById('error-message');
+            errorMessage.style.display = 'none'; 
+            errorMessage.textContent = 'An error occurred while processing your request. Please try again.';
+            setTimeout(() => {
+                errorMessage.style.display = 'block';
+            }, 50);
         });
     }
 
@@ -89,6 +108,8 @@ class ButtonHandler {
                 showError('🚩 User does not exist. Please sign up.');
             } else if (data.resCode === 3) {
                 showError('🚩 Invalid credentials. Please try again.');
+            } else if(data.resCode === 4){
+                showError('🚩 Unverified email. Proceed veryfing your email!');
             } else {
                 showError('🚩 An unknown error occurred. Please try again.');
             }
