@@ -3,9 +3,10 @@ const QuestionData = require('../models/questionData');
 const SolvedQuestionsService = require('./solvedQuestionsService');
 const {getUserData} = require('../utils/cookieHandler');
 const CategoryService = require('./categoryService');
+const QuestionCategoryService = require('./questionCategoryService');
 class QuestionService{
 
-    static async insertQuestion(title, difficulty, answer, description, hint){
+    static async insertQuestion(title, difficulty, answer, description, hint, categoryList){
         let questionData = null;
         let counter = 0;
         try 
@@ -17,6 +18,9 @@ class QuestionService{
             
             const result =  await dbConnection.query(insertQuery);
             const id = result.rows[0].id;
+            for(const category of categoryList){
+                await QuestionCategoryService.insertQuestionCategory(id, category)
+            }
             questionData = new QuestionData(id, title, difficulty, answer, counter, description, hint, 0);
         }
          catch (error) {
