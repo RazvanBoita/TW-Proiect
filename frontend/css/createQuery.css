@@ -42,7 +42,7 @@ option{
 #left-form{
     display: flex;
     flex-direction: column;    
-    align-items: left;
+    align-items: flex-start;
     justify-content: left;
     margin-left: 2vw;
 }
@@ -54,7 +54,7 @@ option{
 .content-form{
     display: flex;
     flex-direction: column;    
-    align-items: left;
+    align-items: flex-start;
     justify-content: left;
     margin-left: 2vw;
     padding-top: 2vh;

@@ -57,7 +57,7 @@ th {
 }
 
 .status-field {
-    padding: auto;
+    padding: inherit;
     text-align: start;
 }
 
