@@ -5,6 +5,7 @@ const QuestionCategoryService = require('../../services/questionCategoryService'
 const Loader = require('../../loaders/Loader');
 const PendingService = require('../../services/pendingService');
 const { isUserAdmin } = require('../cookieHandler');
+const { log } = require('handlebars/runtime');
 
 const handleCreateQuizz =  async (req, res, next) => {
       let body = '';
@@ -17,7 +18,15 @@ const handleCreateQuizz =  async (req, res, next) => {
         try 
         {
             if(!isUserAdmin(req)){
-                await PendingService.insertQuestion(formData.difficulty, formData.quizz_question, formData.answer_area, formData.description_area, formData.hint_area)
+                let categoryList = [];
+                if (Array.isArray(formData.category)) {
+                    categoryList.push(...formData.category);
+                } 
+                else if (typeof formData.category === 'string') {
+                    categoryList.push(formData.category); 
+                }
+                let intList = await buildIntList(categoryList)
+                await PendingService.insertQuestion(formData.difficulty, formData.quizz_question, formData.answer_area, formData.description_area, formData.hint_area, intList)
             } else{
                 const difficulty = capitalizeFirstLetter(formData.difficulty);
                 if(formData.hint_area === '')
@@ -71,5 +80,15 @@ async function showErrorMessage(req, res)
 }
 function capitalizeFirstLetter(str) {
     return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
+
+async function buildIntList(categoryList) {
+    const intList = await Promise.all(categoryList.map(async (category) => {
+        const categoryData = await CategoryService.getCategory(category);
+        return categoryData.id;
+    }));
+
+    return intList
 }
 module.exports = handleCreateQuizz;

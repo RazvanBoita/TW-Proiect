@@ -1,5 +1,14 @@
-const UserService = require('../services/userService')
+const CategoryService = require('../services/categoryService')
 
-UserService.getUser("razvanboita16@gmail.com").then(res => {
-    console.log(res[0].verifiedEmail);
-});
+const categoryList = ["UPDATE", "DELETE", "SELECT"]
+
+async function buildIntList() {
+    const intList = await Promise.all(categoryList.map(async (category) => {
+        const categoryData = await CategoryService.getCategory(category);
+        return categoryData.id;
+    }));
+
+    console.log(intList);
+}
+
+buildIntList();
