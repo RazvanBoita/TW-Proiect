@@ -23,7 +23,7 @@ class SignUpService{
         req.on('end', async () => {
             try {
                 const { username, email, password } = JSON.parse(body);
-                console.log(`Trying to add user with username ${username}, email: ${email}, password: ${password} `);
+                // console.log(`Trying to add user with username ${username}, email: ${email}, password: ${password} `);
             
                 const result = await UserService.getUser(email);
                 if (!result) {
@@ -41,7 +41,7 @@ class SignUpService{
 
                     const newPassword = hashPassword(password)
                     UserService.addUser(email, username, newPassword)
-                    console.log(`Added user with email: ${email} and password: ${newPassword}`);
+                    // console.log(`Added user with email: ${email} and password: ${newPassword}`);
 
                     res.writeHead(302, { 'Location': '/verifyEmail' });
                     res.end(); 
@@ -56,7 +56,7 @@ class SignUpService{
             } catch (error) {
                 log(error);
                 res.statusCode = 500; // Internal Server Error
-                res.end(JSON.stringify({ message: 'Internal Server Error' }));
+                res.end(JSON.stringify({ error: 'Internal Server Error' }));
             }
         });
     }
